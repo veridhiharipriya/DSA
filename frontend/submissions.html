@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VeriText — My Submissions</title>
+
+    <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+
+        /* =========================================
+           SUBMISSIONS PAGE
+        ========================================= */
+
+        .submissions-page {
+            min-height: 100vh;
+            display: flex;
+        }
+
+
+        /* SIDEBAR */
+
+        .submissions-sidebar {
+            width: 245px;
+            min-height: 100vh;
+
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 20;
+
+            padding: 28px 18px;
+
+            display: flex;
+            flex-direction: column;
+
+            background: rgba(11,14,13,.94);
+            border-right: 1px solid rgba(255,255,255,.07);
+
+            backdrop-filter: blur(20px);
+        }
+
+        .submissions-brand {
+            padding: 0 12px 35px;
+        }
+
+        .submissions-brand-name {
+            font-family: "DM Mono", monospace;
+            font-size: 19px;
+            letter-spacing: .16em;
+        }
+
+        .submissions-brand-name span {
+            color: #8df5c2;
+        }
+
+        .submissions-brand-sub {
+            display: block;
+            margin-top: 6px;
+
+            color: #626a66;
+
+            font: 8px "DM Mono", monospace;
+            letter-spacing: .14em;
+        }
+
+
+        .submissions-label {
+            padding: 0 12px;
+            margin-bottom: 10px;
+
+            color: #59615d;
+
+            font: 9px "DM Mono", monospace;
+            letter-spacing: .16em;
+        }
+
+
+        .submissions-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+
+        .submissions-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            color: #7f8883;
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition: .25s ease;
+        }
+
+        .submissions-link:hover {
+            color: #dce5df;
+            background: rgba(255,255,255,.035);
+        }
+
+        .submissions-link.active {
+            color: #8df5c2;
+            background: rgba(141,245,194,.075);
+        }
+
+        .submissions-icon {
+            width: 18px;
+            text-align: center;
+        }
+
+
+        .submissions-sidebar-bottom {
+            margin-top: auto;
+        }
+
+
+        .submissions-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 12px;
+            margin-bottom: 8px;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.025);
+            border: 1px solid rgba(255,255,255,.055);
+        }
+
+
+        .submissions-avatar {
+            width: 34px;
+            height: 34px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            background: rgba(141,245,194,.12);
+            color: #8df5c2;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        .submissions-profile strong {
+            display: block;
+
+            color: #d8dfdb;
+            font-size: 12px;
+        }
+
+        .submissions-profile span {
+            color: #606864;
+            font-size: 10px;
+        }
+
+        .submissions-signout:hover {
+            color: #ff9d9d;
+        }
+
+
+        /* MAIN */
+
+        .submissions-main {
+            width: calc(100% - 245px);
+            margin-left: 245px;
+
+            padding: 38px 45px 70px;
+        }
+
+
+        .submissions-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 44px;
+        }
+
+
+        .submissions-breadcrumb {
+            color: #626a66;
+
+            font: 9px "DM Mono", monospace;
+            letter-spacing: .15em;
+        }
+
+
+        .submissions-secure {
+            color: #69716d;
+            font-size: 11px;
+        }
+
+        .submissions-secure span {
+            color: #8df5c2;
+        }
+
+
+        /* HEADER */
+
+        .submissions-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            gap: 30px;
+
+            margin-bottom: 32px;
+        }
+
+
+        .submissions-eyebrow {
+            margin-bottom: 12px;
+
+            color: #8df5c2;
+
+            font: 10px "DM Mono", monospace;
+            letter-spacing: .16em;
+        }
+
+
+        .submissions-heading h1 {
+            margin: 0;
+
+            font-size: clamp(34px,4vw,50px);
+            line-height: 1;
+            letter-spacing: -.045em;
+        }
+
+
+        .submissions-heading p {
+            max-width: 580px;
+
+            margin-top: 14px;
+
+            color: #747d78;
+
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+
+        .new-submission {
+            flex-shrink: 0;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 12px 17px;
+
+            border-radius: 10px;
+
+            background: #8df5c2;
+            color: #08100c;
+
+            text-decoration: none;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            transition: .25s ease;
+        }
+
+
+        .new-submission:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px rgba(141,245,194,.12);
+        }
+
+
+        /* STATS */
+
+        .submission-stats {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+
+            gap: 12px;
+
+            margin-bottom: 24px;
+        }
+
+
+        .submission-stat {
+            padding: 19px;
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,.025);
+
+            border: 1px solid rgba(255,255,255,.065);
+        }
+
+
+        .submission-stat-label {
+            color: #606964;
+
+            font: 8px "DM Mono", monospace;
+            letter-spacing: .12em;
+        }
+
+
+        .submission-stat-value {
+            margin-top: 9px;
+
+            color: #dce4df;
+
+            font-size: 25px;
+            font-weight: 600;
+            letter-spacing: -.04em;
+        }
+
+
+        .submission-stat-value.green {
+            color: #8df5c2;
+        }
+
+
+        /* TABLE CARD */
+
+        .submissions-card {
+            overflow: hidden;
+
+            border-radius: 17px;
+
+            background: rgba(255,255,255,.025);
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+
+        .submissions-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 21px 23px;
+
+            border-bottom: 1px solid rgba(255,255,255,.055);
+        }
+
+
+        .submissions-card-header h2 {
+            margin: 0;
+
+            color: #dce3de;
+            font-size: 15px;
+        }
+
+
+        .submissions-card-header span {
+            color: #626a66;
+
+            font: 9px "DM Mono", monospace;
+            letter-spacing: .08em;
+        }
+
+
+        /* FILTER */
+
+        .submission-filter {
+            display: flex;
+            gap: 6px;
+        }
+
+
+        .filter-button {
+            padding: 7px 11px;
+
+            border: 1px solid transparent;
+            border-radius: 7px;
+
+            background: transparent;
+            color: #626a66;
+
+            cursor: pointer;
+
+            font-family: inherit;
+            font-size: 9px;
+
+            transition: .2s ease;
+        }
+
+
+        .filter-button:hover {
+            color: #aeb6b1;
+        }
+
+
+        .filter-button.active {
+            color: #8df5c2;
+
+            background: rgba(141,245,194,.07);
+
+            border-color: rgba(141,245,194,.12);
+        }
+
+
+        /* TABLE */
+
+        .submission-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+
+        .submission-table th {
+            padding: 14px 22px;
+
+            color: #555e59;
+
+            text-align: left;
+
+            font: 8px "DM Mono", monospace;
+            letter-spacing: .12em;
+
+            border-bottom: 1px solid rgba(255,255,255,.045);
+        }
+
+
+        .submission-table td {
+            padding: 17px 22px;
+
+            color: #858e89;
+
+            font-size: 11px;
+
+            border-bottom: 1px solid rgba(255,255,255,.045);
+        }
+
+
+        .submission-table tbody tr {
+            transition: .2s ease;
+        }
+
+
+        .submission-table tbody tr:hover {
+            background: rgba(255,255,255,.018);
+        }
+
+
+        .submission-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        .assignment-name strong {
+            display: block;
+
+            color: #cbd3ce;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        .assignment-name span {
+            display: block;
+
+            margin-top: 5px;
+
+            color: #555e59;
+
+            font-size: 9px;
+        }
+
+
+        /* STATUS */
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 6px 9px;
+
+            border-radius: 20px;
+
+            font: 8px "DM Mono", monospace;
+            letter-spacing: .04em;
+        }
+
+
+        .status-dot {
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+        }
+
+
+        .status.pending {
+            color: #c9b77c;
+            background: rgba(201,183,124,.07);
+        }
+
+        .status.pending .status-dot {
+            background: #c9b77c;
+        }
+
+
+        .status.evaluating {
+            color: #8db5f5;
+            background: rgba(141,181,245,.07);
+        }
+
+        .status.evaluating .status-dot {
+            background: #8db5f5;
+            animation: pulse 1.6s infinite;
+        }
+
+
+        .status.evaluated {
+            color: #8df5c2;
+            background: rgba(141,245,194,.07);
+        }
+
+        .status.evaluated .status-dot {
+            background: #8df5c2;
+        }
+
+
+        @keyframes pulse {
+
+            50% {
+                opacity: .35;
+            }
+
+        }
+
+
+        /* REPORT BUTTON */
+
+        .report-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 7px 10px;
+
+            border: 1px solid rgba(141,245,194,.13);
+            border-radius: 7px;
+
+            color: #8df5c2;
+            background: rgba(141,245,194,.035);
+
+            text-decoration: none;
+
+            font-size: 9px;
+
+            transition: .2s ease;
+        }
+
+
+        .report-button:hover {
+            background: rgba(141,245,194,.08);
+
+            border-color: rgba(141,245,194,.3);
+        }
+
+
+        .report-disabled {
+            color: #4f5753;
+
+            font-size: 9px;
+        }
+
+
+        /* MOBILE CARDS */
+
+        .mobile-submission-list {
+            display: none;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media (max-width:1050px) {
+
+            .submissions-sidebar {
+                width: 210px;
+            }
+
+            .submissions-main {
+                width: calc(100% - 210px);
+                margin-left: 210px;
+
+                padding: 30px;
+            }
+
+            .submission-stats {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+        }
+
+
+        @media (max-width:760px) {
+
+            .submissions-sidebar {
+                width: 70px;
+                padding: 20px 10px;
+            }
+
+
+            .submissions-brand {
+                padding-left: 0;
+                padding-right: 0;
+
+                text-align: center;
+            }
+
+
+            .submissions-brand-name {
+                font-size: 14px;
+            }
+
+
+            .submissions-brand-sub,
+            .submissions-label,
+            .submissions-link span:not(.submissions-icon),
+            .submissions-profile div:not(.submissions-avatar) {
+                display: none;
+            }
+
+
+            .submissions-link {
+                justify-content: center;
+            }
+
+
+            .submissions-profile {
+                justify-content: center;
+            }
+
+
+            .submissions-main {
+                width: calc(100% - 70px);
+                margin-left: 70px;
+
+                padding: 25px 18px 45px;
+            }
+
+
+            .submissions-secure {
+                display: none;
+            }
+
+
+            .submissions-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+
+            .submission-table-wrapper {
+                overflow-x: auto;
+            }
+
+
+            .submission-table {
+                min-width: 700px;
+            }
+
+        }
+
+
+        @media (max-width:480px) {
+
+            .submissions-main {
+                padding: 20px 13px 40px;
+            }
+
+
+            .submissions-heading h1 {
+                font-size: 34px;
+            }
+
+
+            .submission-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+
+            .submission-stat {
+                padding: 15px;
+            }
+
+
+            .submission-stat-value {
+                font-size: 21px;
+            }
+
+
+            .submission-filter {
+                margin-top: 12px;
+            }
+
+
+            .submissions-card-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="background">
+
+        <div class="grid"></div>
+
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
+
+    </div>
+
+
+    <div class="submissions-page">
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="submissions-sidebar">
+
+
+            <div class="submissions-brand">
+
+                <div class="submissions-brand-name">
+                    VERI<span>TEXT</span>
+                </div>
+
+                <span class="submissions-brand-sub">
+                    STUDENT PORTAL
+                </span>
+
+            </div>
+
+
+            <div class="submissions-label">
+                WORKSPACE
+            </div>
+
+
+            <nav class="submissions-nav">
+
+
+                <a
+                    href="student-dashboard.html"
+                    class="submissions-link"
+                >
+
+                    <span class="submissions-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Overview
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="submit.html"
+                    class="submissions-link"
+                >
+
+                    <span class="submissions-icon">
+                        ↑
+                    </span>
+
+                    <span>
+                        Submit Assignment
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="submissions.html"
+                    class="submissions-link active"
+                >
+
+                    <span class="submissions-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        My Submissions
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="report.html"
+                    class="submissions-link"
+                >
+
+                    <span class="submissions-icon">
+                        ◫
+                    </span>
+
+                    <span>
+                        Reports
+                    </span>
+
+                </a>
+
+
+            </nav>
+
+
+            <div
+                class="submissions-label"
+                style="margin-top:28px;"
+            >
+                ACCOUNT
+            </div>
+
+
+            <nav class="submissions-nav">
+
+                <a
+                    href="student-profile.html"
+                    class="submissions-link"
+                    
+                >
+
+                    <span class="submissions-icon">
+                        ○
+                    </span>
+
+                    <span>
+                        Profile
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="submissions-sidebar-bottom">
+
+
+                <div class="submissions-profile">
+
+                    <div class="submissions-avatar">
+                        HP
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Student
+                        </strong>
+
+                        <span>
+                            Academic account
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="login.html"
+                    class="submissions-link submissions-signout"
+                >
+
+                    <span class="submissions-icon">
+                        ↪
+                    </span>
+
+                    <span>
+                        Sign Out
+                    </span>
+
+                </a>
+
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- MAIN -->
+
+        <main class="submissions-main">
+
+
+            <div class="submissions-top">
+
+                <div class="submissions-breadcrumb">
+                    VERITEXT / STUDENT / SUBMISSIONS
+                </div>
+
+                <div class="submissions-secure">
+                    <span>●</span>
+                    Secure academic workspace
+                </div>
+
+            </div>
+
+
+
+            <!-- HEADING -->
+
+            <section class="submissions-heading">
+
+
+                <div>
+
+                    <div class="submissions-eyebrow">
+                        SUBMISSION HISTORY
+                    </div>
+
+                    <h1>
+                        My submissions.
+                    </h1>
+
+                    <p>
+                        Track the assignments you have submitted,
+                        their evaluation status, and reports released
+                        by your faculty.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="submit.html"
+                    class="new-submission"
+                >
+                    + New Submission
+                </a>
+
+
+            </section>
+
+
+
+            <!-- STATS -->
+
+            <section class="submission-stats">
+
+
+                <div class="submission-stat">
+
+                    <div class="submission-stat-label">
+                        TOTAL SUBMISSIONS
+                    </div>
+
+                    <div class="submission-stat-value">
+                        12
+                    </div>
+
+                </div>
+
+
+                <div class="submission-stat">
+
+                    <div class="submission-stat-label">
+                        PENDING
+                    </div>
+
+                    <div class="submission-stat-value">
+                        1
+                    </div>
+
+                </div>
+
+
+                <div class="submission-stat">
+
+                    <div class="submission-stat-label">
+                        UNDER EVALUATION
+                    </div>
+
+                    <div class="submission-stat-value">
+                        1
+                    </div>
+
+                </div>
+
+
+                <div class="submission-stat">
+
+                    <div class="submission-stat-label">
+                        EVALUATED
+                    </div>
+
+                    <div class="submission-stat-value green">
+                        10
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- TABLE -->
+
+            <section class="submissions-card">
+
+
+                <div class="submissions-card-header">
+
+
+                    <h2>
+                        Assignment history
+                    </h2>
+
+
+                    <div class="submission-filter">
+
+                        <button
+                            class="filter-button active"
+                            data-filter="all"
+                        >
+                            ALL
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-filter="pending"
+                        >
+                            PENDING
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-filter="evaluating"
+                        >
+                            EVALUATING
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-filter="evaluated"
+                        >
+                            EVALUATED
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="submission-table-wrapper">
+
+
+                    <table class="submission-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ASSIGNMENT
+                                </th>
+
+                                <th>
+                                    SUBJECT
+                                </th>
+
+                                <th>
+                                    SUBMITTED
+                                </th>
+
+                                <th>
+                                    STATUS
+                                </th>
+
+                                <th>
+                                    REPORT
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        
+                    <tbody id="submissionTableBody">
+
+    <tr>
+        <td colspan="5" style="text-align:center; padding:40px;">
+            Loading submissions...
+        </td>
+    </tr>
+
+</tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <script>
+
+async function loadSubmissions() {
+
+    const tableBody =
+        document.getElementById("submissionTableBody");
+
+    try {
+
+        let studentId = localStorage.getItem("veritext_student_id");
+        if (studentId) {
+            const studentResponse = await fetch(
+                `http://127.0.0.1:8000/api/portal/students/${encodeURIComponent(studentId)}`
+            );
+            if (studentResponse.status === 404) {
+                localStorage.removeItem("veritext_student_id");
+                studentId = null;
+            } else if (!studentResponse.ok) {
+                throw new Error("Unable to validate your student account.");
+            } else {
+                const studentData = await studentResponse.json();
+                localStorage.setItem("veritext_student_profile", JSON.stringify(studentData.student));
+            }
+        }
+        if (!studentId) {
+            const email = localStorage.getItem("veritextUser");
+            if (email) {
+                const identityResponse = await fetch(
+                    `http://127.0.0.1:8000/api/portal/students/resolve?email=${encodeURIComponent(email)}`
+                );
+                const identityData = await identityResponse.json();
+                if (identityResponse.ok) {
+                    studentId = identityData.student.student_id;
+                    localStorage.setItem("veritext_student_id", studentId);
+                    localStorage.setItem("veritext_student_profile", JSON.stringify(identityData.student));
+                }
+            }
+        }
+        if (!studentId) {
+            tableBody.innerHTML = `
+                <tr><td colspan="5" style="text-align:center;padding:40px;">
+                    Connect your student account once from Profile to see your assignments and submissions.
+                    <br><a href="student-profile.html">Open Profile →</a>
+                </td></tr>`;
+            document.querySelectorAll(".submission-stat-value").forEach(value => value.textContent = "—");
+            return;
+        }
+        const response = await fetch(
+            `http://127.0.0.1:8000/api/roster/students/${encodeURIComponent(studentId)}/submissions`
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to load submissions");
+        }
+
+        const data = await response.json();
+
+        if (
+            !data.success ||
+            !data.submissions ||
+            data.submissions.length === 0
+        ) {
+
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5"
+                        style="text-align:center; padding:40px;">
+                        No submissions found.
+                    </td>
+                </tr>
+            `;
+
+            updateStats([]);
+
+            return;
+        }
+
+        tableBody.innerHTML = "";
+
+        data.submissions.forEach(submission => {
+
+            const date = submission.submitted_at
+                ? new Date(
+                    submission.submitted_at
+                ).toLocaleDateString(
+                    "en-US",
+                    {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric"
+                    }
+                )
+                : "—";
+
+            let statusClass = "pending";
+            let statusText = "PENDING";
+
+            if (submission.status === "EVALUATED") {
+
+                statusClass = "evaluated";
+                statusText = "EVALUATED";
+
+            } else if (
+                submission.status === "EVALUATING"
+            ) {
+
+                statusClass = "evaluating";
+                statusText = "UNDER EVALUATION";
+            }
+
+            const row =
+                document.createElement("tr");
+
+            row.dataset.status =
+                statusClass;
+
+            row.innerHTML = `
+
+                <td class="assignment-name">
+
+                    <strong>
+                        ${escapeHtml(
+                            submission.assignment_title
+                        )}
+                    </strong>
+
+                    <span>
+                        S-${String(
+                            submission.id
+                        ).padStart(4, "0")}
+                    </span>
+
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        submission.subject
+                    )}
+                </td>
+
+                <td>
+                    ${date}
+                </td>
+
+                <td>
+
+                    <span class="status ${statusClass}">
+
+                        <span class="status-dot"></span>
+
+                        ${statusText}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    ${
+                        submission.status === "EVALUATED"
+
+                        ? `
+                            <a
+                                href="report.html?submission_id=${submission.id}"
+                                class="report-button"
+                            >
+                                View Report →
+                            </a>
+                          `
+
+                        : `
+                            <span class="report-disabled">
+                                Not available yet
+                            </span>
+                          `
+                    }
+
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+
+        });
+
+        updateStats(data.submissions);
+
+        setupFilters();
+
+        animateRows();
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load submissions:",
+            error
+        );
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="5"
+                    style="text-align:center; padding:40px;">
+
+                    Unable to load submissions.<br>
+
+                    <small>
+                        Make sure the VeriText backend is running.
+                    </small>
+
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+function updateStats(submissions) {
+
+    const total =
+        submissions.length;
+
+    const pending =
+        submissions.filter(
+            s => s.status === "PENDING"
+        ).length;
+
+    const evaluating =
+        submissions.filter(
+            s => s.status === "EVALUATING"
+        ).length;
+
+    const evaluated =
+        submissions.filter(
+            s => s.status === "EVALUATED"
+        ).length;
+
+
+    const statValues =
+        document.querySelectorAll(
+            ".submission-stat-value"
+        );
+
+    if (statValues.length >= 4) {
+
+        statValues[0].textContent =
+            total;
+
+        statValues[1].textContent =
+            pending;
+
+        statValues[2].textContent =
+            evaluating;
+
+        statValues[3].textContent =
+            evaluated;
+    }
+}
+
+
+function setupFilters() {
+
+    const filterButtons =
+        document.querySelectorAll(
+            ".filter-button"
+        );
+
+    filterButtons.forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                filterButtons.forEach(item => {
+                    item.classList.remove(
+                        "active"
+                    );
+                });
+
+                button.classList.add(
+                    "active"
+                );
+
+                const filter =
+                    button.dataset.filter;
+
+                const rows =
+                    document.querySelectorAll(
+                        "#submissionTableBody tr"
+                    );
+
+                rows.forEach(row => {
+
+                    const status =
+                        row.dataset.status;
+
+                    if (
+                        filter === "all" ||
+                        status === filter
+                    ) {
+
+                        row.style.display = "";
+
+                    } else {
+
+                        row.style.display =
+                            "none";
+                    }
+
+                });
+
+            }
+        );
+
+    });
+
+}
+
+
+function animateRows() {
+
+    const rows =
+        document.querySelectorAll(
+            "#submissionTableBody tr"
+        );
+
+    rows.forEach((row, index) => {
+
+        row.style.opacity = "0";
+
+        row.style.transform =
+            "translateY(8px)";
+
+        setTimeout(() => {
+
+            row.style.transition =
+                "opacity .4s ease, transform .4s ease";
+
+            row.style.opacity = "1";
+
+            row.style.transform =
+                "translateY(0)";
+
+        }, 100 + (index * 70));
+
+    });
+
+}
+
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadSubmissions
+);
+
+</script>
+
+</body>
+</html>

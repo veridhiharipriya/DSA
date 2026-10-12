@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator | VeriText</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 34px 0 60px; }
+        .admin-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 25px; }
+        .admin-kicker { color: var(--accent); font: 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+        .admin-header h1 { margin: 8px 0; font-size: clamp(28px, 4vw, 40px); }
+        .admin-header p, .admin-help { color: var(--text-soft); line-height: 1.6; }
+        .admin-header .signout { border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; white-space: nowrap; }
+        .admin-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+        .admin-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; min-width: 0; }
+        .admin-card.full { grid-column: 1 / -1; }
+        .admin-card h2 { font-size: 18px; margin: 0 0 7px; }
+        .admin-help { font-size: 13px; margin-bottom: 18px; }
+        .admin-form { display: grid; gap: 12px; }
+        .admin-form.two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .admin-form label { display: grid; gap: 7px; color: var(--text-soft); font-size: 12px; }
+        .admin-form input, .admin-form select { width: 100%; min-height: 42px; border-radius: 9px; padding: 10px 12px; background: #0b0e14; color: var(--text); border: 1px solid var(--border-bright); font: inherit; }
+        .admin-form input:focus, .admin-form select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+        .admin-action { align-self: end; min-height: 42px; border-radius: 9px; padding: 10px 15px; color: #07100b; background: var(--accent); font-weight: 800; }
+        .admin-action:disabled { opacity: .6; cursor: wait; }
+        .admin-message { min-height: 20px; margin-top: 10px; color: var(--accent); font-size: 13px; }
+        .table-wrap { width: 100%; overflow-x: auto; }
+        .admin-table { width: 100%; border-collapse: collapse; min-width: 650px; text-align: left; }
+        .admin-table th, .admin-table td { padding: 11px 9px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .admin-table th { color: var(--text-muted); font: 11px var(--mono); text-transform: uppercase; letter-spacing: .05em; }
+        .admin-table td { color: var(--text-soft); font-size: 13px; }
+        .admin-table input, .admin-table select { min-width: 110px; max-width: 190px; border: 1px solid var(--border); border-radius: 7px; padding: 8px; background: #0b0e14; color: var(--text); font: inherit; }
+        .admin-table button { border: 1px solid rgba(141,245,194,.3); border-radius: 7px; padding: 8px 10px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+        .admin-table .delete-student { margin-left: 6px; border-color: rgba(255, 120, 120, .35); background: rgba(255, 120, 120, .08); color: #ff9b9b; }
+        .empty-row { color: var(--text-muted) !important; padding: 18px 9px !important; }
+        @media (max-width: 760px) { .admin-grid { grid-template-columns: 1fr; } .admin-card.full { grid-column: auto; } }
+        @media (max-width: 540px) { .admin-shell { width: min(100% - 26px, 1180px); padding-top: 22px; } .admin-header { flex-direction: column; } .admin-form.two-col { grid-template-columns: 1fr; } .admin-card { padding: 17px; } }
+    </style>
+</head>
+<body>
+    <div class="background"><div class="grid"></div><div class="orb orb-one"></div><div class="orb orb-two"></div></div>
+    <main class="admin-shell">
+        <header class="admin-header">
+            <div>
+                <div class="admin-kicker">VeriText · Administration</div>
+                <h1>Accounts & sections</h1>
+                <p>Set up student records and connect each class section to its faculty account.</p>
+            </div>
+            <a class="signout" href="login.html" id="signOut">Sign out</a>
+        </header>
+
+        <div class="admin-grid">
+            <section class="admin-card">
+                <h2 id="sectionFormTitle">Create a section</h2>
+                <p class="admin-help">Enter the faculty member’s login email so the section can be associated with their portal account.</p>
+                <form class="admin-form" id="sectionForm">
+                    <label>Section name<input id="sectionName" maxlength="100" required placeholder="e.g. CSE-A"></label>
+                    <label>Faculty login email<input id="sectionFaculty" type="email" placeholder="faculty@university.edu"></label>
+                    <button class="admin-action" id="sectionSubmit" type="submit">Create section</button>
+                </form>
+                <div class="admin-message" id="sectionMessage" role="status"></div>
+            </section>
+
+            <section class="admin-card">
+                <h2 id="studentFormTitle">Add a student</h2>
+                <p class="admin-help">The student email entered here is used to match the account at login.</p>
+                <form class="admin-form two-col" id="studentForm">
+                    <label>Student ID<input id="studentCode" maxlength="50" required></label>
+                    <label>Full name<input id="studentName" maxlength="100" required></label>
+                    <label>Student email<input id="studentEmail" type="email" required></label>
+                    <label>Section<select id="studentSection" required><option value="">Create a section first</option></select></label>
+                    <label>Department<input id="studentDepartment" maxlength="150"></label>
+                    <label>Year<input id="studentYear" maxlength="50" placeholder="e.g. 2nd year"></label>
+                    <button class="admin-action" id="studentSubmit" type="submit">Add student</button>
+                </form>
+                <div class="admin-message" id="studentMessage" role="status"></div>
+            </section>
+
+            <section class="admin-card full">
+                <h2>Sections and faculty mapping</h2>
+                <p class="admin-help">Edit a section to change its assigned faculty account. Existing students remain enrolled in the section.</p>
+                <div class="table-wrap"><table class="admin-table"><thead><tr><th>Section</th><th>Faculty login email</th><th>Students</th><th>Action</th></tr></thead><tbody id="sectionRows"><tr><td class="empty-row" colspan="4">Loading sections…</td></tr></tbody></table></div>
+            </section>
+
+            <section class="admin-card full">
+                <h2>Student accounts</h2>
+                <p class="admin-help">Edit a student to correct account details or move them to another section.</p>
+                <div class="table-wrap"><table class="admin-table"><thead><tr><th>Student ID</th><th>Name</th><th>Login email</th><th>Department</th><th>Year</th><th>Section</th><th>Actions</th></tr></thead><tbody id="studentRows"><tr><td class="empty-row" colspan="7">Loading student accounts…</td></tr></tbody></table></div>
+            </section>
+        </div>
+    </main>
+    <script>
+        const API_BASE = "http://127.0.0.1:8000";
+        const role = localStorage.getItem("veritextRole");
+        if (role !== "admin") window.location.replace("login.html");
+
+        let sections = [];
+        let students = [];
+
+        const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, character => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        }[character]));
+
+        async function apiRequest(path, options = {}) {
+            const response = await fetch(`${API_BASE}${path}`, options);
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.detail || "The request could not be completed.");
+            return data;
+        }
+
+        function renderSections() {
+            const body = document.getElementById("sectionRows");
+            const selector = document.getElementById("studentSection");
+            body.innerHTML = sections.length ? sections.map(section => `
+                <tr data-section-id="${section.id}">
+                    <td><input class="section-edit-name" value="${escapeHtml(section.name)}" aria-label="Section name"></td>
+                    <td><input class="section-edit-faculty" type="email" value="${escapeHtml(section.faculty_name || "")}" aria-label="Faculty login email"></td>
+                    <td>${section.student_count}</td>
+                    <td><button type="button" data-save-section="${section.id}">Save</button></td>
+                </tr>`).join("") : '<tr><td class="empty-row" colspan="4">No sections yet. Create one above.</td></tr>';
+
+            selector.innerHTML = sections.length
+                ? '<option value="">Select a section</option>' + sections.map(section =>
+                    `<option value="${section.id}">${escapeHtml(section.name)} · ${section.student_count} students</option>`
+                ).join("")
+                : '<option value="">Create a section first</option>';
+
+        }
+
+        function renderStudents() {
+            const body = document.getElementById("studentRows");
+            body.innerHTML = students.length ? students.map(student => `
+                <tr data-student-id="${student.id}">
+                    <td><input class="student-edit-code" value="${escapeHtml(student.student_id)}" aria-label="Student ID"></td>
+                    <td><input class="student-edit-name" value="${escapeHtml(student.name)}" aria-label="Student name"></td>
+                    <td><input class="student-edit-email" type="email" value="${escapeHtml(student.email || "")}" aria-label="Student login email"></td>
+                    <td><input class="student-edit-department" value="${escapeHtml(student.department || "")}" aria-label="Department"></td>
+                    <td><input class="student-edit-year" value="${escapeHtml(student.year || "")}" aria-label="Year"></td>
+                    <td><select class="student-edit-section" aria-label="Student section">${sections.map(section =>
+                        `<option value="${section.id}" ${section.id === student.section_id ? "selected" : ""}>${escapeHtml(section.name)}</option>`
+                    ).join("")}</select></td>
+                    <td><button type="button" data-save-student="${student.id}">Save</button><button class="delete-student" type="button" data-delete-student="${student.id}">Delete</button></td>
+                </tr>`).join("") : '<tr><td class="empty-row" colspan="7">No student accounts yet. Add students above.</td></tr>';
+        }
+
+        async function loadAdminData() {
+            try {
+                const [sectionData, studentData] = await Promise.all([
+                    apiRequest("/api/sections"),
+                    apiRequest("/api/students")
+                ]);
+                sections = sectionData.sections || [];
+                students = studentData.students || [];
+                renderSections();
+                renderStudents();
+            } catch (error) {
+                document.getElementById("sectionRows").innerHTML = `<tr><td class="empty-row" colspan="4">${escapeHtml(error.message)}</td></tr>`;
+                document.getElementById("studentRows").innerHTML = `<tr><td class="empty-row" colspan="7">${escapeHtml(error.message)}</td></tr>`;
+            }
+        }
+
+        document.getElementById("sectionForm").addEventListener("submit", async event => {
+            event.preventDefault();
+            const button = document.getElementById("sectionSubmit");
+            const message = document.getElementById("sectionMessage");
+            button.disabled = true;
+            try {
+                const section = {
+                    name: document.getElementById("sectionName").value.trim(),
+                    faculty_name: document.getElementById("sectionFaculty").value.trim() || null
+                };
+                await apiRequest("/api/sections", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(section)
+                });
+                message.textContent = "Section created.";
+                document.getElementById("sectionForm").reset();
+                await loadAdminData();
+            } catch (error) {
+                message.textContent = error.message;
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        document.getElementById("sectionRows").addEventListener("click", async event => {
+            const button = event.target.closest("[data-save-section]");
+            if (!button) return;
+            const row = button.closest("tr");
+            button.disabled = true;
+            try {
+                await apiRequest(`/api/sections/${button.dataset.saveSection}`, {
+                    method: "PUT",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        name: row.querySelector(".section-edit-name").value.trim(),
+                        faculty_name: row.querySelector(".section-edit-faculty").value.trim() || null
+                    })
+                });
+                document.getElementById("sectionMessage").textContent = "Section and faculty mapping saved.";
+                await loadAdminData();
+            } catch (error) {
+                document.getElementById("sectionMessage").textContent = error.message;
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        document.getElementById("studentForm").addEventListener("submit", async event => {
+            event.preventDefault();
+            const button = document.getElementById("studentSubmit");
+            const message = document.getElementById("studentMessage");
+            button.disabled = true;
+            try {
+                const student = {
+                    student_id: document.getElementById("studentCode").value.trim(),
+                    name: document.getElementById("studentName").value.trim(),
+                    email: document.getElementById("studentEmail").value.trim(),
+                    department: document.getElementById("studentDepartment").value.trim() || null,
+                    year: document.getElementById("studentYear").value.trim() || null,
+                    section_id: Number(document.getElementById("studentSection").value)
+                };
+                await apiRequest("/api/students", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(student)
+                });
+                message.textContent = "Student account created.";
+                document.getElementById("studentForm").reset();
+                await loadAdminData();
+            } catch (error) {
+                message.textContent = error.message;
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        document.getElementById("studentRows").addEventListener("click", async event => {
+            const button = event.target.closest("[data-save-student]");
+            if (button) {
+                const row = button.closest("tr");
+                button.disabled = true;
+                try {
+                    await apiRequest(`/api/students/${button.dataset.saveStudent}`, {
+                        method: "PUT",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({
+                            student_id: row.querySelector(".student-edit-code").value.trim(),
+                            name: row.querySelector(".student-edit-name").value.trim(),
+                            email: row.querySelector(".student-edit-email").value.trim() || null,
+                            department: row.querySelector(".student-edit-department").value.trim() || null,
+                            year: row.querySelector(".student-edit-year").value.trim() || null,
+                            section_id: Number(row.querySelector(".student-edit-section").value)
+                        })
+                    });
+                    document.getElementById("studentMessage").textContent = "Student account and section mapping saved.";
+                    await loadAdminData();
+                } catch (error) {
+                    document.getElementById("studentMessage").textContent = error.message;
+                } finally {
+                    button.disabled = false;
+                }
+                return;
+            }
+
+            const deleteButton = event.target.closest("[data-delete-student]");
+            if (!deleteButton) return;
+            const row = deleteButton.closest("tr");
+            const studentName = row.querySelector(".student-edit-name").value.trim();
+            const studentCode = row.querySelector(".student-edit-code").value.trim();
+            if (!window.confirm(`Delete ${studentName} (${studentCode})? Existing submissions will be kept but disconnected from this student account.`)) {
+                return;
+            }
+            deleteButton.disabled = true;
+            try {
+                await apiRequest(`/api/students/${deleteButton.dataset.deleteStudent}`, {
+                    method: "DELETE"
+                });
+                document.getElementById("studentMessage").textContent = "Student account deleted. Existing submissions were preserved.";
+                await loadAdminData();
+            } catch (error) {
+                document.getElementById("studentMessage").textContent = error.message;
+            } finally {
+                deleteButton.disabled = false;
+            }
+        });
+
+        document.getElementById("signOut").addEventListener("click", () => {
+            localStorage.removeItem("veritextRole");
+        });
+        loadAdminData();
+    </script>
+</body>
+</html>

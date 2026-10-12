@@ -1,0 +1,2873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Evaluate Submission | VeriText</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================================
+           FACULTY EVALUATION PAGE
+        ========================================================= */
+
+        .evaluation-page {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 80% 5%, rgba(141, 245, 194, 0.055), transparent 27%),
+                radial-gradient(circle at 15% 75%, rgba(100, 180, 255, 0.035), transparent 25%);
+        }
+
+        .evaluation-main {
+    margin-left: 245px;
+    padding: 45px 30px 70px;
+    width: calc(100% - 245px);
+    box-sizing: border-box;
+}
+
+        /* TOP BAR */
+
+        .evaluation-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 34px;
+        }
+
+        .evaluation-breadcrumb {
+            color: #697571;
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .evaluation-breadcrumb span {
+            color: #8df5c2;
+        }
+
+        .back-dashboard {
+            color: #71807b;
+            text-decoration: none;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.7px;
+            transition: 0.25s ease;
+        }
+
+        .back-dashboard:hover {
+            color: #8df5c2;
+        }
+
+        /* HEADER */
+
+        .evaluation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 30px;
+            margin-bottom: 28px;
+        }
+
+        .evaluation-label {
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .evaluation-header h1 {
+            margin: 0;
+            color: #edf4f1;
+            font-size: clamp(34px, 4vw, 52px);
+            line-height: 1;
+            letter-spacing: -2.4px;
+        }
+
+        .evaluation-header p {
+            max-width: 700px;
+            margin: 14px 0 0;
+            color: #788580;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .submission-status {
+            padding: 9px 13px;
+            border: 1px solid rgba(240, 198, 116, 0.17);
+            border-radius: 8px;
+            background: rgba(240, 198, 116, 0.055);
+            color: #e3ba6c;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+        }
+
+        /* ASSIGNMENT INFO */
+
+        .assignment-info-card {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 25px;
+
+            padding: 23px 25px;
+            margin-bottom: 24px;
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 17px;
+
+            background: rgba(255, 255, 255, 0.025);
+            backdrop-filter: blur(18px);
+        }
+
+        .assignment-info-card h2 {
+            margin: 0 0 7px;
+            color: #e4ece9;
+            font-size: 19px;
+        }
+
+        .assignment-subtitle {
+            color: #697571;
+            font-size: 11px;
+        }
+
+        .assignment-meta {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 17px;
+        }
+
+        .assignment-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .assignment-meta-item span:first-child {
+            color: #4f5c58;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .assignment-meta-item span:last-child {
+            color: #aab5b1;
+            font-size: 11px;
+        }
+
+        .student-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 10px 13px;
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 10px;
+
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .student-chip-avatar {
+            width: 32px;
+            height: 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(141, 245, 194, 0.08);
+            border: 1px solid rgba(141, 245, 194, 0.13);
+
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+        }
+
+        .student-chip strong {
+            display: block;
+            color: #cdd7d3;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .student-chip span {
+            display: block;
+            margin-top: 3px;
+            color: #596560;
+            font-family: "DM Mono", monospace;
+            font-size: 7px;
+        }
+
+        /* MAIN GRID */
+
+      
+        .evaluation-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    width: 100%;
+    align-items: start;
+}
+
+.evaluation-grid > div {
+    width: 100%;
+    min-width: 0;
+}
+
+        .evaluation-card {
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+
+            background: rgba(255, 255, 255, 0.025);
+            backdrop-filter: blur(18px);
+        }
+
+        .evaluation-card-heading {
+            padding: 21px 23px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .evaluation-card-heading span {
+            display: block;
+            margin-bottom: 6px;
+
+            color: #596662;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .evaluation-card-heading h2 {
+            margin: 0;
+            color: #e2ebe7;
+            font-size: 17px;
+        }
+
+        .evaluation-card-body {
+            padding: 23px;
+        }
+
+        /* SUBMISSION PREVIEW */
+
+        .document-preview {
+            min-height: 340px;
+
+            padding: 24px;
+
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.025),
+                    rgba(255, 255, 255, 0.012)
+                );
+        }
+
+        .document-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding-bottom: 18px;
+            margin-bottom: 20px;
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .document-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-icon {
+            width: 32px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(141, 245, 194, 0.14);
+            border-radius: 6px;
+
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+
+            background: rgba(141, 245, 194, 0.05);
+        }
+
+        .document-file strong {
+            display: block;
+            color: #cbd5d1;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .document-file span {
+            display: block;
+            margin-top: 4px;
+            color: #596662;
+            font-family: "DM Mono", monospace;
+            font-size: 7px;
+        }
+
+        .document-page {
+            color: #596662;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+        }
+
+        .document-text {
+            color: #788580;
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        .document-text p {
+            margin: 0 0 17px;
+        }
+
+        .document-text .highlight {
+            padding: 2px 4px;
+            border-radius: 3px;
+
+            color: #a9eecb;
+            background: rgba(141, 245, 194, 0.09);
+
+            box-shadow: inset 0 -1px 0 rgba(141, 245, 194, 0.22);
+        }
+
+        .preview-note {
+            margin-top: 17px;
+            padding: 12px 14px;
+
+            border-left: 2px solid rgba(141, 245, 194, 0.45);
+
+            color: #66736f;
+            background: rgba(141, 245, 194, 0.025);
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            line-height: 1.6;
+        }
+
+        /* ANALYSIS */
+
+        .analysis-control {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+
+            padding: 16px 17px;
+            margin-bottom: 20px;
+
+            border: 1px solid rgba(141, 245, 194, 0.1);
+            border-radius: 12px;
+
+            background: rgba(141, 245, 194, 0.025);
+        }
+
+        .analysis-control strong {
+            display: block;
+            color: #cbd6d2;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .analysis-control span {
+            display: block;
+            margin-top: 4px;
+            color: #5e6b67;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+        }
+
+        .run-analysis {
+            border: 1px solid rgba(141, 245, 194, 0.2);
+            background: rgba(141, 245, 194, 0.08);
+            color: #8df5c2;
+
+            padding: 11px 15px;
+            border-radius: 8px;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.8px;
+
+            cursor: pointer;
+            white-space: nowrap;
+
+            transition: 0.3s ease;
+        }
+
+        .run-analysis:hover {
+            background: rgba(141, 245, 194, 0.14);
+            transform: translateY(-2px);
+        }
+
+        .run-analysis.running {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* PIPELINE */
+
+        .analysis-pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin-bottom: 20px;
+        }
+
+        .analysis-stage {
+            display: grid;
+            grid-template-columns: 31px 1fr auto;
+            align-items: center;
+            gap: 12px;
+
+            padding: 10px 12px;
+
+            border: 1px solid rgba(255, 255, 255, 0.045);
+            border-radius: 9px;
+
+            background: rgba(255, 255, 255, 0.015);
+
+            transition: 0.3s ease;
+        }
+
+        .analysis-stage.active {
+            border-color: rgba(141, 245, 194, 0.14);
+            background: rgba(141, 245, 194, 0.035);
+        }
+
+        .stage-number {
+            width: 26px;
+            height: 26px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 7px;
+
+            color: #57635f;
+            background: rgba(255, 255, 255, 0.03);
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+        }
+
+        .analysis-stage.active .stage-number {
+            color: #8df5c2;
+            background: rgba(141, 245, 194, 0.08);
+        }
+
+        .stage-info strong {
+            display: block;
+            color: #b8c4c0;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .stage-info span {
+            display: block;
+            margin-top: 3px;
+            color: #56625e;
+            font-family: "DM Mono", monospace;
+            font-size: 7px;
+        }
+
+        .stage-status {
+            color: #56625e;
+            font-family: "DM Mono", monospace;
+            font-size: 7px;
+            letter-spacing: 0.5px;
+        }
+
+        .analysis-stage.active .stage-status {
+            color: #8df5c2;
+        }
+
+        /* RESULT */
+
+        .analysis-result {
+            display: grid;
+            grid-template-columns: 145px 1fr;
+            gap: 22px;
+            align-items: center;
+
+            padding: 18px;
+
+            border: 1px solid rgba(141, 245, 194, 0.1);
+            border-radius: 12px;
+
+            background: rgba(141, 245, 194, 0.025);
+        }
+
+        .similarity-circle {
+            width: 125px;
+            height: 125px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+
+            border-radius: 50%;
+
+            background:
+                conic-gradient(
+                    #8df5c2 0deg 0deg,
+        rgba(255, 255, 255, 0.06) 0deg 360deg
+                );
+        }
+
+        .similarity-circle::before {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border-radius: 50%;
+            background: #101513;
+        }
+
+        .similarity-score {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .similarity-score strong {
+            display: block;
+            color: #edf4f1;
+            font-size: 29px;
+            letter-spacing: -1.5px;
+        }
+
+        .similarity-score span {
+            color: #65716d;
+            font-family: "DM Mono", monospace;
+            font-size: 7px;
+        }
+
+        .result-info h3 {
+            margin: 0 0 7px;
+            color: #d7e1dd;
+            font-size: 14px;
+        }
+
+        .result-info p {
+            margin: 0;
+            color: #6e7b76;
+            font-size: 10px;
+            line-height: 1.65;
+        }
+
+        .result-stats {
+            display: flex;
+            gap: 17px;
+            margin-top: 14px;
+        }
+
+        .result-stat strong {
+            display: block;
+            color: #bfcac6;
+            font-family: "DM Mono", monospace;
+            font-size: 11px;
+        }
+
+        .result-stat span {
+            display: block;
+            margin-top: 3px;
+            color: #596560;
+            font-size: 7px;
+        }
+
+        /* MATCHING PASSAGES */
+
+        .matching-list {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .matching-item {
+            padding: 13px 14px;
+
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 9px;
+
+            background: rgba(255, 255, 255, 0.015);
+        }
+
+        .matching-item-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 7px;
+        }
+
+        .matching-item-top span:first-child {
+            color: #66736f;
+            font-family: "DM Mono", monospace;
+            font-size: 7px;
+            letter-spacing: 0.8px;
+        }
+
+        .matching-percent {
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+        }
+
+        .matching-text {
+            color: #9ba7a3;
+            font-size: 10px;
+            line-height: 1.65;
+        }
+
+        .matching-text mark {
+            color: #b9efd2;
+            background: rgba(141, 245, 194, 0.08);
+            border-radius: 2px;
+            padding: 1px 2px;
+        }
+
+        /* EVALUATION FORM */
+
+        .evaluation-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 8px;
+
+            color: #707d79;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .marks-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .marks-input {
+            width: 110px;
+            box-sizing: border-box;
+
+            padding: 12px 13px;
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+
+            outline: none;
+
+            background: rgba(255, 255, 255, 0.025);
+
+            color: #e0e9e5;
+
+            font-family: "DM Mono", monospace;
+            font-size: 13px;
+
+            transition: 0.25s ease;
+        }
+
+        .marks-input:focus {
+            border-color: rgba(141, 245, 194, 0.25);
+        }
+
+        .marks-total {
+            color: #596560;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+        }
+
+        .feedback-textarea {
+            width: 100%;
+            min-height: 125px;
+            box-sizing: border-box;
+
+            resize: vertical;
+
+            padding: 13px;
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 9px;
+
+            outline: none;
+
+            background: rgba(255, 255, 255, 0.025);
+
+            color: #cbd5d1;
+
+            font-family: "Manrope", sans-serif;
+            font-size: 11px;
+            line-height: 1.6;
+
+            transition: 0.25s ease;
+        }
+
+        .feedback-textarea::placeholder {
+            color: #4e5a56;
+        }
+
+        .feedback-textarea:focus {
+            border-color: rgba(141, 245, 194, 0.22);
+        }
+
+        .evaluation-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 9px;
+        }
+
+        .evaluation-option {
+            padding: 12px;
+
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            color: #687571;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+
+            text-align: center;
+
+            transition: 0.25s ease;
+        }
+
+        .evaluation-option:hover {
+            border-color: rgba(141, 245, 194, 0.15);
+            color: #9aaba5;
+        }
+
+        .evaluation-option.selected {
+            border-color: rgba(141, 245, 194, 0.2);
+            color: #8df5c2;
+            background: rgba(141, 245, 194, 0.05);
+        }
+
+        /* PUBLISH */
+
+        .publish-area {
+            margin-top: 21px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .publish-note {
+            margin-bottom: 13px;
+            color: #596662;
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        .publish-button {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: #8df5c2;
+            color: #08110d;
+
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            transition: 0.3s ease;
+        }
+
+        .publish-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(141, 245, 194, 0.1);
+        }
+
+        /* REVEAL */
+
+        .evaluation-reveal {
+            opacity: 0;
+            transform: translateY(17px);
+            animation: evaluationReveal 0.7s ease forwards;
+        }
+
+        .evaluation-reveal:nth-child(2) {
+            animation-delay: 0.08s;
+        }
+
+        .evaluation-reveal:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+
+        @keyframes evaluationReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+
+       @media (max-width: 1100px) {
+
+    .evaluation-main {
+        margin-left: 220px;
+        padding: 35px 30px 60px;
+    }
+}
+
+        @media (max-width: 760px) {
+
+            .evaluation-main {
+                margin-left: 0;
+                padding: 30px 20px 50px;
+            }
+
+            .evaluation-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .assignment-info-card {
+                grid-template-columns: 1fr;
+            }
+
+            .analysis-result {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                text-align: center;
+            }
+
+            .result-stats {
+                justify-content: center;
+            }
+
+            .analysis-control {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .run-analysis {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .evaluation-main {
+                padding: 25px 15px 40px;
+            }
+
+            .evaluation-header h1 {
+                font-size: 36px;
+            }
+
+            .assignment-info-card,
+            .evaluation-card-body {
+                padding: 19px;
+            }
+
+            .assignment-meta {
+                gap: 15px;
+            }
+
+            .evaluation-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="evaluation-page">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-mark">V</div>
+
+            <div>
+                <strong>VERITEXT</strong>
+                <span>FACULTY PORTAL</span>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">FACULTY WORKSPACE</span>
+
+            <a href="faculty-dashboard.html" class="sidebar-link">
+                <span>01</span>
+                Dashboard
+            </a>
+
+            <a href="#" class="sidebar-link active">
+                <span>02</span>
+                Submission Queue
+            </a>
+
+            <a href="#" class="sidebar-link">
+                <span>03</span>
+                Evaluated Work
+            </a>
+
+            <a href="#" class="sidebar-link">
+                <span>04</span>
+                Reports
+            </a>
+
+        </div>
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">ACCOUNT</span>
+
+            <a href="#" class="sidebar-link">
+                <span>05</span>
+                Profile
+            </a>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+            <div class="student-mini">
+
+                <div class="student-avatar">F</div>
+
+                <div>
+                    <strong>Faculty</strong>
+                    <span>Evaluator Account</span>
+                </div>
+
+            </div>
+
+            <a href="login.html" class="sign-out">
+                Sign Out
+                <span>↗</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="evaluation-main">
+
+        <!-- TOP BAR -->
+
+        <div class="evaluation-topbar">
+
+            <div class="evaluation-breadcrumb">
+                VERITEXT / FACULTY / <span>EVALUATION</span>
+            </div>
+
+            <a href="faculty-dashboard.html" class="back-dashboard">
+                ← BACK TO DASHBOARD
+            </a>
+
+        </div>
+
+
+        <!-- HEADER -->
+
+        <section class="evaluation-header evaluation-reveal">
+
+            <div>
+
+                <div class="evaluation-label">
+                    Assignment Evaluation
+                </div>
+
+                <h1>
+                    Review student<br>
+                    submission.
+                </h1>
+
+                <p>
+                    Inspect the submitted work, run the plagiarism analysis,
+                    evaluate the assignment, and publish the final report.
+                </p>
+
+            </div>
+
+            <div class="submission-status">
+                PENDING EVALUATION
+            </div>
+
+        </section>
+
+
+        <!-- ASSIGNMENT INFO -->
+
+        <section class="assignment-info-card evaluation-reveal">
+
+    <div>
+
+        <h2 id="assignmentTitle">
+            Loading assignment...
+        </h2>
+
+        <div class="assignment-subtitle" id="assignmentId">
+            Loading submission...
+        </div>
+
+        <div class="assignment-meta">
+
+            <div class="assignment-meta-item">
+                <span>Subject</span>
+                <span id="assignmentSubject">
+                    —
+                </span>
+            </div>
+
+            <div class="assignment-meta-item">
+                <span>Submitted</span>
+                <span id="assignmentDate">
+                    —
+                </span>
+            </div>
+
+            <div class="assignment-meta-item">
+                <span>File</span>
+                <span id="assignmentFile">
+                    —
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="student-chip">
+
+        <div class="student-chip-avatar">
+            S
+        </div>
+
+        <div>
+            <strong id="studentName">
+                Loading...
+            </strong>
+
+            <span id="studentId">
+                —
+            </span>
+        </div>
+
+    </div>
+
+</section>
+
+
+        <!-- MAIN EVALUATION GRID -->
+
+        <section class="evaluation-grid evaluation-reveal">
+
+
+            <!-- =================================================
+                 LEFT COLUMN
+            ================================================== -->
+
+            <div>
+
+
+                <!-- SUBMISSION PREVIEW -->
+
+                <div class="evaluation-card">
+
+                    <div class="evaluation-card-heading">
+
+                        <span>01 / Submitted Work</span>
+
+                        <h2>
+                            Assignment preview
+                        </h2>
+
+                    </div>
+
+                    <div class="evaluation-card-body">
+
+<div class="document-preview" id="documentPreview">
+
+    <div class="document-top">
+
+        <div class="document-file">
+
+            <div class="file-icon" id="previewFileType">
+                FILE
+            </div>
+
+            <div>
+
+                <strong id="previewFileName">
+                    Loading file...
+                </strong>
+
+                <span id="previewFileInfo">
+                    STUDENT SUBMISSION
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="document-page" id="documentPage">
+            LOADING...
+        </div>
+
+    </div>
+
+
+    <div
+        id="documentViewer"
+        style="
+            width:100%;
+            min-height:520px;
+            margin-top:20px;
+            border-radius:12px;
+            overflow:hidden;
+            background:rgba(255,255,255,0.018);
+        "
+    >
+
+        <div
+            style="
+                min-height:520px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                color:#687571;
+                font-family:'DM Mono',monospace;
+                font-size:10px;
+                letter-spacing:1px;
+            "
+        >
+            LOADING ASSIGNMENT...
+        </div>
+
+    </div>
+
+
+    <div class="preview-note">
+
+        ACTUAL SUBMITTED FILE · LOADED FROM VERITEXT DATABASE.
+
+    </div>
+
+</div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MATCHING PASSAGES -->
+
+                <div class="evaluation-card" style="margin-top: 24px;">
+
+                    <div class="evaluation-card-heading">
+
+                        <span>03 / Similarity Evidence</span>
+
+                        <h2>
+                            Matching passages
+                        </h2>
+
+                    </div>
+
+                    <div class="evaluation-card-body">
+                 <div class="matching-list" id="matchingList">
+
+    <div class="matching-item">
+
+        <div class="matching-item-top">
+            <span>
+                NO ANALYSIS YET
+            </span>
+
+            <span class="matching-percent">
+                —
+            </span>
+        </div>
+
+        <div class="matching-text">
+            Run the plagiarism analysis to display
+            actual matching passages from the indexed submissions.
+        </div>
+
+    </div>
+
+</div>
+
+
+            <!-- =================================================
+                 RIGHT COLUMN
+            ================================================== -->
+
+            <div>
+
+
+                <!-- ANALYSIS -->
+
+                <div class="evaluation-card">
+
+                    <div class="evaluation-card-heading">
+
+                        <span>02 / DSA Engine</span>
+
+                        <h2>
+                            Plagiarism analysis
+                        </h2>
+
+                    </div>
+
+                    <div class="evaluation-card-body">
+
+
+                        <div class="analysis-control">
+
+                            <div>
+
+                                <strong>
+                                    Run analysis on submission
+                                </strong>
+
+                                <span>
+                                    Uses the configured DSA pipeline
+                                </span>
+
+                            </div>
+
+                            <button
+                                class="run-analysis"
+                                id="runAnalysis"
+                            >
+                                RUN ANALYSIS →
+                            </button>
+
+                        </div>
+
+
+                        <!-- PIPELINE -->
+
+                        <div class="analysis-pipeline">
+
+                            <div class="analysis-stage active">
+
+                                <div class="stage-number">
+                                    01
+                                </div>
+
+                                <div class="stage-info">
+                                    <strong>Preprocessing</strong>
+                                    <span>Normalize submission text</span>
+                                </div>
+
+                                <div class="stage-status">
+                                    READY
+                                </div>
+
+                            </div>
+
+
+                            <div class="analysis-stage active">
+
+                                <div class="stage-number">
+                                    02
+                                </div>
+
+                                <div class="stage-info">
+                                    <strong>Rabin-Karp</strong>
+                                    <span>Generate text fingerprints</span>
+                                </div>
+
+                                <div class="stage-status">
+                                    READY
+                                </div>
+
+                            </div>
+
+
+                            <div class="analysis-stage active">
+
+                                <div class="stage-number">
+                                    03
+                                </div>
+
+                                <div class="stage-info">
+                                    <strong>Winnowing</strong>
+                                    <span>Select representative fingerprints</span>
+                                </div>
+
+                                <div class="stage-status">
+                                    READY
+                                </div>
+
+                            </div>
+
+
+                            <div class="analysis-stage active">
+
+                                <div class="stage-number">
+                                    04
+                                </div>
+
+                                <div class="stage-info">
+                                    <strong>Candidate Matching</strong>
+                                    <span>Find potentially similar submissions</span>
+                                </div>
+
+                                <div class="stage-status">
+                                    READY
+                                </div>
+
+                            </div>
+
+
+                            <div class="analysis-stage active">
+
+                                <div class="stage-number">
+                                    05
+                                </div>
+
+                                <div class="stage-info">
+                                    <strong>Suffix Array</strong>
+                                    <span>Index submission text</span>
+                                </div>
+
+                                <div class="stage-status">
+                                    READY
+                                </div>
+
+                            </div>
+
+
+                            <div class="analysis-stage active">
+
+                                <div class="stage-number">
+                                    06
+                                </div>
+
+                                <div class="stage-info">
+                                    <strong>LCP Analysis</strong>
+                                    <span>Extract common passages</span>
+                                </div>
+
+                                <div class="stage-status">
+                                    READY
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RESULT -->
+
+                        <div class="analysis-result">
+
+    <div class="similarity-circle" id="similarityCircle">
+
+        <div class="similarity-score">
+
+            <strong id="similarityScore">
+                0.00%
+            </strong>
+
+            <span>
+                SIMILARITY
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="result-info">
+
+        <h3>
+            Analysis result
+        </h3>
+
+        <p id="analysisSummary">
+            Run the plagiarism analysis to generate
+            similarity evidence for this submission.
+        </p>
+
+        <div class="result-stats">
+
+            <div class="result-stat">
+
+                <strong id="fingerprintCount">
+                    —
+                </strong>
+
+                <span>
+                    FINGERPRINTS
+                </span>
+
+            </div>
+
+
+            <div class="result-stat">
+
+                <strong id="winnowedCount">
+                    —
+                </strong>
+
+                <span>
+                    WINNOWED
+                </span>
+
+            </div>
+
+
+            <div class="result-stat">
+
+                <strong id="commonFingerprintCount">
+                    —
+                </strong>
+
+                <span>
+                    COMMON
+                </span>
+
+            </div>
+
+        </div>
+
+        <div
+            id="matchedSubmission"
+            style="
+                margin-top:12px;
+                color:#687571;
+                font-family:'DM Mono',monospace;
+                font-size:8px;
+                line-height:1.5;
+            "
+        >
+            NO MATCH ANALYSIS YET
+        </div>
+
+    </div>
+
+</div>
+
+                <!-- FACULTY EVALUATION -->
+
+                <div class="evaluation-card" style="margin-top: 24px;">
+
+                    <div class="evaluation-card-heading">
+
+                        <span>04 / Faculty Review</span>
+
+                        <h2>
+                            Evaluation details
+                        </h2>
+
+                    </div>
+
+                    <div class="evaluation-card-body">
+
+                        <div class="evaluation-form">
+
+
+                            <div class="form-field">
+
+                                <label for="marks">
+                                    Marks awarded
+                                </label>
+
+                                <div class="marks-row">
+
+                                    <input
+                                        type="number"
+                                        id="marks"
+                                        class="marks-input"
+                                        min="0"
+                                        max="100"
+                                        value="86"
+                                    >
+
+                                    <span class="marks-total">
+                                        / 100
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-field">
+
+                                <label>
+                                    Overall assessment
+                                </label>
+
+                                <div class="evaluation-options">
+
+                                    <div
+                                        class="evaluation-option selected"
+                                        data-value="Excellent"
+                                    >
+                                        Excellent
+                                    </div>
+
+                                    <div
+                                        class="evaluation-option"
+                                        data-value="Very Good"
+                                    >
+                                        Very Good
+                                    </div>
+
+                                    <div
+                                        class="evaluation-option"
+                                        data-value="Good"
+                                    >
+                                        Good
+                                    </div>
+
+                                    <div
+                                        class="evaluation-option"
+                                        data-value="Needs Improvement"
+                                    >
+                                        Needs Improvement
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-field">
+
+                                <label for="feedback">
+                                    Faculty feedback
+                                </label>
+
+                                <textarea
+                                    id="feedback"
+                                    class="feedback-textarea"
+                                    placeholder="Enter feedback for the student..."
+                                >Good understanding of the core data structures and algorithms. The implementation demonstrates a clear understanding of the concepts discussed in class. Improve the explanation of time complexity and include a more detailed discussion of edge cases.</textarea>
+
+                            </div>
+
+
+                            <div class="publish-area">
+
+                                <div class="publish-note">
+                                    Publishing the evaluation will make the
+                                    final report available to the student.
+                                    The released report will contain the
+                                    evaluation and approved similarity results.
+                                </div>
+
+                                <button
+                                    class="publish-button"
+                                    id="publishEvaluation"
+                                >
+                                    PUBLISH EVALUATION →
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+
+function escapeHtml(value) {
+    const div = document.createElement("div");
+    div.textContent = value ?? "";
+    return div.innerHTML;
+}
+
+
+/* =====================================================
+   ASSIGNMENT PREVIEW
+===================================================== */
+
+function loadAssignmentPreview(submission) {
+
+    const fileName =
+        submission.filename || "Assignment";
+
+    const fileExtension =
+        fileName.split(".").pop().toLowerCase();
+
+    const fileType =
+        document.getElementById("previewFileType");
+
+    const previewFileName =
+        document.getElementById("previewFileName");
+
+    const previewFileInfo =
+        document.getElementById("previewFileInfo");
+
+    const documentPage =
+        document.getElementById("documentPage");
+
+    const viewer =
+        document.getElementById("documentViewer");
+
+
+    if (!viewer) {
+        return;
+    }
+
+
+    if (previewFileName) {
+        previewFileName.textContent =
+            fileName;
+    }
+
+
+    if (previewFileInfo) {
+        previewFileInfo.textContent =
+            "STUDENT SUBMISSION · " +
+            fileExtension.toUpperCase();
+    }
+
+
+    if (fileType) {
+        fileType.textContent =
+            fileExtension.toUpperCase();
+    }
+
+
+    const fileUrl =
+        `http://127.0.0.1:8000/api/submissions/${submission.id}/file`;
+
+
+    /* -----------------------------
+       PDF
+    ----------------------------- */
+
+    if (fileExtension === "pdf") {
+
+        if (documentPage) {
+            documentPage.textContent =
+                "FULL DOCUMENT";
+        }
+
+
+        viewer.innerHTML = `
+            <iframe
+                src="${fileUrl}"
+                title="Submitted Assignment"
+                style="
+                    width:100%;
+                    height:520px;
+                    border:none;
+                    display:block;
+                    background:#ffffff;
+                "
+            ></iframe>
+        `;
+
+        return;
+    }
+
+
+    /* -----------------------------
+       TXT
+    ----------------------------- */
+
+    if (fileExtension === "txt") {
+
+        if (documentPage) {
+            documentPage.textContent =
+                "TEXT DOCUMENT";
+        }
+
+
+        viewer.innerHTML = `
+            <div style="
+                min-height:520px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                color:#687571;
+                font-family:'DM Mono',monospace;
+                font-size:10px;
+            ">
+                LOADING DOCUMENT...
+            </div>
+        `;
+
+
+        fetch(
+            `http://127.0.0.1:8000/api/submissions/${submission.id}/content`
+        )
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error(
+                        `File request failed: ${response.status}`
+                    );
+                }
+
+                return response.json();
+
+            })
+            .then(data => {
+
+                if (!data.success) {
+                    throw new Error(
+                        data.message ||
+                        "Unable to load document"
+                    );
+                }
+
+
+                const text =
+                    data.content;
+
+
+                viewer.innerHTML = `
+                    <pre
+                        style="
+                            margin:0;
+                            padding:28px;
+                            min-height:520px;
+                            color:#aebbb6;
+                            font-family:'DM Mono',monospace;
+                            font-size:11px;
+                            line-height:1.8;
+                            white-space:pre-wrap;
+                            overflow:auto;
+                            box-sizing:border-box;
+                        "
+                    >${escapeHtml(text)}</pre>
+                `;
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "Unable to preview text file:",
+                    error
+                );
+
+
+                viewer.innerHTML = `
+                    <div style="
+                        min-height:520px;
+                        display:flex;
+                        flex-direction:column;
+                        align-items:center;
+                        justify-content:center;
+                        gap:10px;
+                        color:#f0c674;
+                        font-family:'DM Mono',monospace;
+                        font-size:10px;
+                        text-align:center;
+                        padding:30px;
+                        box-sizing:border-box;
+                    ">
+
+                        <div>
+                            UNABLE TO LOAD DOCUMENT PREVIEW
+                        </div>
+
+                        <div style="
+                            color:#687571;
+                            font-size:9px;
+                        ">
+                            ${escapeHtml(error.message)}
+                        </div>
+
+                    </div>
+                `;
+
+            });
+
+
+        return;
+    }
+
+
+    /* -----------------------------
+       DOCX
+    ----------------------------- */
+
+    if (fileExtension === "docx") {
+
+        if (documentPage) {
+            documentPage.textContent =
+                "WORD DOCUMENT";
+        }
+
+
+        viewer.innerHTML = `
+            <div style="
+                min-height:520px;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+                gap:16px;
+                text-align:center;
+            ">
+
+                <div style="
+                    color:#8df5c2;
+                    font-family:'DM Mono',monospace;
+                    font-size:11px;
+                ">
+                    DOCX FILE READY
+                </div>
+
+                <div style="
+                    color:#687571;
+                    font-size:12px;
+                ">
+                    ${escapeHtml(fileName)}
+                </div>
+
+                <a
+                    href="${fileUrl}"
+                    target="_blank"
+                    style="
+                        padding:11px 16px;
+                        border:1px solid rgba(141,245,194,0.2);
+                        border-radius:8px;
+                        color:#8df5c2;
+                        text-decoration:none;
+                        font-family:'DM Mono',monospace;
+                        font-size:9px;
+                        letter-spacing:1px;
+                    "
+                >
+                    OPEN DOCUMENT →
+                </a>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    /* -----------------------------
+       Unsupported
+    ----------------------------- */
+
+    if (documentPage) {
+        documentPage.textContent =
+            "FILE";
+    }
+
+
+    viewer.innerHTML = `
+        <div style="
+            min-height:520px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#687571;
+            font-family:'DM Mono',monospace;
+            font-size:10px;
+        ">
+            PREVIEW NOT AVAILABLE FOR THIS FILE TYPE.
+        </div>
+    `;
+}
+
+
+/* =====================================================
+   LOAD SUBMISSION
+===================================================== */
+
+async function loadSubmission(submissionId) {
+
+    try {
+
+        const response =
+            await fetch(
+                `http://127.0.0.1:8000/api/submissions/${submissionId}`
+            );
+
+
+        if (!response.ok) {
+            throw new Error(
+                "Failed to load submission"
+            );
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+            throw new Error(
+                data.message ||
+                "Submission not found"
+            );
+        }
+
+
+        const submission =
+            data.submission;
+
+
+        const assignmentTitle =
+            document.getElementById(
+                "assignmentTitle"
+            );
+
+        if (assignmentTitle) {
+            assignmentTitle.textContent =
+                submission.assignment_title;
+        }
+
+
+        const assignmentId =
+            document.getElementById(
+                "assignmentId"
+            );
+
+        if (assignmentId) {
+            assignmentId.textContent =
+                "Submission ID: S-" +
+                String(submission.id)
+                    .padStart(4, "0");
+        }
+
+
+        const assignmentSubject =
+            document.getElementById(
+                "assignmentSubject"
+            );
+
+        if (assignmentSubject) {
+            assignmentSubject.textContent =
+                submission.subject;
+        }
+
+
+        const assignmentFile =
+            document.getElementById(
+                "assignmentFile"
+            );
+
+        if (assignmentFile) {
+            assignmentFile.textContent =
+                submission.filename;
+        }
+
+
+        const studentName =
+            document.getElementById(
+                "studentName"
+            );
+
+        if (studentName) {
+            studentName.textContent =
+                submission.student_name;
+        }
+
+
+        const studentId =
+            document.getElementById(
+                "studentId"
+            );
+
+        if (studentId) {
+            studentId.textContent =
+                "S-" +
+                String(submission.id)
+                    .padStart(4, "0");
+        }
+
+
+        const date =
+            submission.submitted_at
+                ? new Date(
+                    submission.submitted_at
+                ).toLocaleDateString(
+                    "en-US",
+                    {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric"
+                    }
+                )
+                : "—";
+
+
+        const assignmentDate =
+            document.getElementById(
+                "assignmentDate"
+            );
+
+        if (assignmentDate) {
+            assignmentDate.textContent =
+                date;
+        }
+
+
+        loadAssignmentPreview(
+            submission
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load submission:",
+            error
+        );
+
+        alert(
+            "Unable to load submission: " +
+            error.message
+        );
+    }
+}
+
+
+/* =====================================================
+   RUN REAL PLAGIARISM ANALYSIS
+===================================================== */
+
+async function runPlagiarismAnalysis(
+    submissionId
+) {
+
+    const response =
+        await fetch(
+            `http://127.0.0.1:8000/api/submissions/${submissionId}/analyze`,
+            {
+                method: "POST"
+            }
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Plagiarism analysis request failed."
+        );
+    }
+
+
+    const result =
+        await response.json();
+
+
+    if (!result.success) {
+
+        throw new Error(
+            result.message ||
+            "Plagiarism analysis failed."
+        );
+    }
+
+
+    console.log(
+        "REAL ANALYSIS RESULT:",
+        result
+    );
+
+
+    return result;
+}
+
+
+/* =====================================================
+   UPDATE ANALYSIS UI
+===================================================== */
+
+function displayAnalysisResult(
+    result
+) {
+
+    const similarity =
+        Number(
+            result.similarity_percentage
+        ) || 0;
+
+
+    /* -----------------------------
+       Similarity percentage
+    ----------------------------- */
+
+    const similarityScore =
+        document.getElementById(
+            "similarityScore"
+        );
+
+    if (similarityScore) {
+
+        similarityScore.textContent =
+            similarity.toFixed(2) + "%";
+    }
+
+
+    /* -----------------------------
+       Similarity circle
+    ----------------------------- */
+
+    const circle =
+        document.getElementById(
+            "similarityCircle"
+        ) ||
+        document.querySelector(
+            ".similarity-circle"
+        );
+
+
+    if (circle) {
+
+        const degrees =
+            Math.min(
+                Math.max(
+                    similarity,
+                    0
+                ),
+                100
+            ) * 3.6;
+
+
+        circle.style.background =
+            `conic-gradient(
+                #8df5c2 0deg ${degrees}deg,
+                rgba(255,255,255,0.06)
+                ${degrees}deg 360deg
+            )`;
+    }
+
+
+    /* -----------------------------
+       Matched submission
+    ----------------------------- */
+
+    const matchedSubmission =
+        result.matched_submission;
+
+
+    const matchedElement =
+        document.getElementById(
+            "matchedSubmission"
+        );
+
+
+    if (matchedElement) {
+
+        if (matchedSubmission) {
+
+            matchedElement.textContent =
+                `${matchedSubmission.assignment_title} · ` +
+                `${matchedSubmission.student_name}`;
+
+        } else {
+
+            matchedElement.textContent =
+                "No comparable submission found";
+        }
+    }
+
+
+    /* -----------------------------
+       Analysis summary
+    ----------------------------- */
+
+    const summaryElement =
+        document.getElementById(
+            "analysisSummary"
+        );
+
+
+    if (summaryElement) {
+
+        if (matchedSubmission) {
+
+            summaryElement.textContent =
+                `The submission shows ` +
+                `${similarity.toFixed(2)}% similarity ` +
+                `with ` +
+                `${matchedSubmission.assignment_title} ` +
+                `submitted by ` +
+                `${matchedSubmission.student_name}.`;
+
+        } else {
+
+            summaryElement.textContent =
+                "No comparable submission was found in the indexed corpus.";
+        }
+    }
+
+
+    /* -----------------------------
+       Fingerprints
+    ----------------------------- */
+
+    const fingerprintElement =
+        document.getElementById(
+            "fingerprintCount"
+        );
+
+    if (fingerprintElement) {
+
+        fingerprintElement.textContent =
+            result.fingerprints_1 ?? 0;
+    }
+
+
+    /* -----------------------------
+       Winnowed fingerprints
+    ----------------------------- */
+
+    const winnowedElement =
+        document.getElementById(
+            "winnowedCount"
+        );
+
+    if (winnowedElement) {
+
+        winnowedElement.textContent =
+            result.winnowed_1 ?? 0;
+    }
+
+
+    /* -----------------------------
+       Common fingerprints
+    ----------------------------- */
+
+    const commonElement =
+        document.getElementById(
+            "commonFingerprintCount"
+        );
+
+    if (commonElement) {
+
+        commonElement.textContent =
+            result.common_fingerprints ?? 0;
+    }
+
+
+    /* -----------------------------
+       Matching passages
+    ----------------------------- */
+
+    const passages =
+        Array.isArray(
+            result.common_passages
+        )
+            ? result.common_passages
+            : [];
+
+
+    console.log(
+        "REAL MATCHING PASSAGES:",
+        passages
+    );
+
+
+    const matchingList =
+        document.getElementById(
+            "matchingList"
+        );
+
+
+    if (!matchingList) {
+        return;
+    }
+
+
+    if (passages.length === 0) {
+
+        matchingList.innerHTML = `
+            <div class="matching-item">
+
+                <div class="matching-item-top">
+
+                    <span>
+                        NO COMMON PASSAGES
+                    </span>
+
+                    <span class="matching-percent">
+                        0 MATCHES
+                    </span>
+
+                </div>
+
+                <div class="matching-text">
+                    No sufficiently long common passages
+                    were detected between the submissions.
+                </div>
+
+            </div>
+        `;
+
+
+        return;
+    }
+
+
+    matchingList.innerHTML = "";
+
+
+    passages.forEach(
+        (passage, index) => {
+
+            const passageText =
+    typeof passage === "string"
+        ? passage
+        : (
+            passage.submission_1_passage ||
+            passage.submission_2_passage ||
+            passage.text ||
+            passage.passage ||
+            passage.content ||
+            ""
+        );
+
+
+            const passageLength =
+    typeof passage === "object" && passage.length
+        ? passage.length
+        : passageText
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean)
+            .length;
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "matching-item";
+
+
+            item.innerHTML = `
+                <div class="matching-item-top">
+
+                    <span>
+                        MATCH
+                        ${String(index + 1)
+                            .padStart(2, "0")}
+                        · COMMON PASSAGE
+                    </span>
+
+                    <span class="matching-percent">
+                        ${passageLength} WORDS
+                    </span>
+
+                </div>
+
+                <div class="matching-text">
+                    ${escapeHtml(
+                        passageText
+                    )}
+                </div>
+            `;
+
+
+            matchingList.appendChild(
+                item
+            );
+        }
+    );
+}
+
+
+/* =====================================================
+   PAGE INITIALIZATION
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        let analyzedCommonPassages = [];
+
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const submissionId =
+            params.get(
+                "submission_id"
+            );
+        const facultyName = "Faculty";
+
+        console.log(
+            "CURRENT URL:",
+            window.location.href
+        );
+
+
+        console.log(
+            "SUBMISSION ID:",
+            submissionId
+        );
+
+
+        if (!submissionId) {
+
+            console.error(
+                "No submission ID found in URL."
+            );
+
+            alert(
+                "No submission selected."
+            );
+
+            return;
+        }
+
+
+        /* ==========================================
+           LOAD SUBMISSION
+        ========================================== */
+
+        loadSubmission(
+            submissionId
+        );
+
+
+        /* ==========================================
+           RUN ANALYSIS BUTTON
+        ========================================== */
+
+        const runButton =
+            document.getElementById(
+                "runAnalysis"
+            );
+
+
+        if (runButton) {
+
+            runButton.addEventListener(
+                "click",
+                async () => {
+
+                    runButton.disabled =
+                        true;
+
+                    runButton.classList.add(
+                        "running"
+                    );
+
+                    runButton.textContent =
+                        "ANALYZING...";
+
+
+                    try {
+
+                        const result =
+                            await runPlagiarismAnalysis(
+                                submissionId
+                            );
+
+
+                        analyzedCommonPassages =
+                            Array.isArray(
+                                result.common_passages
+                            )
+                                ? result.common_passages
+                                : [];
+
+
+                        displayAnalysisResult(
+                            result
+                        );
+
+
+                        runButton.textContent =
+                            "ANALYSIS COMPLETE ✓";
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Plagiarism analysis failed:",
+                            error
+                        );
+
+
+                        alert(
+                            "Unable to run plagiarism analysis: " +
+                            error.message
+                        );
+
+
+                        runButton.textContent =
+                            "RUN ANALYSIS →";
+
+
+                    } finally {
+
+                        runButton.disabled =
+                            false;
+                    }
+                }
+            );
+        }
+
+
+        /* ==========================================
+           EVALUATION OPTIONS
+        ========================================== */
+
+        const options =
+            document.querySelectorAll(
+                ".evaluation-option"
+            );
+
+
+        options.forEach(
+            option => {
+
+                option.addEventListener(
+                    "click",
+                    () => {
+
+                        options.forEach(
+                            item => {
+
+                                item.classList.remove(
+                                    "selected"
+                                );
+
+                            }
+                        );
+
+
+                        option.classList.add(
+                            "selected"
+                        );
+                    }
+                );
+
+            }
+        );
+
+
+        /* ==========================================
+           PUBLISH EVALUATION
+        ========================================== */
+
+        const publishButton =
+            document.getElementById(
+                "publishEvaluation"
+            );
+
+
+        if (publishButton) {
+
+            publishButton.addEventListener(
+                "click",
+                async () => {
+
+                    const marks =
+                        document
+                            .getElementById(
+                                "marks"
+                            )
+                            .value;
+
+
+                    const feedback =
+                        document
+                            .getElementById(
+                                "feedback"
+                            )
+                            .value
+                            .trim();
+
+
+                    if (!marks) {
+
+                        alert(
+                            "Please enter marks."
+                        );
+
+                        return;
+                    }
+
+
+                    if (!feedback) {
+
+                        alert(
+                            "Please enter faculty feedback."
+                        );
+
+                        return;
+                    }
+
+
+                    publishButton.disabled =
+                        true;
+
+
+                    publishButton.textContent =
+                        "ANALYSING & PUBLISHING...";
+
+
+                    try {
+
+                        /* ==================================
+                           ALWAYS RUN FRESH ANALYSIS
+                        ================================== */
+
+                        const analysisResult =
+                            await runPlagiarismAnalysis(
+                                submissionId
+                            );
+
+
+                        const similarityPercentage =
+                            Number(
+                                analysisResult
+                                    .similarity_percentage
+                            ) || 0;
+
+
+                      const commonPassages =
+    Array.isArray(analysisResult.common_passages)
+        ? analysisResult.common_passages
+        : [];
+console.log("PASSAGES BEFORE SAVING:", commonPassages);
+console.log("PASSAGE COUNT:", commonPassages.length);
+
+console.log(
+    "PASSAGES BEFORE SAVING:",
+    commonPassages
+);
+
+if (commonPassages.length === 0) {
+    console.warn(
+        "No matching passages were returned by plagiarism analysis."
+    );
+}
+
+console.log(
+    "FINAL MATCHING PASSAGES:",
+    commonPassages
+);
+
+console.log(
+    "SAVING COMMON PASSAGES:",
+    JSON.stringify(commonPassages)
+);
+
+console.log("FULL ANALYSIS RESULT:", analysisResult);
+console.log("COMMON PASSAGES FROM ANALYSIS:", commonPassages);
+
+
+                        analyzedCommonPassages =
+                            commonPassages;
+
+
+                        console.log(
+                            "FINAL SIMILARITY:",
+                            similarityPercentage
+                        );
+
+
+                        console.log(
+                            "FINAL MATCHING PASSAGES:",
+                            commonPassages
+                        );
+                        console.log(
+    "SAVING COMMON PASSAGES:",
+    JSON.stringify(commonPassages)
+);
+
+                        /* ==================================
+                           SAVE EVALUATION
+                        ================================== */
+
+                        const response =
+                            await fetch(
+                                "http://127.0.0.1:8000/api/evaluations",
+                                {
+                                    method: "POST",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json"
+                                    },
+
+                                    body: JSON.stringify({
+    submission_id: submissionId,
+
+    marks: marks,
+
+    similarity_percentage: similarityPercentage,
+
+    common_passages: JSON.stringify(commonPassages),
+
+    feedback: feedback,
+
+    faculty_name: facultyName,
+
+    fingerprints_1: analysisResult.fingerprints_1 || 0,
+
+    fingerprints_2: analysisResult.fingerprints_2 || 0,
+
+    winnowed_1: analysisResult.winnowed_1 || 0,
+
+    winnowed_2: analysisResult.winnowed_2 || 0,
+
+    common_fingerprints:
+        analysisResult.common_fingerprints || 0
+})
+});
+
+                        const result =
+                            await response.json();
+
+
+                        console.log(
+                            "EVALUATION RESPONSE:",
+                            result
+                        );
+
+
+                        if (
+                            !response.ok ||
+                            !result.success
+                        ) {
+
+                            throw new Error(
+                                result.message ||
+                                "Failed to publish evaluation."
+                            );
+                        }
+
+
+                        /* ==================================
+                           SUCCESS
+                        ================================== */
+
+                        publishButton.textContent =
+                            "EVALUATION PUBLISHED ✓";
+
+
+                        publishButton.style.background =
+                            "rgba(141, 245, 194, 0.18)";
+
+
+                        publishButton.style.color =
+                            "#8df5c2";
+
+
+                    publishButton.textContent =
+    "EVALUATION PUBLISHED ✓";
+
+publishButton.style.background =
+    "rgba(141, 245, 194, 0.18)";
+
+publishButton.style.color =
+    "#8df5c2";
+
+window.location.href = "faculty-dashboard.html";
+
+                    } catch (error) {
+
+                        console.error(
+                            "Evaluation publishing failed:",
+                            error
+                        );
+
+
+                        alert(
+                            "Unable to publish evaluation: " +
+                            error.message
+                        );
+
+
+                        publishButton.disabled =
+                            false;
+
+
+                        publishButton.textContent =
+                            "PUBLISH EVALUATION →";
+                    }
+
+                }
+            );
+        }
+
+    }
+);
+
+</script>
+
+      
+ 
+</body>
+</html>

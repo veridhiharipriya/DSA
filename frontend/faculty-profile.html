@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Faculty Profile | VeriText</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           FACULTY PROFILE
+        ========================================= */
+
+        .profile-page {
+            min-height: 100vh;
+            margin-left: 245px;
+            padding: 42px 48px 70px;
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 30px;
+            margin-bottom: 36px;
+        }
+
+        .profile-breadcrumb {
+            font-family: "DM Mono", monospace;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            color: rgba(255,255,255,0.38);
+            margin-bottom: 15px;
+        }
+
+        .profile-breadcrumb span {
+            color: #8df5c2;
+        }
+
+        .profile-header h1 {
+            margin: 0;
+            font-size: clamp(30px, 4vw, 48px);
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
+        .profile-header p {
+            margin: 13px 0 0;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+        }
+
+        .profile-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 10px 14px;
+            border: 1px solid rgba(141,245,194,0.18);
+            border-radius: 999px;
+            background: rgba(141,245,194,0.05);
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            color: #8df5c2;
+        }
+
+        .profile-status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #8df5c2;
+            box-shadow: 0 0 12px rgba(141,245,194,0.7);
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 320px minmax(0, 1fr);
+            gap: 24px;
+            max-width: 1180px;
+        }
+
+        .profile-card,
+        .details-card,
+        .security-card,
+        .activity-card {
+            border: 1px solid rgba(255,255,255,0.08);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.018)
+                );
+            border-radius: 20px;
+            box-shadow: 0 18px 60px rgba(0,0,0,0.18);
+        }
+
+        /* LEFT PROFILE CARD */
+
+        .profile-card {
+            padding: 30px;
+            text-align: center;
+            height: fit-content;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(141,245,194,0.08);
+            filter: blur(45px);
+            top: -90px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .faculty-avatar-large {
+            width: 94px;
+            height: 94px;
+            border-radius: 50%;
+            margin: 4px auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(141,245,194,0.18),
+                    rgba(141,245,194,0.04)
+                );
+
+            border: 1px solid rgba(141,245,194,0.25);
+
+            color: #8df5c2;
+
+            font-family: "DM Mono", monospace;
+            font-size: 26px;
+
+            box-shadow:
+                0 0 0 8px rgba(141,245,194,0.025),
+                0 0 35px rgba(141,245,194,0.08);
+        }
+
+        .profile-card h2 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .profile-role {
+            margin: 8px 0 0;
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+        }
+
+        .profile-email {
+            margin: 14px 0 25px;
+            color: rgba(255,255,255,0.48);
+            font-size: 13px;
+            word-break: break-word;
+        }
+
+        .profile-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.07);
+            margin: 22px 0;
+        }
+
+        .profile-mini-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            color: rgba(255,255,255,0.55);
+            font-size: 12px;
+        }
+
+        .profile-mini-stat strong {
+            color: rgba(255,255,255,0.9);
+            font-family: "DM Mono", monospace;
+            font-size: 12px;
+        }
+
+        /* RIGHT CONTENT */
+
+        .profile-content {
+            display: grid;
+            gap: 24px;
+        }
+
+        .details-card {
+            padding: 28px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: 18px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-eyebrow {
+            font-family: "DM Mono", monospace;
+            color: #8df5c2;
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            margin-bottom: 7px;
+        }
+
+        .edit-label {
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            color: rgba(255,255,255,0.38);
+            letter-spacing: 0.1em;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .detail-item {
+            padding: 17px 18px;
+            border-radius: 13px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .detail-item span {
+            display: block;
+            margin-bottom: 7px;
+
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+
+            color: rgba(255,255,255,0.35);
+        }
+
+        .detail-item strong {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.86);
+        }
+
+        /* SECURITY + ACTIVITY */
+
+        .lower-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .security-card,
+        .activity-card {
+            padding: 26px;
+        }
+
+        .security-row,
+        .activity-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .security-row:last-child,
+        .activity-row:last-child {
+            border-bottom: none;
+        }
+
+        .security-info strong,
+        .activity-info strong {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .security-info span,
+        .activity-info span {
+            color: rgba(255,255,255,0.4);
+            font-size: 10px;
+        }
+
+        .verified-badge {
+            padding: 6px 9px;
+            border-radius: 999px;
+            background: rgba(141,245,194,0.07);
+            border: 1px solid rgba(141,245,194,0.14);
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.08em;
+        }
+
+        .activity-time {
+            color: rgba(255,255,255,0.32);
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            white-space: nowrap;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1050px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                max-width: 520px;
+            }
+
+            .lower-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .profile-page {
+                margin-left: 0;
+                padding: 30px 22px 60px;
+            }
+
+            .profile-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-page {
+                padding: 24px 16px 50px;
+            }
+
+            .details-card,
+            .security-card,
+            .activity-card,
+            .profile-card {
+                padding: 21px;
+            }
+
+            .profile-header h1 {
+                font-size: 32px;
+            }
+        }
+        /* =========================================
+   EDITABLE FACULTY PROFILE
+========================================= */
+
+.profile-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.profile-action-button,
+.profile-cancel-button {
+    border: 1px solid rgba(141,245,194,0.18);
+    background: rgba(141,245,194,0.06);
+    color: #8df5c2;
+    padding: 9px 13px;
+    border-radius: 9px;
+
+    font-family: "DM Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.profile-action-button:hover {
+    transform: translateY(-1px);
+    background: rgba(141,245,194,0.11);
+    border-color: rgba(141,245,194,0.35);
+}
+
+.save-profile-button {
+    background: rgba(141,245,194,0.12);
+}
+
+.profile-cancel-button {
+    color: rgba(255,255,255,0.55);
+    border-color: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03);
+}
+
+.profile-cancel-button:hover {
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.06);
+}
+
+.editable-field {
+    position: relative;
+}
+
+.profile-input {
+    display: none;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 10px 11px;
+
+    border: 1px solid rgba(141,245,194,0.22);
+    border-radius: 9px;
+
+    background: rgba(0,0,0,0.22);
+
+    color: rgba(255,255,255,0.92);
+
+    font-family: "Manrope", sans-serif;
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.profile-input:focus {
+    border-color: rgba(141,245,194,0.55);
+    background: rgba(141,245,194,0.035);
+    box-shadow: 0 0 0 3px rgba(141,245,194,0.06);
+}
+
+.editing .detail-value {
+    display: none;
+}
+
+.editing .profile-input {
+    display: block;
+}
+
+.editing .detail-item {
+    background: rgba(141,245,194,0.025);
+    border-color: rgba(141,245,194,0.12);
+}
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================
+         FACULTY SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-mark">V</div>
+
+            <div>
+                <div class="brand-name">VERITEXT</div>
+                <div class="brand-role">FACULTY PORTAL</div>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">FACULTY WORKSPACE</span>
+
+            <a href="faculty-dashboard.html" class="sidebar-link">
+                <span>01</span>
+                Dashboard
+            </a>
+
+            <a href="faculty-dashboard.html#submission-queue" class="sidebar-link">
+                <span>02</span>
+                Submission Queue
+            </a>
+
+            <a href="faculty-roster.html" class="sidebar-link">
+                <span>03</span>
+                Submission Tracking
+            </a>
+
+            <a href="faculty-evaluated.html" class="sidebar-link">
+                <span>04</span>
+                Evaluated Work
+            </a>
+
+            <a href="faculty-reports.html" class="sidebar-link">
+                <span>05</span>
+                Reports
+            </a>
+
+        </div>
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">ACCOUNT</span>
+
+            <a href="faculty-profile.html" class="sidebar-link active">
+                <span>06</span>
+                Profile
+            </a>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+<div class="student-mini">
+
+    <div class="student-avatar">FC</div>
+
+    <div>
+        <strong>Faculty Member</strong>
+        <span>VERITEXT</span>
+    </div>
+
+</div>
+            <a href="login.html" class="sign-out">
+                SIGN OUT
+                <span>↗</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================
+         PROFILE CONTENT
+    ========================================== -->
+
+    <main class="profile-page">
+
+        <header class="profile-header">
+
+            <div>
+
+                <div class="profile-breadcrumb">
+                    VERITEXT / FACULTY / <span>PROFILE</span>
+                </div>
+
+                <h1>Faculty Profile</h1>
+
+                <p>
+                    Manage your faculty account and review your VeriText activity.
+                </p>
+
+            </div>
+
+            <div class="profile-status">
+                <span class="profile-status-dot"></span>
+                ACCOUNT ACTIVE
+            </div>
+
+        </header>
+
+
+        <div class="profile-layout">
+
+            <!-- PROFILE CARD -->
+
+            <section class="profile-card">
+
+                <div class="faculty-avatar-large">
+                    FC
+                </div>
+
+                <h2>Faculty Member</h2>
+
+                <div class="profile-role">
+                    FACULTY / REVIEWER
+                </div>
+
+                <div class="profile-email">
+                    faculty@veritext.edu
+                </div>
+
+                <div class="profile-divider"></div>
+
+                <div class="profile-mini-stat">
+                    <span>Submissions reviewed</span>
+                    <strong>42</strong>
+                </div>
+
+                <div class="profile-mini-stat">
+                    <span>Evaluations completed</span>
+                    <strong>38</strong>
+                </div>
+
+                <div class="profile-mini-stat">
+                    <span>Reports generated</span>
+                    <strong>38</strong>
+                </div>
+
+                <div class="profile-mini-stat">
+                    <span>Account status</span>
+                    <strong>ACTIVE</strong>
+                </div>
+
+            </section>
+
+
+            <!-- RIGHT CONTENT -->
+
+            <div class="profile-content">
+
+                <!-- PERSONAL DETAILS -->
+
+                <section class="details-card">
+
+                    <div class="section-heading">
+
+                        <div>
+                            <div class="section-eyebrow">
+                                ACCOUNT INFORMATION
+                            </div>
+
+                            <h2>Faculty Details</h2>
+                        </div>
+
+                        <div class="profile-actions">
+
+    <span class="edit-label" id="profileModeLabel">
+        VERIFIED ACCOUNT
+    </span>
+
+    <button
+        type="button"
+        class="profile-action-button"
+        id="editProfileButton"
+    >
+        EDIT PROFILE
+    </button>
+
+    <button
+        type="button"
+        class="profile-action-button save-profile-button"
+        id="saveProfileButton"
+        style="display:none;"
+    >
+        SAVE CHANGES
+    </button>
+
+    <button
+        type="button"
+        class="profile-cancel-button"
+        id="cancelProfileButton"
+        style="display:none;"
+    >
+        CANCEL
+    </button>
+
+</div>
+
+                    </div>
+
+
+                <div class="details-grid">
+
+    <div class="detail-item editable-field">
+        <span>FULL NAME</span>
+        <strong class="detail-value" id="facultyNameDisplay">
+            Faculty Member
+        </strong>
+
+        <input
+            type="text"
+            id="facultyNameInput"
+            value="Faculty Member"
+            class="profile-input"
+        >
+    </div>
+
+
+    <div class="detail-item editable-field">
+        <span>FACULTY ID</span>
+        <strong class="detail-value" id="facultyIdDisplay">
+            FAC-2026-001
+        </strong>
+
+        <input
+            type="text"
+            id="facultyIdInput"
+            value="FAC-2026-001"
+            class="profile-input"
+        >
+    </div>
+
+
+    <div class="detail-item editable-field">
+        <span>EMAIL ADDRESS</span>
+        <strong class="detail-value" id="facultyEmailDisplay">
+            faculty@veritext.edu
+        </strong>
+
+        <input
+            type="email"
+            id="facultyEmailInput"
+            value="faculty@veritext.edu"
+            class="profile-input"
+        >
+    </div>
+
+
+    <div class="detail-item editable-field">
+        <span>DEPARTMENT</span>
+        <strong class="detail-value" id="facultyDepartmentDisplay">
+            Computer Science & Engineering
+        </strong>
+
+        <input
+            type="text"
+            id="facultyDepartmentInput"
+            value="Computer Science & Engineering"
+            class="profile-input"
+        >
+    </div>
+
+
+    <div class="detail-item editable-field">
+        <span>ROLE</span>
+        <strong class="detail-value" id="facultyRoleDisplay">
+            Faculty Reviewer
+        </strong>
+
+        <input
+            type="text"
+            id="facultyRoleInput"
+            value="Faculty Reviewer"
+            class="profile-input"
+        >
+    </div>
+
+
+    <div class="detail-item editable-field">
+        <span>INSTITUTION</span>
+        <strong class="detail-value" id="facultyInstitutionDisplay">
+            VeriText Academic System
+        </strong>
+
+        <input
+            type="text"
+            id="facultyInstitutionInput"
+            value="VeriText Academic System"
+            class="profile-input"
+        >
+    </div>
+
+</div>
+                </section>
+
+
+                <!-- LOWER CARDS -->
+
+                <div class="lower-grid">
+
+                    <!-- SECURITY -->
+
+                    <section class="security-card">
+
+                        <div class="section-heading">
+
+                            <div>
+                                <div class="section-eyebrow">
+                                    ACCOUNT SECURITY
+                                </div>
+
+                                <h2>Security</h2>
+                            </div>
+
+                        </div>
+
+
+                        <div class="security-row">
+
+                            <div class="security-info">
+                                <strong>Email verification</strong>
+                                <span>Faculty email is verified</span>
+                            </div>
+
+                            <span class="verified-badge">
+                                VERIFIED
+                            </span>
+
+                        </div>
+
+
+                        <div class="security-row">
+
+                            <div class="security-info">
+                                <strong>Password</strong>
+                                <span>Last updated recently</span>
+                            </div>
+
+                            <span class="verified-badge">
+                                PROTECTED
+                            </span>
+
+                        </div>
+
+
+                        <div class="security-row">
+
+                            <div class="security-info">
+                                <strong>Portal access</strong>
+                                <span>Faculty workspace enabled</span>
+                            </div>
+
+                            <span class="verified-badge">
+                                ACTIVE
+                            </span>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ACTIVITY -->
+
+                    <section class="activity-card">
+
+                        <div class="section-heading">
+
+                            <div>
+                                <div class="section-eyebrow">
+                                    RECENT ACTIVITY
+                                </div>
+
+                                <h2>Account Activity</h2>
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-row">
+
+                            <div class="activity-info">
+                                <strong>Evaluation completed</strong>
+                                <span>Data Structures Assignment</span>
+                            </div>
+
+                            <span class="activity-time">
+                                TODAY
+                            </span>
+
+                        </div>
+
+
+                        <div class="activity-row">
+
+                            <div class="activity-info">
+                                <strong>Report generated</strong>
+                                <span>Submission DSA-2026-014</span>
+                            </div>
+
+                            <span class="activity-time">
+                                1D AGO
+                            </span>
+
+                        </div>
+
+
+                        <div class="activity-row">
+
+                            <div class="activity-info">
+                                <strong>Portal accessed</strong>
+                                <span>Faculty dashboard</span>
+                            </div>
+
+                            <span class="activity-time">
+                                2D AGO
+                            </span>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================================
+       PROFILE ELEMENTS
+    ========================================= */
+
+    const editButton = document.getElementById("editProfileButton");
+    const saveButton = document.getElementById("saveProfileButton");
+    const cancelButton = document.getElementById("cancelProfileButton");
+    const modeLabel = document.getElementById("profileModeLabel");
+
+    const detailsCard = document.querySelector(".details-card");
+
+
+    /* =========================================
+       PROFILE DATA
+    ========================================= */
+
+    const defaultProfile = {
+        name: "Faculty Member",
+        facultyId: "FAC-2026-001",
+        email: "faculty@veritext.edu",
+        department: "Computer Science & Engineering",
+        role: "Faculty Reviewer",
+        institution: "VeriText Academic System"
+    };
+
+
+    let originalProfile = { ...defaultProfile };
+
+
+    /* =========================================
+       LOAD PROFILE
+    ========================================= */
+
+    function loadProfile() {
+
+        const savedProfile =
+            localStorage.getItem("veritext_faculty_profile");
+
+        if (savedProfile) {
+
+            try {
+
+                originalProfile = {
+                    ...defaultProfile,
+                    ...JSON.parse(savedProfile)
+                };
+
+            } catch (error) {
+
+                originalProfile = { ...defaultProfile };
+
+            }
+
+        }
+
+        populateProfile(originalProfile);
+    }
+
+
+    /* =========================================
+       POPULATE DISPLAY + INPUTS
+    ========================================= */
+
+    function populateProfile(profile) {
+
+        document.getElementById("facultyNameDisplay").textContent =
+            profile.name;
+
+        document.getElementById("facultyIdDisplay").textContent =
+            profile.facultyId;
+
+        document.getElementById("facultyEmailDisplay").textContent =
+            profile.email;
+
+        document.getElementById("facultyDepartmentDisplay").textContent =
+            profile.department;
+
+        document.getElementById("facultyRoleDisplay").textContent =
+            profile.role;
+
+        document.getElementById("facultyInstitutionDisplay").textContent =
+            profile.institution;
+
+
+        document.getElementById("facultyNameInput").value =
+            profile.name;
+
+        document.getElementById("facultyIdInput").value =
+            profile.facultyId;
+
+        document.getElementById("facultyEmailInput").value =
+            profile.email;
+
+        document.getElementById("facultyDepartmentInput").value =
+            profile.department;
+
+        document.getElementById("facultyRoleInput").value =
+            profile.role;
+
+        document.getElementById("facultyInstitutionInput").value =
+            profile.institution;
+
+
+        /* Update profile card */
+
+        const profileName = document.querySelector(".profile-card h2");
+        const profileEmail = document.querySelector(".profile-email");
+        const avatar = document.querySelector(".faculty-avatar-large");
+
+        if (profileName) {
+            profileName.textContent = profile.name;
+        }
+
+        if (profileEmail) {
+            profileEmail.textContent = profile.email;
+        }
+
+        if (avatar) {
+
+            const initials = profile.name
+                .trim()
+                .split(/\s+/)
+                .slice(0, 2)
+                .map(word => word.charAt(0))
+                .join("")
+                .toUpperCase();
+
+            avatar.textContent = initials || "FC";
+        }
+
+
+        /* Update sidebar */
+
+        const sidebarName =
+            document.querySelector(".student-mini strong");
+
+        if (sidebarName) {
+            sidebarName.textContent = profile.name;
+        }
+
+        const sidebarAvatar =
+            document.querySelector(".student-avatar");
+
+        if (sidebarAvatar) {
+
+            const initials = profile.name
+                .trim()
+                .split(/\s+/)
+                .slice(0, 2)
+                .map(word => word.charAt(0))
+                .join("")
+                .toUpperCase();
+
+            sidebarAvatar.textContent = initials || "FC";
+        }
+    }
+
+
+    /* =========================================
+       EDIT MODE
+    ========================================= */
+
+    function enableEditing() {
+
+        detailsCard.classList.add("editing");
+
+        editButton.style.display = "none";
+        saveButton.style.display = "inline-flex";
+        cancelButton.style.display = "inline-flex";
+
+        modeLabel.textContent = "EDITING PROFILE";
+
+        const firstInput =
+            document.getElementById("facultyNameInput");
+
+        if (firstInput) {
+            setTimeout(() => firstInput.focus(), 100);
+        }
+    }
+
+
+    /* =========================================
+       CANCEL EDITING
+    ========================================= */
+
+    function cancelEditing() {
+
+        populateProfile(originalProfile);
+
+        detailsCard.classList.remove("editing");
+
+        editButton.style.display = "inline-flex";
+        saveButton.style.display = "none";
+        cancelButton.style.display = "none";
+
+        modeLabel.textContent = "VERIFIED ACCOUNT";
+    }
+
+
+    /* =========================================
+       SAVE PROFILE
+    ========================================= */
+
+    function saveProfile() {
+
+        const updatedProfile = {
+
+            name:
+                document.getElementById("facultyNameInput")
+                .value.trim(),
+
+            facultyId:
+                document.getElementById("facultyIdInput")
+                .value.trim(),
+
+            email:
+                document.getElementById("facultyEmailInput")
+                .value.trim(),
+
+            department:
+                document.getElementById("facultyDepartmentInput")
+                .value.trim(),
+
+            role:
+                document.getElementById("facultyRoleInput")
+                .value.trim(),
+
+            institution:
+                document.getElementById("facultyInstitutionInput")
+                .value.trim()
+        };
+
+
+        /* Basic validation */
+
+        if (
+            !updatedProfile.name ||
+            !updatedProfile.facultyId ||
+            !updatedProfile.email ||
+            !updatedProfile.department ||
+            !updatedProfile.role ||
+            !updatedProfile.institution
+        ) {
+
+            alert("Please fill in all profile fields.");
+            return;
+        }
+
+
+        /* Save locally */
+
+        localStorage.setItem(
+            "veritext_faculty_profile",
+            JSON.stringify(updatedProfile)
+        );
+
+
+        originalProfile = {
+            ...updatedProfile
+        };
+
+
+        populateProfile(originalProfile);
+
+        detailsCard.classList.remove("editing");
+
+        editButton.style.display = "inline-flex";
+        saveButton.style.display = "none";
+        cancelButton.style.display = "none";
+
+        modeLabel.textContent = "PROFILE UPDATED";
+
+
+        /* Small success feedback */
+
+        setTimeout(() => {
+
+            modeLabel.textContent = "VERIFIED ACCOUNT";
+
+        }, 2200);
+    }
+
+
+    /* =========================================
+       BUTTON EVENTS
+    ========================================= */
+
+    editButton.addEventListener(
+        "click",
+        enableEditing
+    );
+
+    saveButton.addEventListener(
+        "click",
+        saveProfile
+    );
+
+    cancelButton.addEventListener(
+        "click",
+        cancelEditing
+    );
+
+
+    /* =========================================
+       INITIAL LOAD
+    ========================================= */
+
+    loadProfile();
+
+
+    /* =========================================
+       ENTRANCE ANIMATION
+    ========================================= */
+
+    const cards = document.querySelectorAll(
+        ".profile-card, .details-card, .security-card, .activity-card"
+    );
+
+    cards.forEach((card, index) => {
+
+        card.style.opacity = "0";
+        card.style.transform = "translateY(16px)";
+        card.style.transition =
+            "opacity 0.6s ease, transform 0.6s ease";
+
+        setTimeout(() => {
+
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+
+        }, 100 + index * 100);
+
+    });
+
+});
+
+</script>
+</body>
+</html>

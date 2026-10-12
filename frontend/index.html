@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Plagiarism Detection Engine for Academic Submissions"
+    >
+
+    <title>VeriText — Plagiarism Detection Engine</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- =========================
+         BACKGROUND EFFECTS
+    ========================== -->
+
+    <div class="background">
+        <div class="grid"></div>
+
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
+    </div>
+
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-mark">
+                V
+            </div>
+
+            <div class="logo-text">
+                <span>VERITEXT</span>
+                <small>ACADEMIC INTELLIGENCE</small>
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="#home" class="active">Home</a>
+
+            <a href="#how-it-works">
+                How it works
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
+        </nav>
+
+
+        <a href="login.html" class="nav-button">
+    LOGIN
+    <span>→</span>
+</a>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO SECTION
+    ========================== -->
+
+    <main>
+
+        <section class="hero" id="home">
+
+            <!-- LEFT SIDE -->
+
+            <div class="hero-content">
+
+                <div class="status-pill">
+
+                    <span class="status-dot"></span>
+
+                    DSA-POWERED ANALYSIS
+
+                </div>
+
+
+                <h1>
+
+                    Detect similarity.
+                    <br>
+
+                    <span>Understand originality.</span>
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    A data-structures-driven plagiarism detection engine
+                    designed to analyze academic submissions,
+                    identify matching content, and reveal meaningful
+                    similarity patterns.
+
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <a href="login.html" class="primary-button">
+    <span>Start Analysis</span>
+    <span class="button-arrow">↗</span>
+</a>
+
+
+                    <button class="secondary-button">
+
+                        Explore Engine
+
+                        <span>↓</span>
+
+                    </button>
+
+                </div>
+
+
+                <div class="hero-meta">
+
+                    <div>
+                        <strong>DSA</strong>
+                        <span>Powered</span>
+                    </div>
+
+                    <div class="meta-line"></div>
+
+                    <div>
+                        <strong>FAST</strong>
+                        <span>Comparison</span>
+                    </div>
+
+                    <div class="meta-line"></div>
+
+                    <div>
+                        <strong>SMART</strong>
+                        <span>Detection</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RIGHT SIDE — ANALYSIS VISUAL -->
+
+            <div class="hero-visual">
+
+                <div class="visual-glow"></div>
+
+
+                <!-- Floating top label -->
+
+                <div class="floating-label label-top">
+
+                    <span class="mini-dot"></span>
+
+                    ANALYSIS ENGINE
+
+                </div>
+
+
+                <!-- Main analysis card -->
+
+                <div class="analysis-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <span class="card-eyebrow">
+                                LIVE ENGINE
+                            </span>
+
+                            <h3>
+                                Document comparison
+                            </h3>
+
+                        </div>
+
+
+                        <div class="pulse-icon">
+                            <span></span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Documents -->
+
+                    <div class="document-flow">
+
+                        <div class="document">
+
+                            <div class="document-icon">
+                                A
+                            </div>
+
+                            <div class="document-info">
+
+                                <strong>
+                                    Submission_A.pdf
+                                </strong>
+
+                                <span>
+                                    12,482 words
+                                </span>
+
+                            </div>
+
+                            <div class="document-check">
+                                ✓
+                            </div>
+
+                        </div>
+
+
+                        <div class="connection">
+
+                            <div class="connection-line"></div>
+
+                            <div class="connection-node">
+                                <span></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="document">
+
+                            <div class="document-icon">
+                                B
+                            </div>
+
+                            <div class="document-info">
+
+                                <strong>
+                                    Submission_B.pdf
+                                </strong>
+
+                                <span>
+                                    11,907 words
+                                </span>
+
+                            </div>
+
+                            <div class="document-check">
+                                ✓
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Analysis stages -->
+
+                    <div class="analysis-stages">
+
+                        <div class="stage completed">
+
+                            <span class="stage-icon">
+                                ✓
+                            </span>
+
+                            <span>
+                                Fingerprinting
+                            </span>
+
+                        </div>
+
+
+                        <div class="stage completed">
+
+                            <span class="stage-icon">
+                                ✓
+                            </span>
+
+                            <span>
+                                Pattern matching
+                            </span>
+
+                        </div>
+
+
+                        <div class="stage scanning">
+
+                            <span class="stage-icon">
+                                ◌
+                            </span>
+
+                            <span>
+                                Similarity analysis
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Similarity -->
+
+                    <div class="similarity-preview">
+
+                        <div class="similarity-heading">
+
+                            <span>
+                                SIMILARITY
+                            </span>
+
+                            <strong>
+                                78.17%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="similarity-bar">
+
+                            <div class="similarity-progress"></div>
+
+                        </div>
+
+
+                        <div class="similarity-footer">
+
+                            <span>
+                                Common passages detected
+                            </span>
+
+                            <span>
+                                30 matches
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Floating cards -->
+
+                <div class="floating-card fingerprint-card">
+
+                    <div class="floating-icon">
+                        #
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Fingerprints
+                        </strong>
+
+                        <span>
+                            35 / 35 indexed
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card match-card">
+
+                    <div class="match-circle">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Matches found
+                        </strong>
+
+                        <span>
+                            30 common fingerprints
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             ENGINE STRIP
+        ========================== -->
+
+        <section class="engine-strip">
+
+            <div class="strip-item">
+
+                <span class="strip-number">
+                    01
+                </span>
+
+                <div>
+                    <strong>
+                        INGEST
+                    </strong>
+
+                    <small>
+                        Academic submissions
+                    </small>
+                </div>
+
+            </div>
+
+
+            <div class="strip-line"></div>
+
+
+            <div class="strip-item">
+
+                <span class="strip-number">
+                    02
+                </span>
+
+                <div>
+                    <strong>
+                        INDEX
+                    </strong>
+
+                    <small>
+                        Fingerprints & patterns
+                    </small>
+                </div>
+
+            </div>
+
+
+            <div class="strip-line"></div>
+
+
+            <div class="strip-item">
+
+                <span class="strip-number">
+                    03
+                </span>
+
+                <div>
+                    <strong>
+                        COMPARE
+                    </strong>
+
+                    <small>
+                        Matching content
+                    </small>
+                </div>
+
+            </div>
+
+
+            <div class="strip-line"></div>
+
+
+            <div class="strip-item">
+
+                <span class="strip-number">
+                    04
+                </span>
+
+                <div>
+                    <strong>
+                        REPORT
+                    </strong>
+
+                    <small>
+                        Similarity insights
+                    </small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             HOW IT WORKS
+        ========================== -->
+
+        <section class="how-section" id="how-it-works">
+
+            <div class="section-heading">
+
+                <span>
+                    THE ENGINE
+                </span>
+
+                <h2>
+                    From submission
+                    <br>
+                    <em>to insight.</em>
+                </h2>
+
+            </div>
+
+
+            <div class="process-grid">
+
+                <div class="process-card">
+
+                    <span class="process-number">
+                        01
+                    </span>
+
+                    <h3>
+                        Submit
+                    </h3>
+
+                    <p>
+                        Academic documents enter the analysis
+                        pipeline for structured processing.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <span class="process-number">
+                        02
+                    </span>
+
+                    <h3>
+                        Fingerprint
+                    </h3>
+
+                    <p>
+                        Document content is transformed into
+                        searchable fingerprints for efficient comparison.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <span class="process-number">
+                        03
+                    </span>
+
+                    <h3>
+                        Compare
+                    </h3>
+
+                    <p>
+                        Matching words and passages are identified
+                        across submitted documents.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <span class="process-number">
+                        04
+                    </span>
+
+                    <h3>
+                        Understand
+                    </h3>
+
+                    <p>
+                        Similarity results are presented through
+                        a clear academic analysis report.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             ABOUT
+        ========================== -->
+
+        <section class="about-section" id="about">
+
+            <div class="about-card">
+
+                <div class="about-label">
+                    BUILT FOR ACADEMIC ANALYSIS
+                </div>
+
+                <h2>
+                    Data structures
+                    <span>meet</span>
+                    real-world detection.
+                </h2>
+
+                <p>
+                    VeriText demonstrates how Data Structures and
+                    Algorithms can be applied to a practical academic
+                    problem — organizing submissions, searching content,
+                    comparing documents, and calculating similarity.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+            VERITEXT
+        </div>
+
+        <span>
+            Plagiarism Detection Engine · Academic DSA Project
+        </span>
+
+        <span>
+            2026
+        </span>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

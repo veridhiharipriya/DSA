@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Faculty Report | VeriText</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           FACULTY REPORT VIEW
+        ========================================== */
+
+        .faculty-report-page {
+            min-height: 100vh;
+            margin-left: 245px;
+            padding: 42px 48px 70px;
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .report-breadcrumb {
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 14px;
+        }
+
+        .report-breadcrumb span {
+            color: #8df5c2;
+        }
+
+        .report-header h1 {
+            margin: 0;
+            font-size: clamp(30px, 4vw, 46px);
+            line-height: 1;
+            letter-spacing: -0.045em;
+        }
+
+        .report-header p {
+            margin: 12px 0 0;
+            color: rgba(255,255,255,0.45);
+            font-size: 13px;
+        }
+
+        .report-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 13px;
+            border-radius: 999px;
+            border: 1px solid rgba(141,245,194,0.18);
+            background: rgba(141,245,194,0.05);
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        .report-status::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #8df5c2;
+            box-shadow: 0 0 10px rgba(141,245,194,0.7);
+        }
+
+        /* TOP INFORMATION */
+
+        .report-info-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 13px;
+            max-width: 1200px;
+            margin-bottom: 22px;
+        }
+
+        .info-card {
+            padding: 18px 19px;
+            border: 1px solid rgba(255,255,255,0.075);
+            border-radius: 15px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.05),
+                    rgba(255,255,255,0.015)
+                );
+        }
+
+        .info-label {
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.12em;
+            color: rgba(255,255,255,0.32);
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            color: rgba(255,255,255,0.88);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .info-sub {
+            margin-top: 4px;
+            color: rgba(255,255,255,0.32);
+            font-size: 9px;
+        }
+
+        /* MAIN GRID */
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(330px, 0.65fr);
+            gap: 22px;
+            max-width: 1200px;
+        }
+
+        .report-card {
+            border: 1px solid rgba(255,255,255,0.075);
+            border-radius: 19px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.045),
+                    rgba(255,255,255,0.015)
+                );
+            box-shadow: 0 18px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 21px 23px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .card-eyebrow {
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.14em;
+            color: #8df5c2;
+            margin-bottom: 6px;
+        }
+
+        .card-header span {
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* ANALYSIS SCORE */
+
+        .analysis-score {
+            padding: 25px;
+        }
+
+        .score-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .score-label {
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.13em;
+            color: rgba(255,255,255,0.38);
+        }
+
+        .score-number {
+            margin-top: 8px;
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -0.06em;
+            color: #8df5c2;
+        }
+
+        .score-description {
+            max-width: 280px;
+            color: rgba(255,255,255,0.45);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .score-meter {
+            height: 7px;
+            margin-top: 18px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .score-meter-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: inherit;
+            background: #8df5c2;
+            box-shadow: 0 0 18px rgba(141,245,194,0.3);
+        }
+
+        /* METRICS */
+
+        .analysis-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .metric {
+            padding: 14px;
+            border-radius: 11px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.055);
+        }
+
+        .metric span {
+            display: block;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 7px;
+        }
+
+        .metric strong {
+            font-family: "DM Mono", monospace;
+            font-size: 14px;
+            color: rgba(255,255,255,0.84);
+        }
+
+        /* PASSAGES */
+
+        .passage-list {
+            padding: 6px 22px 22px;
+        }
+
+        .passage {
+            margin-top: 14px;
+            padding: 16px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.055);
+        }
+
+        .passage-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .passage-number {
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+        }
+
+        .passage-length {
+            color: rgba(255,255,255,0.3);
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+        }
+
+        .passage-text {
+            color: rgba(255,255,255,0.66);
+            font-size: 11px;
+            line-height: 1.75;
+        }
+
+        .highlight {
+            padding: 2px 4px;
+            border-radius: 4px;
+            color: #8df5c2;
+            background: rgba(141,245,194,0.08);
+        }
+
+        /* FACULTY EVALUATION */
+
+        .evaluation-body {
+            padding: 24px;
+        }
+
+        .evaluation-score {
+            padding: 20px;
+            border-radius: 14px;
+            background: rgba(141,245,194,0.035);
+            border: 1px solid rgba(141,245,194,0.11);
+            margin-bottom: 20px;
+        }
+
+        .evaluation-score-label {
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.12em;
+            color: rgba(255,255,255,0.34);
+        }
+
+        .evaluation-score-value {
+            display: flex;
+            align-items: baseline;
+            gap: 7px;
+            margin-top: 7px;
+        }
+
+        .evaluation-score-value strong {
+            font-size: 37px;
+            letter-spacing: -0.05em;
+            color: #8df5c2;
+        }
+
+        .evaluation-score-value span {
+            color: rgba(255,255,255,0.35);
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+        }
+
+        .evaluation-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 13px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.055);
+        }
+
+        .evaluation-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .evaluation-row span:first-child {
+            color: rgba(255,255,255,0.38);
+            font-size: 10px;
+        }
+
+        .evaluation-row strong {
+            color: rgba(255,255,255,0.78);
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+        }
+
+        .faculty-feedback {
+            margin-top: 21px;
+            padding-top: 21px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .faculty-feedback label {
+            display: block;
+            margin-bottom: 10px;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.12em;
+            color: rgba(255,255,255,0.35);
+        }
+
+        .faculty-feedback p {
+            margin: 0;
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        /* ENGINE PIPELINE */
+
+        .pipeline {
+            padding: 21px 24px 24px;
+        }
+
+        .pipeline-stage {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+        }
+
+        .stage-number {
+            width: 25px;
+            height: 25px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 7px;
+            background: rgba(141,245,194,0.06);
+            border: 1px solid rgba(141,245,194,0.12);
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+        }
+
+        .stage-name {
+            color: rgba(255,255,255,0.57);
+            font-size: 10px;
+        }
+
+        .stage-status {
+            margin-left: auto;
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 7px;
+            letter-spacing: 0.08em;
+        }
+
+        /* ACTIONS */
+
+        .report-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 22px;
+            max-width: 1200px;
+        }
+
+        .report-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 15px;
+            border-radius: 9px;
+            border: 1px solid rgba(255,255,255,0.09);
+            background: rgba(255,255,255,0.025);
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .report-action:hover {
+            border-color: rgba(141,245,194,0.28);
+            color: #8df5c2;
+            background: rgba(141,245,194,0.04);
+        }
+
+        .report-action.primary {
+            border-color: rgba(141,245,194,0.25);
+            color: #8df5c2;
+            background: rgba(141,245,194,0.06);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1100px) {
+            .report-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .report-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .faculty-report-page {
+                margin-left: 0;
+                padding: 30px 22px 60px;
+            }
+
+            .report-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .report-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-main {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .faculty-report-page {
+                padding: 24px 16px 50px;
+            }
+
+            .analysis-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .report-actions {
+                flex-direction: column;
+            }
+
+            .report-header h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================
+         FACULTY SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-mark">V</div>
+
+            <div>
+                <div class="brand-name">VERITEXT</div>
+                <div class="brand-role">FACULTY PORTAL</div>
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                FACULTY WORKSPACE
+            </span>
+
+            <a href="faculty-dashboard.html" class="sidebar-link">
+                <span>01</span>
+                Dashboard
+            </a>
+
+            <a href="faculty-dashboard.html#submission-queue" class="sidebar-link">
+                <span>02</span>
+                Submission Queue
+            </a>
+
+            <a href="faculty-evaluated.html" class="sidebar-link">
+                <span>03</span>
+                Evaluated Work
+            </a>
+
+            <a href="faculty-reports.html" class="sidebar-link active">
+                <span>04</span>
+                Reports
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                ACCOUNT
+            </span>
+
+            <a href="faculty-profile.html" class="sidebar-link">
+                <span>05</span>
+                Profile
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="student-mini">
+
+                <div class="student-avatar">
+                    F
+                </div>
+
+                <div>
+                    <strong>Faculty</strong>
+                    <span>VERITEXT</span>
+                </div>
+
+            </div>
+
+            <a href="login.html" class="sign-out">
+                SIGN OUT
+                <span>↗</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================
+         MAIN REPORT
+    ========================================== -->
+
+    <main class="faculty-report-page">
+
+        <header class="report-header">
+
+            <div>
+
+                <div class="report-breadcrumb">
+                    VERITEXT / FACULTY / REPORTS /
+                    <span>RPT-001</span>
+                </div>
+
+                <h1>Evaluation Report</h1>
+
+                <p>
+                    Detailed plagiarism analysis and faculty evaluation record.
+                </p>
+
+            </div>
+
+            <div class="report-status">
+                EVALUATION COMPLETED
+            </div>
+
+        </header>
+
+
+        <!-- =========================================
+             ASSIGNMENT INFORMATION
+        ========================================== -->
+
+        <section class="report-info-grid">
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    STUDENT
+                </div>
+
+                <div class="info-value">
+                    Student 01
+                </div>
+
+                <div class="info-sub">
+                    S-2026-014
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    ASSIGNMENT
+                </div>
+
+                <div class="info-value">
+                    Data Structures
+                </div>
+
+                <div class="info-sub">
+                    DSA Assignment
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    SUBMISSION
+                </div>
+
+                <div class="info-value">
+                    DSA-2026-014
+                </div>
+
+                <div class="info-sub">
+                    Sep 20, 2026
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    FILE
+                </div>
+
+                <div class="info-value">
+                    DSA_Assignment.pdf
+                </div>
+
+                <div class="info-sub">
+                    Submitted document
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             REPORT GRID
+        ========================================== -->
+
+        <div class="report-grid">
+
+
+            <!-- LEFT COLUMN -->
+
+            <div>
+
+
+                <!-- ANALYSIS -->
+
+                <section class="report-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <div class="card-eyebrow">
+                                VERITEXT DSA ENGINE
+                            </div>
+
+                            <h2>Plagiarism Analysis</h2>
+                        </div>
+
+                        <span>
+                            ANALYSIS COMPLETE
+                        </span>
+
+                    </div>
+
+
+                    <div class="analysis-score">
+
+                        <div class="score-main">
+
+                            <div>
+
+                                <div class="score-label">
+                                    SIMILARITY SCORE
+                                </div>
+
+                                <div class="score-number" id="similarityValue">
+    —
+</div>
+
+                            </div>
+
+                            <div class="score-description">
+                                The engine identified matching content between
+                                the submitted work and the comparison corpus.
+                            </div>
+
+                        </div>
+
+
+                        <div class="score-meter">
+<div class="score-meter-fill" id="similarityMeter"></div>                        </div>
+
+
+                        <div class="analysis-metrics">
+
+                            <div class="metric">
+                                <span>FINGERPRINTS</span>
+<strong id="fingerprintsValue">—</strong>                            </div>
+
+                            <div class="metric">
+                                <span>COMMON MATCHES</span>
+<strong id="commonMatchesValue">—</strong>                            </div>
+
+                            <div class="metric">
+                                <span>PASSAGES</span>
+<strong id="passagesValue">—</strong>                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- COMMON PASSAGES -->
+
+                <section class="report-card" style="margin-top:22px;">
+
+                    <div class="card-header">
+
+                        <div>
+                            <div class="card-eyebrow">
+                                MATCHED CONTENT
+                            </div>
+
+                            <h2>Common Passages</h2>
+                        </div>
+
+                        <span id="passageCount">
+    — MATCHES
+</span>
+
+                    </div>
+
+
+                <div class="passage-list" id="passageList">
+    <div class="passage">
+        <div class="passage-text">
+            Loading matching passages...
+        </div>
+    </div>
+</div>
+                </section>
+
+
+                <!-- ENGINE PIPELINE -->
+
+                <section class="report-card" style="margin-top:22px;">
+
+                    <div class="card-header">
+
+                        <div>
+                            <div class="card-eyebrow">
+                                ALGORITHM TRACE
+                            </div>
+
+                            <h2>Analysis Pipeline</h2>
+                        </div>
+
+                        <span>
+                            COMPLETE
+                        </span>
+
+                    </div>
+
+
+                    <div class="pipeline">
+
+                        <div class="pipeline-stage">
+
+                            <div class="stage-number">01</div>
+
+                            <div class="stage-name">
+                                Preprocessing
+                            </div>
+
+                            <div class="stage-status">
+                                COMPLETE
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-stage">
+
+                            <div class="stage-number">02</div>
+
+                            <div class="stage-name">
+                                Rabin-Karp Fingerprinting
+                            </div>
+
+                            <div class="stage-status">
+                                COMPLETE
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-stage">
+
+                            <div class="stage-number">03</div>
+
+                            <div class="stage-name">
+                                Winnowing
+                            </div>
+
+                            <div class="stage-status">
+                                COMPLETE
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-stage">
+
+                            <div class="stage-number">04</div>
+
+                            <div class="stage-name">
+                                Candidate Matching
+                            </div>
+
+                            <div class="stage-status">
+                                COMPLETE
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-stage">
+
+                            <div class="stage-number">05</div>
+
+                            <div class="stage-name">
+                                Suffix Array
+                            </div>
+
+                            <div class="stage-status">
+                                COMPLETE
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-stage">
+
+                            <div class="stage-number">06</div>
+
+                            <div class="stage-name">
+                                LCP Analysis
+                            </div>
+
+                            <div class="stage-status">
+                                COMPLETE
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- RIGHT COLUMN -->
+
+            <div>
+
+
+                <!-- FACULTY EVALUATION -->
+
+                <section class="report-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <div class="card-eyebrow">
+                                FACULTY REVIEW
+                            </div>
+
+                            <h2>Evaluation Result</h2>
+                        </div>
+
+                        <span>
+                            FINAL
+                        </span>
+
+                    </div>
+
+
+                    <div class="evaluation-body">
+
+
+                        <div class="evaluation-score">
+
+                            <div class="evaluation-score-label">
+                                ASSIGNMENT MARKS
+                            </div>
+
+                            <div class="evaluation-score-value">
+
+<strong id="marksValue">—</strong>
+                                <span>
+                                    / 100
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="evaluation-row">
+
+                            <span>
+                                Faculty
+                            </span>
+
+                            <strong id="facultyValue">
+    —
+</strong>
+
+                        </div>
+
+
+                        <div class="evaluation-row">
+
+                            <span>
+                                Evaluation status
+                            </span>
+
+                            <strong>
+                                COMPLETED
+                            </strong>
+
+                        </div>
+
+
+                        <div class="evaluation-row">
+
+                            <span>
+                                Evaluation date
+                            </span>
+
+                            <strong id="evaluationDate">
+    —
+</strong>
+
+                        </div>
+
+
+                        <div class="evaluation-row">
+
+                            <span>
+                                Submission status
+                            </span>
+
+                            <strong>
+                                EVALUATED
+                            </strong>
+
+                        </div>
+
+
+                        <div class="faculty-feedback">
+
+                            <label>
+                                FACULTY FEEDBACK
+                            </label>
+
+                            <p id="facultyFeedback">
+    —
+</p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- REPORT SUMMARY -->
+
+                <section class="report-card" style="margin-top:22px;">
+
+                    <div class="card-header">
+
+                        <div>
+                            <div class="card-eyebrow">
+                                REPORT SUMMARY
+                            </div>
+
+                            <h2>Evaluation Overview</h2>
+                        </div>
+
+                    </div>
+
+
+                    <div class="evaluation-body">
+
+                        <div class="evaluation-row">
+
+                            <span>
+                                Similarity
+                            </span>
+
+                            <strong
+    id="summarySimilarity"
+    style="color:#8df5c2;"
+>
+    —
+</strong>
+
+                        </div>
+
+
+                        <div class="evaluation-row">
+
+                            <span>
+                                Common passages
+                            </span>
+
+                            <strong id="summaryPassages">
+    —
+</strong>
+
+                        </div>
+
+
+                        <div class="evaluation-row">
+
+                            <span>
+                                Marks awarded
+                            </span>
+
+                            <strong id="summaryMarks">
+    —
+</strong>
+
+                        </div>
+
+
+                        <div class="evaluation-row">
+
+                            <span>
+                                Report status
+                            </span>
+
+                            <strong style="color:#8df5c2;">
+                                PUBLISHED
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="report-actions">
+
+            <a href="faculty-reports.html" class="report-action">
+                ← BACK TO REPORTS
+            </a>
+
+            <a href="faculty-dashboard.html" class="report-action">
+                FACULTY DASHBOARD
+            </a>
+
+            <button
+                class="report-action primary"
+                onclick="window.print()"
+            >
+                PRINT REPORT
+                ↗
+            </button>
+
+            <button
+                class="report-action primary"
+                id="downloadPdf"
+                type="button"
+            >
+                DOWNLOAD PDF ↓
+            </button>
+
+        </div>
+
+    </main>
+    <script>
+
+const API_BASE = "http://127.0.0.1:8000";
+
+
+/* =========================================
+   GET SUBMISSION ID FROM URL
+========================================= */
+
+const params = new URLSearchParams(
+    window.location.search
+);
+
+const submissionId = params.get("submission_id");
+
+
+/* =========================================
+   LOAD REPORT
+========================================= */
+
+async function loadReport() {
+
+    if (!submissionId) {
+        console.error("No submission ID provided.");
+        return;
+    }
+
+    try {
+
+        const [submissionResponse, evaluationResponse] =
+            await Promise.all([
+
+                fetch(
+                    `${API_BASE}/api/submissions/${submissionId}`
+                ),
+
+                fetch(
+                    `${API_BASE}/api/evaluations/${submissionId}`
+                )
+
+            ]);
+
+
+        if (!submissionResponse.ok) {
+            throw new Error(
+                "Failed to load submission."
+            );
+        }
+
+
+        if (!evaluationResponse.ok) {
+            throw new Error(
+                "Failed to load evaluation."
+            );
+        }
+
+
+        const submission =
+            await submissionResponse.json();
+
+        const evaluation =
+            await evaluationResponse.json();
+
+
+        console.log("Submission:", submission);
+        console.log("Evaluation:", evaluation);
+
+
+        populateReport(
+            submission,
+            evaluation
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Report loading error:",
+            error
+        );
+
+    }
+}
+
+async function downloadReportPdf() {
+    if (!submissionId) {
+        alert("No submission selected.");
+        return;
+    }
+    const button = document.getElementById("downloadPdf");
+    button.disabled = true;
+    button.textContent = "PREPARING PDF...";
+    try {
+        const response = await fetch(`${API_BASE}/api/reports/${submissionId}/pdf`);
+        if (!response.ok) {
+            const error = await response.json().catch(() => ({}));
+            throw new Error(error.detail || "Unable to generate the PDF report.");
+        }
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `VeriText_Report_${submissionId}.pdf`;
+        link.click();
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        button.disabled = false;
+        button.textContent = "DOWNLOAD PDF ↓";
+    }
+}
+
+
+/* =========================================
+   POPULATE REPORT
+========================================= */
+
+function populateReport(
+    submission,
+    evaluation
+) {
+
+    /*
+       Some backend responses may wrap the
+       actual object inside a data field.
+    */
+
+    const submissionData =
+        submission.submission ||
+        submission.data ||
+        submission;
+
+    const evaluationData =
+        evaluation.evaluation ||
+        evaluation.data ||
+        evaluation;
+
+
+    /* -----------------------------------------
+       ASSIGNMENT INFORMATION
+    ----------------------------------------- */
+
+    const infoCards =
+        document.querySelectorAll(".info-card");
+
+
+    if (infoCards.length >= 4) {
+
+        infoCards[0].querySelector(
+            ".info-value"
+        ).textContent =
+            submissionData.student_name ||
+            "Unknown Student";
+
+
+        infoCards[0].querySelector(
+            ".info-sub"
+        ).textContent =
+            `Submission #${submissionData.id || submissionId}`;
+
+
+        infoCards[1].querySelector(
+            ".info-value"
+        ).textContent =
+            submissionData.assignment_title ||
+            "Untitled Assignment";
+
+
+        infoCards[1].querySelector(
+            ".info-sub"
+        ).textContent =
+            submissionData.subject ||
+            "—";
+
+
+        infoCards[2].querySelector(
+            ".info-value"
+        ).textContent =
+            `SUB-${String(
+                submissionData.id || submissionId
+            ).padStart(3, "0")}`;
+
+
+        infoCards[2].querySelector(
+            ".info-sub"
+        ).textContent =
+            formatDate(
+                submissionData.submitted_at
+            );
+
+
+        infoCards[3].querySelector(
+            ".info-value"
+        ).textContent =
+            submissionData.filename ||
+            "Submitted document";
+
+
+        infoCards[3].querySelector(
+            ".info-sub"
+        ).textContent =
+            "Submitted document";
+
+    }
+
+
+    /* -----------------------------------------
+       SIMILARITY
+    ----------------------------------------- */
+
+    const similarity =
+        Number(
+            evaluationData.similarity_percentage
+        );
+
+
+    if (Number.isFinite(similarity)) {
+
+        const similarityText =
+            `${similarity.toFixed(1)}%`;
+
+
+        const similarityValue =
+            document.getElementById(
+                "similarityValue"
+            );
+
+        if (similarityValue) {
+            similarityValue.textContent =
+                similarityText;
+        }
+
+
+        const similarityMeter =
+            document.getElementById(
+                "similarityMeter"
+            );
+
+        if (similarityMeter) {
+
+            similarityMeter.style.width =
+                `${Math.min(
+                    Math.max(similarity, 0),
+                    100
+                )}%`;
+
+        }
+
+
+        const summarySimilarity =
+            document.getElementById(
+                "summarySimilarity"
+            );
+
+        if (summarySimilarity) {
+            summarySimilarity.textContent =
+                similarityText;
+        }
+
+    }
+
+    /* -----------------------------------------
+   ANALYSIS METRICS
+----------------------------------------- */
+
+const fingerprintsValue =
+    document.getElementById(
+        "fingerprintsValue"
+    );
+
+if (fingerprintsValue) {
+
+    fingerprintsValue.textContent =
+        evaluationData.fingerprints_1 ??
+        "—";
+
+}
+
+
+const commonMatchesValue =
+    document.getElementById(
+        "commonMatchesValue"
+    );
+
+if (commonMatchesValue) {
+
+    commonMatchesValue.textContent =
+        evaluationData.common_fingerprints ??
+        "—";
+
+}
+    /* -----------------------------------------
+       MARKS
+    ----------------------------------------- */
+
+    const marks =
+        evaluationData.marks;
+
+
+    const marksValue =
+        document.getElementById(
+            "marksValue"
+        );
+
+    if (marksValue) {
+
+        marksValue.textContent =
+            marks !== null &&
+            marks !== undefined
+                ? Number(marks).toFixed(1)
+                : "—";
+
+    }
+    const summaryMarks =
+    document.getElementById(
+        "summaryMarks"
+    );
+
+if (summaryMarks) {
+
+    summaryMarks.textContent =
+        marks !== null &&
+        marks !== undefined
+            ? `${Number(marks).toFixed(1)} / 100`
+            : "—";
+
+}
+
+    /* -----------------------------------------
+       FACULTY
+    ----------------------------------------- */
+
+    const facultyValue =
+        document.getElementById(
+            "facultyValue"
+        );
+
+    if (facultyValue) {
+
+        facultyValue.textContent =
+            evaluationData.faculty_name ||
+            "Faculty";
+
+    }
+
+
+    /* -----------------------------------------
+       EVALUATION DATE
+    ----------------------------------------- */
+
+    const evaluationDate =
+        document.getElementById(
+            "evaluationDate"
+        );
+
+    if (evaluationDate) {
+
+        evaluationDate.textContent =
+            formatDate(
+                evaluationData.evaluated_at
+            );
+
+    }
+
+
+    /* -----------------------------------------
+       FEEDBACK
+    ----------------------------------------- */
+
+    const feedback =
+        document.getElementById(
+            "facultyFeedback"
+        );
+
+    if (feedback) {
+
+        feedback.textContent =
+            evaluationData.feedback ||
+            "No faculty feedback provided.";
+
+    }
+
+
+    /* -----------------------------------------
+       COMMON PASSAGES
+    ----------------------------------------- */
+
+    let passages = [];
+
+    if (evaluationData.common_passages) {
+
+        try {
+
+            passages =
+                typeof evaluationData.common_passages === "string"
+                    ? JSON.parse(
+                        evaluationData.common_passages
+                    )
+                    : evaluationData.common_passages;
+
+        } catch (error) {
+
+            console.error(
+                "Unable to parse common passages:",
+                error
+            );
+
+        }
+
+    }
+
+
+    renderPassages(passages);
+    const summaryPassages =
+    document.getElementById(
+        "summaryPassages"
+    );
+
+if (summaryPassages) {
+
+    summaryPassages.textContent =
+        passages.length;
+
+}
+
+    /* -----------------------------------------
+       REPORT BREADCRUMB
+    ----------------------------------------- */
+
+    const breadcrumb =
+        document.querySelector(
+            ".report-breadcrumb span"
+        );
+
+    if (breadcrumb) {
+
+        breadcrumb.textContent =
+            `RPT-${String(
+                evaluationData.id ||
+                evaluationData.evaluation_id ||
+                submissionId
+            ).padStart(3, "0")}`;
+
+    }
+
+
+    /* -----------------------------------------
+       PAGE TITLE DETAILS
+    ----------------------------------------- */
+
+    document.title =
+        `Faculty Report | ${
+            submissionData.assignment_title ||
+            "VeriText"
+        }`;
+
+}
+
+
+/* =========================================
+   RENDER COMMON PASSAGES
+========================================= */
+
+function renderPassages(passages) {
+
+    const list =
+        document.getElementById(
+            "passageList"
+        );
+
+    const count =
+        document.getElementById(
+            "passageCount"
+        );
+
+
+    if (!list) return;
+
+
+    if (!Array.isArray(passages)) {
+        passages = [];
+    }
+
+
+    if (count) {
+
+        count.textContent =
+            `${passages.length} MATCH${
+                passages.length === 1
+                    ? ""
+                    : "ES"
+            }`;
+
+    }
+
+
+    const passagesValue =
+        document.getElementById(
+            "passagesValue"
+        );
+
+    if (passagesValue) {
+
+        passagesValue.textContent =
+            passages.length;
+
+    }
+
+
+    if (!passages.length) {
+
+        list.innerHTML = `
+            <div class="passage">
+
+                <div class="passage-text">
+                    No matching passages were detected.
+                </div>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        passages.map(
+            (passage, index) => {
+
+                const text =
+    typeof passage === "string"
+        ? passage
+        : passage.submission_1_passage ||
+          passage.submission_2_passage ||
+          passage.text ||
+          passage.passage ||
+          passage.content ||
+          "";
+
+
+                const wordCount =
+    passage &&
+    typeof passage === "object" &&
+    passage.length
+        ? passage.length
+        : text
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean)
+            .length;
+
+
+                return `
+                    <div class="passage">
+
+                        <div class="passage-top">
+
+                            <span class="passage-number">
+                                MATCH ${String(
+                                    index + 1
+                                ).padStart(2, "0")}
+                            </span>
+
+                            <span class="passage-length">
+                                ${wordCount} WORD${
+                                    wordCount === 1
+                                        ? ""
+                                        : "S"
+                                }
+                            </span>
+
+                        </div>
+
+                        <div class="passage-text">
+
+                            <span class="highlight">
+                                ${escapeHtml(text)}
+                            </span>
+
+                        </div>
+
+                    </div>
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* =========================================
+   DATE FORMATTER
+========================================= */
+
+function formatDate(value) {
+
+    if (!value) {
+        return "—";
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (Number.isNaN(date.getTime())) {
+        return "—";
+    }
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =========================================
+   HTML SAFETY
+========================================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================
+   ENTRANCE ANIMATION
+========================================= */
+
+function setupAnimations() {
+
+    const elements =
+        document.querySelectorAll(
+            ".info-card, .report-card, .report-actions"
+        );
+
+
+    elements.forEach(
+        (element, index) => {
+
+            element.style.opacity = "0";
+
+            element.style.transform =
+                "translateY(14px)";
+
+            element.style.transition =
+                "opacity 0.55s ease, transform 0.55s ease";
+
+
+            setTimeout(() => {
+
+                element.style.opacity = "1";
+
+                element.style.transform =
+                    "translateY(0)";
+
+            }, 80 + index * 70);
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadReport();
+
+        setupAnimations();
+        document.getElementById("downloadPdf").addEventListener("click", downloadReportPdf);
+
+    }
+);
+
+</script>
+</body>
+</html>

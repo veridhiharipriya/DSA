@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Submission Tracking | VeriText</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =========================================================
+           FACULTY ROSTER
+        ========================================================= */
+
+        .roster-page {
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 82% 8%,
+                    rgba(141, 245, 194, 0.055),
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 5% 80%,
+                    rgba(100, 180, 255, 0.035),
+                    transparent 25%
+                );
+        }
+
+
+        .roster-main {
+            margin-left: 245px;
+            width: calc(100% - 245px);
+            box-sizing: border-box;
+
+            padding: 42px 48px 70px;
+        }
+
+
+        /* =========================================================
+           TOP BAR
+        ========================================================= */
+
+        .roster-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 38px;
+        }
+
+
+        .roster-breadcrumb {
+            color: #71807c;
+
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 1.6px;
+
+            text-transform: uppercase;
+        }
+
+
+        .roster-breadcrumb span {
+            color: #8df5c2;
+        }
+
+
+        .roster-session {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #87938f;
+
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.7px;
+        }
+
+
+        .session-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #8df5c2;
+
+            box-shadow:
+                0 0 12px rgba(141, 245, 194, 0.65);
+
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+
+
+        @keyframes pulseDot {
+
+            0%,
+            100% {
+                opacity: 0.55;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .roster-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            gap: 30px;
+
+            margin-bottom: 32px;
+        }
+
+
+        .roster-label {
+            margin-bottom: 12px;
+
+            color: #8df5c2;
+
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        .roster-header h1 {
+            margin: 0;
+
+            color: #edf4f1;
+
+            font-size: clamp(34px, 4vw, 52px);
+            line-height: 1;
+
+            letter-spacing: -2.5px;
+        }
+
+
+        .roster-header p {
+            max-width: 650px;
+
+            margin: 15px 0 0;
+
+            color: #7d8986;
+
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+
+        /* =========================================================
+           SECTION CONTROL
+        ========================================================= */
+
+        .section-control {
+            min-width: 230px;
+        }
+
+
+        .control-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #66736f;
+
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 1.4px;
+
+            text-transform: uppercase;
+        }
+
+
+        .section-select {
+            width: 100%;
+
+            padding: 13px 15px;
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+
+            outline: none;
+
+            background: rgba(255, 255, 255, 0.035);
+
+            color: #dce6e2;
+
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+
+        .section-select:hover,
+        .section-select:focus {
+            border-color: rgba(141, 245, 194, 0.22);
+
+            background: rgba(141, 245, 194, 0.035);
+        }
+
+
+        .section-select option {
+            background: #111916;
+            color: #dce6e2;
+        }
+
+
+        /* =========================================================
+           SUMMARY CARDS
+        ========================================================= */
+
+        .roster-stats {
+            display: grid;
+
+            grid-template-columns: repeat(5, 1fr);
+
+            gap: 12px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .roster-stat {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 20px;
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 15px;
+
+            background: rgba(255, 255, 255, 0.025);
+
+            backdrop-filter: blur(16px);
+
+            transition: 0.3s ease;
+        }
+
+
+        .roster-stat:hover {
+            transform: translateY(-3px);
+
+            border-color:
+                rgba(141, 245, 194, 0.15);
+        }
+
+
+        .roster-stat::after {
+            content: "";
+
+            position: absolute;
+
+            width: 70px;
+            height: 70px;
+
+            right: -30px;
+            bottom: -35px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(141, 245, 194, 0.035);
+        }
+
+
+        .roster-stat-label {
+            color: #687571;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 1.2px;
+
+            text-transform: uppercase;
+        }
+
+
+        .roster-stat-value {
+            margin-top: 10px;
+
+            color: #edf4f1;
+
+            font-size: 27px;
+            font-weight: 600;
+
+            letter-spacing: -1px;
+        }
+
+
+        .roster-stat-value.accent {
+            color: #8df5c2;
+        }
+
+
+        /* =========================================================
+           ROSTER CARD
+        ========================================================= */
+
+        .roster-card {
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+
+            background: rgba(255, 255, 255, 0.025);
+
+            backdrop-filter: blur(18px);
+        }
+
+
+        .roster-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 22px 24px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.06);
+        }
+
+
+        .heading-label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #66736f;
+
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+        }
+
+
+        .roster-card-header h2 {
+            margin: 0;
+
+            color: #e6efeb;
+
+            font-size: 17px;
+        }
+
+
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 11px 15px;
+
+            border: 1px solid rgba(141, 245, 194, 0.16);
+            border-radius: 9px;
+
+            background: rgba(141, 245, 194, 0.045);
+
+            color: #8df5c2;
+
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.7px;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+
+        .download-button:hover {
+            transform: translateY(-2px);
+
+            border-color:
+                rgba(141, 245, 194, 0.3);
+
+            background:
+                rgba(141, 245, 194, 0.075);
+        }
+
+
+        /* =========================================================
+           FILTERS
+        ========================================================= */
+
+        .roster-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 16px 24px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.045);
+        }
+
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+
+        .filter-button {
+            padding: 8px 11px;
+
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 7px;
+
+            background: rgba(255, 255, 255, 0.018);
+
+            color: #687571;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.7px;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+
+        .filter-button:hover {
+            color: #aab7b2;
+
+            border-color:
+                rgba(255, 255, 255, 0.12);
+        }
+
+
+        .filter-button.active {
+            color: #08110d;
+
+            background: #8df5c2;
+
+            border-color: #8df5c2;
+        }
+
+
+        .roster-count {
+            color: #596561;
+
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+        }
+
+
+        /* =========================================================
+           TABLE
+        ========================================================= */
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+
+        .roster-table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 850px;
+        }
+
+
+        .roster-table th {
+            padding: 14px 18px;
+
+            color: #596662;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            font-weight: 500;
+
+            letter-spacing: 1px;
+
+            text-align: left;
+            text-transform: uppercase;
+
+            background: rgba(255, 255, 255, 0.012);
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.06);
+        }
+
+
+        .roster-table td {
+            padding: 17px 18px;
+
+            color: #9aa7a2;
+
+            font-size: 11px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.045);
+        }
+
+
+        .roster-table tbody tr {
+            transition: 0.2s ease;
+        }
+
+
+        .roster-table tbody tr:hover {
+            background:
+                rgba(255, 255, 255, 0.018);
+        }
+
+
+        .roster-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        .student-name {
+            color: #d8e1de;
+
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+
+        .student-id {
+            margin-top: 4px;
+
+            color: #596662;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+        }
+
+
+        .assignment-name {
+            color: #aebbb6;
+        }
+
+
+        .muted-value {
+            color: #596662;
+        }
+
+
+        /* =========================================================
+           STATUS
+        ========================================================= */
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 6px 9px;
+
+            border-radius: 7px;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.6px;
+
+            white-space: nowrap;
+        }
+
+
+        .status-not-submitted {
+            color: #737e7a;
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+
+        .status-submitted {
+            color: #f0c674;
+
+            border: 1px solid rgba(240, 198, 116, 0.15);
+
+            background: rgba(240, 198, 116, 0.055);
+        }
+
+
+        .status-pending {
+            color: #f0c674;
+
+            border: 1px solid rgba(240, 198, 116, 0.15);
+
+            background: rgba(240, 198, 116, 0.055);
+        }
+
+
+        .status-evaluated {
+            color: #8df5c2;
+
+            border: 1px solid rgba(141, 245, 194, 0.15);
+
+            background: rgba(141, 245, 194, 0.055);
+        }
+
+
+        .similarity {
+            color: #c8d3cf;
+
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+        }
+
+
+        .similarity.high {
+            color: #f08a8a;
+        }
+
+
+        .similarity.medium {
+            color: #f0c674;
+        }
+
+
+        .similarity.low {
+            color: #8df5c2;
+        }
+
+
+        /* =========================================================
+           ACTION
+        ========================================================= */
+
+        .row-action {
+            color: #8df5c2;
+
+            text-decoration: none;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.6px;
+
+            white-space: nowrap;
+
+            transition: 0.25s ease;
+        }
+
+
+        .row-action:hover {
+            letter-spacing: 1px;
+        }
+
+
+        /* =========================================================
+           EMPTY / LOADING
+        ========================================================= */
+
+        .roster-message {
+            padding: 60px 25px;
+
+            text-align: center;
+        }
+
+
+        .roster-message strong {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #cbd5d1;
+
+            font-size: 14px;
+        }
+
+
+        .roster-message span {
+            color: #596662;
+
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+        }
+
+
+        .loading-line {
+            width: 150px;
+            height: 2px;
+
+            margin: 18px auto 0;
+
+            overflow: hidden;
+
+            background: rgba(255, 255, 255, 0.05);
+
+            border-radius: 10px;
+        }
+
+
+        .loading-line::after {
+            content: "";
+
+            display: block;
+
+            width: 45%;
+
+            height: 100%;
+
+            background: #8df5c2;
+
+            animation: loadingSlide 1.2s ease-in-out infinite;
+        }
+
+
+        @keyframes loadingSlide {
+
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(330%);
+            }
+        }
+
+
+        /* =========================================================
+           REVEAL
+        ========================================================= */
+
+        .roster-reveal {
+            opacity: 0;
+
+            transform: translateY(16px);
+
+            animation:
+                rosterReveal 0.65s ease forwards;
+        }
+
+
+        .roster-reveal:nth-child(2) {
+            animation-delay: 0.08s;
+        }
+
+
+        .roster-reveal:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+
+
+        @keyframes rosterReveal {
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1100px) {
+
+            .roster-main {
+                margin-left: 220px;
+
+                width: calc(100% - 220px);
+
+                padding: 36px 30px 60px;
+            }
+
+
+            .roster-stats {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+
+            .roster-header {
+                align-items: flex-start;
+            }
+
+        }
+
+
+        @media (max-width: 760px) {
+
+            .roster-main {
+                margin-left: 0;
+
+                width: 100%;
+
+                padding: 30px 20px 50px;
+            }
+
+
+            .roster-topbar {
+                margin-bottom: 28px;
+            }
+
+
+            .roster-header {
+                flex-direction: column;
+            }
+
+
+            .section-control {
+                width: 100%;
+            }
+
+
+            .roster-stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .roster-card-header {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .download-button {
+                width: 100%;
+
+                justify-content: center;
+            }
+
+
+            .roster-toolbar {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .roster-count {
+                align-self: flex-end;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .roster-main {
+                padding: 25px 15px 40px;
+            }
+
+
+            .roster-header h1 {
+                font-size: 36px;
+            }
+
+
+            .roster-stats {
+                grid-template-columns: 1fr;
+            }
+
+
+            .roster-breadcrumb {
+                font-size: 8px;
+            }
+
+
+            .roster-session {
+                display: none;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="roster-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-mark">
+                V
+            </div>
+
+            <div>
+                <strong>VERITEXT</strong>
+                <span>FACULTY PORTAL</span>
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                FACULTY WORKSPACE
+            </span>
+
+
+            <a
+                href="faculty-dashboard.html"
+                class="sidebar-link"
+            >
+                <span>01</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="faculty-dashboard.html#submission-queue"
+                class="sidebar-link"
+            >
+                <span>02</span>
+                Submission Queue
+            </a>
+        
+            <a
+                href="faculty-roster.html"
+                class="sidebar-link active"
+            >
+                <span>03</span>
+                Submission Tracking
+            </a>     
+
+            <a
+                href="faculty-evaluated.html"
+                class="sidebar-link"
+            >
+                <span>04</span>
+                Evaluated Work
+            </a>
+
+
+            <a
+                href="faculty-reports.html"
+                class="sidebar-link"
+            >
+                <span>05</span>
+                Reports
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                ACCOUNT
+            </span>
+
+
+            <a
+                href="faculty-profile.html"
+                class="sidebar-link"
+            >
+                <span>06</span>
+                Profile
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="student-mini">
+
+                <div class="student-avatar">
+                    F
+                </div>
+
+                <div>
+                    <strong>Faculty</strong>
+                    <span>Evaluator Account</span>
+                </div>
+
+            </div>
+
+
+            <a
+                href="login.html"
+                class="sign-out"
+            >
+                Sign Out
+                <span>↗</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="roster-main">
+
+
+        <!-- TOP BAR -->
+
+        <div class="roster-topbar">
+
+            <div class="roster-breadcrumb">
+
+                VERITEXT /
+                <span>SUBMISSION TRACKING</span>
+
+            </div>
+
+
+            <div class="roster-session">
+
+                <span class="session-dot"></span>
+
+                FACULTY SESSION ACTIVE
+
+            </div>
+
+        </div>
+
+
+        <!-- HEADER -->
+
+        <section class="roster-header roster-reveal">
+
+            <div>
+
+                <div class="roster-label">
+                    Faculty Workspace
+                </div>
+
+
+                <h1>
+                    Assignment<br>
+                    submissions.
+                </h1>
+
+
+                <p>
+                    See who has submitted each assignment, who still needs
+                    to submit, and which work is ready for evaluation.
+                </p>
+
+            </div>
+
+
+            <div class="section-control">
+
+                <label
+                    class="control-label"
+                    for="sectionSelect"
+                >
+                    Select Section
+                </label>
+
+
+                <select
+                    id="sectionSelect"
+                    class="section-select"
+                >
+
+                    <option value="">
+                        Loading sections...
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="section-control">
+                <label class="control-label" for="assignmentSelect">Assignment Status</label>
+                <select id="assignmentSelect" class="section-select" disabled>
+                    <option value="">Load a section first</option>
+                </select>
+            </div>
+
+        </section>
+
+
+        <!-- STATS -->
+
+        <section class="roster-stats roster-reveal">
+
+
+            <div class="roster-stat">
+
+                <div class="roster-stat-label">
+                    Total Students
+                </div>
+
+                <div
+                    class="roster-stat-value"
+                    id="totalStudents"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="roster-stat">
+
+                <div class="roster-stat-label">
+                    Submitted
+                </div>
+
+                <div
+                    class="roster-stat-value accent"
+                    id="submittedCount"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="roster-stat">
+
+                <div class="roster-stat-label">
+                    Not Submitted
+                </div>
+
+                <div
+                    class="roster-stat-value"
+                    id="notSubmittedCount"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="roster-stat">
+
+                <div class="roster-stat-label">
+                    Pending Review
+                </div>
+
+                <div
+                    class="roster-stat-value"
+                    id="pendingCount"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="roster-stat">
+
+                <div class="roster-stat-label">
+                    Evaluated
+                </div>
+
+                <div
+                    class="roster-stat-value accent"
+                    id="evaluatedCount"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ROSTER -->
+
+        <section class="roster-card roster-reveal">
+
+
+            <div class="roster-card-header">
+
+                <div>
+
+                    <span class="heading-label">
+                        ASSIGNMENT STATUS
+                    </span>
+
+                    <h2>
+                        Student submissions
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="download-button"
+                    id="downloadRoster"
+                    type="button"
+                >
+                    ↓
+                    EXPORT STATUS
+                </button>
+
+            </div>
+
+
+            <!-- FILTERS -->
+
+            <div class="roster-toolbar">
+
+                <div class="filter-group">
+
+                    <button
+                        class="filter-button active"
+                        data-filter="ALL"
+                        type="button"
+                    >
+                        ALL
+                    </button>
+
+
+                    <button
+                        class="filter-button"
+                        data-filter="NOT SUBMITTED"
+                        type="button"
+                    >
+                        NOT SUBMITTED
+                    </button>
+
+
+                    <button
+                        class="filter-button"
+                        data-filter="SUBMITTED"
+                        type="button"
+                    >
+                        SUBMITTED
+                    </button>
+
+
+                    <button
+                        class="filter-button"
+                        data-filter="PENDING"
+                        type="button"
+                    >
+                        PENDING
+                    </button>
+
+
+                    <button
+                        class="filter-button"
+                        data-filter="EVALUATED"
+                        type="button"
+                    >
+                        EVALUATED
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="roster-count"
+                    id="rosterCount"
+                >
+                    0 STUDENTS
+                </div>
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table class="roster-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Student
+                            </th>
+
+                            <th>
+                                Assignment
+                            </th>
+
+                            <th>
+                                Submission
+                            </th>
+
+                            <th>
+                                Evaluation
+                            </th>
+
+                            <th>
+                                Marks
+                            </th>
+
+                            <th>
+                                Similarity
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="rosterBody">
+
+                        <tr>
+
+                            <td colspan="7">
+
+                                <div class="roster-message">
+
+                                    <strong>
+                                        Loading assignment status
+                                    </strong>
+
+                                    <span>
+                                        Connecting to VeriText database
+                                    </span>
+
+                                    <div class="loading-line"></div>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       CONFIGURATION
+    ========================================================= */
+
+    const API_BASE =
+        "http://127.0.0.1:8000";
+
+
+    let currentRoster = [];
+
+    let currentFilter = "ALL";
+
+    let selectedSectionId = null;
+    let selectedAssignmentId = null;
+
+
+    /* =========================================================
+       START
+    ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+
+            loadSections();
+
+            setupFilters();
+
+            document
+                .getElementById("sectionSelect")
+                .addEventListener(
+                    "change",
+                    event => {
+
+                        selectedSectionId =
+                            event.target.value;
+
+                        if (
+                            selectedSectionId
+                        ) {
+                            loadAssignments(selectedSectionId);
+
+                        }
+
+                    }
+                );
+
+
+            document
+    .getElementById("downloadRoster")
+    .addEventListener("click", downloadRoster);
+
+            document
+                .getElementById("assignmentSelect")
+                .addEventListener("change", event => {
+                    selectedAssignmentId = event.target.value || null;
+                    if (selectedSectionId) {
+                        loadRoster(selectedSectionId, selectedAssignmentId);
+                    }
+                });
+
+
+    /* =========================================================
+       LOAD SECTIONS
+    ========================================================= */
+
+    async function loadSections() {
+
+        const select =
+            document.getElementById(
+                "sectionSelect"
+            );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/api/sections`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load sections"
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            const availableSections =
+                Array.isArray(data)
+                    ? data
+                    : data.sections || [];
+            const facultyEmail = (
+                localStorage.getItem("veritextUser") || ""
+            ).trim().toLowerCase();
+            const sections = availableSections.filter(section =>
+                (section.faculty_name || "").trim().toLowerCase() === facultyEmail
+            );
+
+
+            select.innerHTML = "";
+
+
+            if (sections.length === 0) {
+
+                select.innerHTML = `
+                    <option value="">
+                        No sections available
+                    </option>
+                `;
+
+                showRosterMessage(
+                    "No sections assigned",
+                    "Ask your administrator to map your login email to a section."
+                );
+
+                return;
+
+            }
+
+
+            sections.forEach(
+                section => {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    option.value =
+                        section.id;
+
+
+                    option.textContent =
+                        `${section.name} · ${section.student_count ?? 0} students`;
+
+
+                    select.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+
+            selectedSectionId =
+                new URLSearchParams(window.location.search).get("section_id")
+                || sections[0].id;
+
+            if (!sections.some(section => String(section.id) === String(selectedSectionId))) {
+                selectedSectionId = sections[0].id;
+            }
+
+
+            select.value =
+                selectedSectionId;
+
+
+            await loadAssignments(selectedSectionId);
+
+
+        } catch (error) {
+
+            console.error(
+                "Section loading error:",
+                error
+            );
+
+
+            select.innerHTML = `
+                <option value="">
+                    Unable to load sections
+                </option>
+            `;
+
+
+            showRosterMessage(
+                "Unable to load assignment status",
+                "Make sure the VeriText backend is running."
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       LOAD ROSTER
+    ========================================================= */
+
+    async function loadRoster(
+        sectionId,
+        assignmentId = selectedAssignmentId
+    ) {
+
+        showLoading();
+
+
+        try {
+
+            const query = assignmentId
+                ? `?assignment_id=${encodeURIComponent(assignmentId)}`
+                : "";
+            const response = await fetch(
+                `${API_BASE}/api/sections/${sectionId}/roster${query}`
+            );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load roster"
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            currentRoster =
+                data.students || [];
+
+
+            updateSummary(
+                data
+            );
+
+
+            renderRoster();
+
+
+        } catch (error) {
+
+            console.error(
+                "Roster loading error:",
+                error
+            );
+
+
+            currentRoster = [];
+
+
+            updateSummary({
+                total_students: 0,
+                submitted: 0,
+                not_submitted: 0,
+                pending_evaluation: 0,
+                evaluated: 0
+            });
+
+
+            showRosterMessage(
+                "Unable to load roster",
+                "Check that the selected section exists and the backend is running."
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SUMMARY
+    ========================================================= */
+
+    function updateSummary(
+        data
+    ) {
+        const summary = data.summary || data;
+
+        setText(
+            "totalStudents",
+            summary.total_students ?? 0
+        );
+
+
+        setText(
+            "submittedCount",
+            summary.submitted ?? 0
+        );
+
+
+        setText(
+            "notSubmittedCount",
+            summary.not_submitted ?? 0
+        );
+
+
+        setText(
+            "pendingCount",
+            summary.pending_evaluation ?? 0
+        );
+
+
+        setText(
+            "evaluatedCount",
+            summary.evaluated ?? 0
+        );
+
+    }
+
+
+    /* =========================================================
+       FILTER SETUP
+    ========================================================= */
+
+    function setupFilters() {
+
+        document
+            .querySelectorAll(
+                ".filter-button"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            document
+                                .querySelectorAll(
+                                    ".filter-button"
+                                )
+                                .forEach(
+                                    item =>
+                                        item.classList.remove(
+                                            "active"
+                                        )
+                                );
+
+
+                            button.classList.add(
+                                "active"
+                            );
+
+
+                            currentFilter =
+                                button.dataset.filter;
+
+
+                            renderRoster();
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =========================================================
+       RENDER ROSTER
+    ========================================================= */
+
+    function renderRoster() {
+
+        const body =
+            document.getElementById(
+                "rosterBody"
+            );
+
+
+        let filteredStudents =
+            [...currentRoster];
+
+
+        if (
+            currentFilter !== "ALL"
+        ) {
+
+            filteredStudents =
+                filteredStudents.filter(
+                    student => {
+
+                        const submissionStatus =
+                            String(
+                                student.submission_status || ""
+                            ).toUpperCase();
+
+
+                        const evaluationStatus =
+                            String(
+                                student.evaluation_status || ""
+                            ).toUpperCase();
+
+
+                        if (
+                            currentFilter ===
+                            "NOT SUBMITTED"
+                        ) {
+
+                            return (
+                                submissionStatus ===
+                                "NOT SUBMITTED"
+                            );
+
+                        }
+
+
+                        if (
+                            currentFilter ===
+                            "SUBMITTED"
+                        ) {
+
+                            return (
+                                submissionStatus ===
+                                "SUBMITTED"
+                            );
+
+                        }
+
+
+                        if (
+                            currentFilter ===
+                            "PENDING"
+                        ) {
+
+                            return (
+                                evaluationStatus ===
+                                "PENDING"
+                            );
+
+                        }
+
+
+                        if (
+                            currentFilter ===
+                            "EVALUATED"
+                        ) {
+
+                            return (
+                                evaluationStatus ===
+                                "EVALUATED"
+                            );
+
+                        }
+
+
+                        return true;
+
+                    }
+                );
+
+        }
+
+
+        setText(
+            "rosterCount",
+            `${filteredStudents.length} STUDENT${filteredStudents.length === 1 ? "" : "S"}`
+        );
+
+
+        if (
+            filteredStudents.length === 0
+        ) {
+
+            body.innerHTML = `
+                <tr>
+                    <td colspan="7">
+                        <div class="roster-message">
+
+                            <strong>
+                                No students in this view
+                            </strong>
+
+                            <span>
+                                Try another roster filter.
+                            </span>
+
+                        </div>
+                    </td>
+                </tr>
+            `;
+
+            return;
+
+        }
+
+
+        body.innerHTML = "";
+
+
+        filteredStudents.forEach(
+            student => {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const submissionStatus =
+                    String(
+                        student.submission_status || "NOT SUBMITTED"
+                    ).toUpperCase();
+
+
+                const evaluationStatus =
+                    String(
+                        student.evaluation_status || ""
+                    ).toUpperCase();
+
+
+                const submissionClass =
+                    submissionStatus ===
+                    "SUBMITTED"
+
+                        ? "status-submitted"
+
+                        : "status-not-submitted";
+
+
+                let evaluationClass =
+                    "status-not-submitted";
+
+
+                if (
+                    evaluationStatus ===
+                    "PENDING"
+                ) {
+
+                    evaluationClass =
+                        "status-pending";
+
+                }
+
+
+                if (
+                    evaluationStatus ===
+                    "EVALUATED"
+                ) {
+
+                    evaluationClass =
+                        "status-evaluated";
+
+                }
+
+
+                const action =
+                    student.submission_id
+
+                        ? evaluationStatus ===
+                          "EVALUATED"
+
+                            ? `
+                                <a
+                                    class="row-action"
+                                    href="faculty-report-view.html?submission_id=${student.submission_id}"
+                                >
+                                    VIEW REPORT →
+                                </a>
+                            `
+
+                            : `
+                                <a
+                                    class="row-action"
+                                    href="faculty-evaluation.html?submission_id=${student.submission_id}"
+                                >
+                                    EVALUATE →
+                                </a>
+                            `
+
+                        : `
+                            <span class="muted-value">
+                                —
+                            </span>
+                        `;
+
+
+                const assignment =
+                    student.assignment_title
+                        ? escapeHtml(
+                            student.assignment_title
+                        )
+                        : "—";
+
+
+                const marks =
+                    student.marks !== null &&
+                    student.marks !== undefined
+                        ? Number(
+                            student.marks
+                        ).toFixed(1)
+                        : "—";
+
+
+                const similarity =
+                    student.similarity_percentage !== null &&
+                    student.similarity_percentage !== undefined
+                        ? Number(
+                            student.similarity_percentage
+                        )
+                        : null;
+
+
+                let similarityClass =
+                    "";
+
+
+                if (
+                    similarity !== null
+                ) {
+
+                    if (
+                        similarity >= 70
+                    ) {
+
+                        similarityClass =
+                            "high";
+
+                    }
+                    else if (
+                        similarity >= 40
+                    ) {
+
+                        similarityClass =
+                            "medium";
+
+                    }
+                    else {
+
+                        similarityClass =
+                            "low";
+
+                    }
+
+                }
+
+
+                const similarityText =
+                    similarity !== null
+                        ? `${similarity.toFixed(1)}%`
+                        : "—";
+
+
+                row.innerHTML = `
+
+                    <td>
+
+                        <div class="student-name">
+                            ${escapeHtml(
+                                student.student_name || student.name
+                            )}
+                        </div>
+
+                        <div class="student-id">
+                            ${escapeHtml(
+                                student.student_id
+                            )}
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="assignment-name">
+                            ${assignment}
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="status-badge ${submissionClass}"
+                        >
+                            ${submissionStatus}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="status-badge ${evaluationClass}"
+                        >
+                            ${
+                                evaluationStatus
+                                    ? evaluationStatus
+                                    : "—"
+                            }
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="similarity">
+                            ${marks}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="similarity ${similarityClass}"
+                        >
+                            ${similarityText}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        ${action}
+
+                    </td>
+
+                `;
+
+
+                body.appendChild(
+                    row
+                );
+
+            }
+        );
+
+    }
+
+
+
+    /* =========================================================
+       LOADING STATE
+    ========================================================= */
+
+    function showLoading() {
+
+        const body =
+            document.getElementById(
+                "rosterBody"
+            );
+
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="7">
+
+                    <div class="roster-message">
+
+                        <strong>
+                            Loading assignment status
+                        </strong>
+
+                        <span>
+                            Syncing student records
+                        </span>
+
+                        <div class="loading-line"></div>
+
+                    </div>
+
+                </td>
+            </tr>
+        `;
+
+    }
+
+
+    /* =========================================================
+       MESSAGE
+    ========================================================= */
+
+    function showRosterMessage(
+        title,
+        message
+    ) {
+
+        const body =
+            document.getElementById(
+                "rosterBody"
+            );
+
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="7">
+
+                    <div class="roster-message">
+
+                        <strong>
+                            ${escapeHtml(title)}
+                        </strong>
+
+                        <span>
+                            ${escapeHtml(message)}
+                        </span>
+
+                    </div>
+
+                </td>
+            </tr>
+        `;
+
+
+        setText(
+            "rosterCount",
+            "0 STUDENTS"
+        );
+
+    }
+
+
+    /* =========================================================
+       SET TEXT
+    ========================================================= */
+
+    function setText(
+        id,
+        value
+    ) {
+
+        const element =
+            document.getElementById(id);
+
+
+        if (element) {
+
+            element.textContent =
+                value;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       ESCAPE DATABASE CONTENT
+    ========================================================= */
+
+    function escapeHtml(
+        value
+    ) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.textContent =
+            value ?? "";
+
+
+        return div.innerHTML;
+
+    }
+async function downloadRoster() {
+    const sectionSelect =
+        document.getElementById("sectionSelect");
+
+    if (!sectionSelect || !sectionSelect.value) {
+        alert("Please select a section first.");
+        return;
+    }
+
+    const sectionId = sectionSelect.value;
+    const assignmentId = document.getElementById("assignmentSelect").value;
+    if (!assignmentId) {
+        alert("Select an assignment to export its submitted / not submitted status.");
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${API_BASE}/api/sections/${sectionId}/roster/export?assignment_id=${encodeURIComponent(assignmentId)}`
+        );
+
+        if (!response.ok) {
+            const errorData =
+                await response.json().catch(() => null);
+
+            throw new Error(
+                errorData?.detail ||
+                "Excel export failed."
+            );
+        }
+
+        const blob = await response.blob();
+
+        const contentDisposition =
+            response.headers.get("Content-Disposition");
+
+        let filename =
+            "Class_Roster.xlsx";
+
+        if (contentDisposition) {
+            const match =
+                contentDisposition.match(
+                    /filename="?([^"]+)"?/
+                );
+
+            if (match && match[1]) {
+                filename = match[1];
+            }
+        }
+
+        const downloadUrl =
+            window.URL.createObjectURL(blob);
+
+        const link =
+            document.createElement("a");
+
+        link.href = downloadUrl;
+        link.download = filename;
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+        window.URL.revokeObjectURL(
+            downloadUrl
+        );
+
+    } catch (error) {
+        console.error(
+            "Roster export error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Unable to download the roster."
+        );
+    }
+}
+
+async function loadAssignments(sectionId) {
+    const select = document.getElementById("assignmentSelect");
+    select.disabled = true;
+    select.innerHTML = '<option value="">Loading assignments...</option>';
+    try {
+        const response = await fetch(`${API_BASE}/api/assignments?section_id=${encodeURIComponent(sectionId)}`);
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "Could not load assignments.");
+        select.innerHTML = '<option value="">Select an assignment</option>';
+        data.assignments.forEach(assignment => {
+            const option = document.createElement("option");
+            option.value = assignment.id;
+            option.textContent = assignment.title;
+            select.appendChild(option);
+        });
+        select.disabled = data.assignments.length === 0;
+        if (data.assignments.length) {
+            const requestedAssignment = new URLSearchParams(window.location.search).get("assignment_id");
+            selectedAssignmentId = data.assignments.some(item => String(item.id) === requestedAssignment)
+                ? requestedAssignment
+                : String(data.assignments[0].id);
+            select.value = selectedAssignmentId;
+            await loadRoster(sectionId, selectedAssignmentId);
+        } else {
+            selectedAssignmentId = null;
+            select.innerHTML = '<option value="">No assignments in this section</option>';
+            await loadRoster(sectionId, null);
+        }
+    } catch (error) {
+        selectedAssignmentId = null;
+        select.innerHTML = '<option value="">Unable to load assignments</option>';
+        showRosterMessage("Unable to load assignments", error.message);
+    }
+}
+
+});
+</script>
+
+</body>
+</html>

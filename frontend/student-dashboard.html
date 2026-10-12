@@ -1,0 +1,2161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VeriText — Student Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+
+        /* =========================================
+           STUDENT DASHBOARD
+        ========================================= */
+
+        .dashboard-page {
+            min-height: 100vh;
+            display: flex;
+            position: relative;
+        }
+
+        /* =========================================
+           SIDEBAR
+        ========================================= */
+
+        .dashboard-sidebar {
+            width: 245px;
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 20;
+
+            padding: 28px 18px;
+
+            display: flex;
+            flex-direction: column;
+
+            background: rgba(11, 14, 13, 0.92);
+            border-right: 1px solid rgba(255,255,255,0.07);
+
+            backdrop-filter: blur(20px);
+        }
+
+        .dashboard-brand {
+            padding: 0 12px 35px;
+        }
+
+        .dashboard-brand-name {
+            font-family: "DM Mono", monospace;
+            font-size: 19px;
+            letter-spacing: 0.16em;
+            color: #ffffff;
+        }
+
+        .dashboard-brand-name span {
+            color: #8df5c2;
+        }
+
+        .dashboard-brand-subtitle {
+            display: block;
+            margin-top: 6px;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.14em;
+            color: #626a66;
+        }
+
+        /* Navigation */
+
+        .sidebar-label {
+            padding: 0 12px;
+            margin-bottom: 10px;
+
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            color: #59615d;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 12px;
+            border-radius: 10px;
+
+            color: #7f8883;
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .sidebar-link:hover {
+            color: #dce5df;
+            background: rgba(255,255,255,0.035);
+            transform: translateX(2px);
+        }
+
+        .sidebar-link.active {
+            color: #8df5c2;
+            background: rgba(141,245,194,0.075);
+        }
+
+        .sidebar-icon {
+            width: 18px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Sidebar bottom */
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .student-mini-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 12px;
+            margin-bottom: 10px;
+
+            border-radius: 12px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.055);
+        }
+
+        .profile-avatar {
+            width: 34px;
+            height: 34px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            background: rgba(141,245,194,0.12);
+            color: #8df5c2;
+
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .profile-info strong {
+            display: block;
+            color: #d8dfdb;
+            font-size: 12px;
+        }
+
+        .profile-info span {
+            color: #606864;
+            font-size: 10px;
+        }
+
+        .sign-out {
+            color: #777f7b;
+        }
+
+        .sign-out:hover {
+            color: #ff9d9d;
+            background: rgba(255,100,100,0.05);
+        }
+
+
+        /* =========================================
+           MAIN AREA
+        ========================================= */
+
+        .dashboard-main {
+            width: calc(100% - 245px);
+            margin-left: 245px;
+            min-height: 100vh;
+
+            padding: 35px 42px 50px;
+
+            position: relative;
+        }
+
+
+        /* Top bar */
+
+        .dashboard-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 45px;
+        }
+
+        .dashboard-location {
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            color: #606864;
+        }
+
+        .dashboard-date {
+            color: #aeb6b1;
+            font-size: 12px;
+        }
+
+
+        /* =========================================
+           WELCOME
+        ========================================= */
+
+        .welcome-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            margin-bottom: 30px;
+        }
+
+        .welcome-label {
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 0.17em;
+            color: #8df5c2;
+
+            margin-bottom: 12px;
+        }
+
+        .welcome-section h1 {
+            margin: 0;
+            font-size: clamp(30px, 4vw, 48px);
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+        }
+
+        .welcome-section h1 span {
+            color: #777f7b;
+        }
+
+        .welcome-description {
+            margin-top: 12px;
+            max-width: 550px;
+
+            color: #747d78;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .submit-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 13px 18px;
+
+            border-radius: 10px;
+
+            background: #8df5c2;
+            color: #08100c;
+
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            transition: 0.25s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 35px rgba(141,245,194,0.12);
+        }
+
+
+        /* =========================================
+           STAT CARDS
+        ========================================= */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 13px;
+
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            padding: 20px;
+
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 15px;
+
+            background: rgba(255,255,255,0.025);
+
+            transition: 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(141,245,194,0.16);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-label {
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.12em;
+            color: #69716d;
+        }
+
+        .stat-icon {
+            color: #8df5c2;
+            font-size: 13px;
+        }
+
+        .stat-number {
+            margin-top: 16px;
+
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+
+        .stat-change {
+            margin-top: 7px;
+
+            font-size: 10px;
+            color: #68716c;
+        }
+
+        .stat-change.positive {
+            color: #7fd9ad;
+        }
+
+
+        /* =========================================
+           CONTENT GRID
+        ========================================= */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
+            gap: 18px;
+        }
+
+        .dashboard-card {
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 17px;
+
+            background: rgba(255,255,255,0.025);
+
+            overflow: hidden;
+        }
+
+        .card-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 20px 21px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.055);
+        }
+
+        .card-heading h2 {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .card-heading span {
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            color: #626a66;
+            letter-spacing: 0.08em;
+        }
+
+        .view-all {
+            color: #8df5c2;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+
+        /* =========================================
+           SUBMISSIONS TABLE
+        ========================================= */
+
+        .submission-row {
+            display: grid;
+            grid-template-columns: 1.7fr 0.8fr 0.8fr 0.7fr;
+
+            align-items: center;
+
+            padding: 17px 21px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.045);
+
+            transition: 0.2s ease;
+        }
+
+        .submission-row:last-child {
+            border-bottom: none;
+        }
+
+        .submission-row:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .document-name {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .document-small-icon {
+            width: 32px;
+            height: 32px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 8px;
+
+            background: rgba(141,245,194,0.06);
+            border: 1px solid rgba(141,245,194,0.1);
+
+            color: #8df5c2;
+
+            font-size: 11px;
+        }
+
+        .document-name strong {
+            display: block;
+            font-size: 11px;
+            color: #c8cfcb;
+        }
+
+        .document-name span {
+            display: block;
+            margin-top: 4px;
+
+            font-size: 9px;
+            color: #5f6763;
+        }
+
+        .table-value {
+            font-size: 10px;
+            color: #858d88;
+        }
+
+        .similarity-value {
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .similarity-low {
+            color: #8df5c2;
+        }
+
+        .similarity-medium {
+            color: #e4c77d;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            width: fit-content;
+
+            padding: 5px 8px;
+
+            border-radius: 6px;
+
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.06em;
+        }
+
+        .status-complete {
+            color: #8df5c2;
+            background: rgba(141,245,194,0.07);
+        }
+
+        .status-review {
+            color: #e4c77d;
+            background: rgba(228,199,125,0.07);
+        }
+
+
+        /* =========================================
+           RIGHT SIDE CARDS
+        ========================================= */
+
+        .analysis-overview {
+            padding: 25px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+
+            margin: 10px auto 22px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(141,245,194,0.08) 0 57%,
+                    transparent 58%
+                );
+
+            border: 1px solid rgba(141,245,194,0.15);
+
+            box-shadow:
+                0 0 50px rgba(141,245,194,0.05),
+                inset 0 0 30px rgba(141,245,194,0.03);
+
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: "";
+
+            position: absolute;
+            inset: 9px;
+
+            border-radius: 50%;
+
+            border: 1px dashed rgba(141,245,194,0.22);
+
+            animation: rotateScore 18s linear infinite;
+        }
+
+        @keyframes rotateScore {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .score-number {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .score-number strong {
+            display: block;
+
+            font-size: 30px;
+            letter-spacing: -0.05em;
+        }
+
+        .score-number span {
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.12em;
+            color: #69716d;
+        }
+
+        .overview-text {
+            text-align: center;
+            color: #747d78;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .overview-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            margin-top: 22px;
+
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 20px;
+        }
+
+        .overview-metric {
+            text-align: center;
+        }
+
+        .overview-metric + .overview-metric {
+            border-left: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .overview-metric strong {
+            display: block;
+            font-size: 17px;
+        }
+
+        .overview-metric span {
+            display: block;
+            margin-top: 5px;
+
+            color: #626a66;
+            font-size: 8px;
+            font-family: "DM Mono", monospace;
+        }
+
+
+        /* =========================================
+           QUICK ACTIONS
+        ========================================= */
+
+        .quick-actions {
+            margin-top: 18px;
+            padding: 18px;
+        }
+
+        .quick-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 13px 0;
+
+            color: #a7afaa;
+            text-decoration: none;
+
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+
+            font-size: 11px;
+
+            transition: 0.2s ease;
+        }
+
+        .quick-action:last-child {
+            border-bottom: none;
+        }
+
+        .quick-action:hover {
+            color: #8df5c2;
+            padding-left: 4px;
+        }
+
+        .quick-action span:last-child {
+            color: #59615d;
+        }
+
+
+        /* =========================================
+           REVEAL ANIMATION
+        ========================================= */
+
+        .dashboard-reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            animation: dashboardReveal 0.7s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.08s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.16s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.24s;
+        }
+
+        @keyframes dashboardReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1050px) {
+
+            .dashboard-sidebar {
+                width: 210px;
+            }
+
+            .dashboard-main {
+                width: calc(100% - 210px);
+                margin-left: 210px;
+                padding: 30px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 760px) {
+
+            .dashboard-sidebar {
+                width: 70px;
+                padding: 20px 10px;
+            }
+
+            .dashboard-brand {
+                padding: 0 0 30px;
+                text-align: center;
+            }
+
+            .dashboard-brand-name {
+                font-size: 0;
+            }
+
+            .dashboard-brand-name::before {
+                content: "V";
+                color: #8df5c2;
+                font-size: 16px;
+            }
+
+            .dashboard-brand-subtitle,
+            .sidebar-label,
+            .sidebar-link span:not(.sidebar-icon),
+            .profile-info {
+                display: none;
+            }
+
+            .sidebar-link {
+                justify-content: center;
+                padding: 13px;
+            }
+
+            .student-mini-profile {
+                justify-content: center;
+                padding: 8px;
+            }
+
+            .dashboard-main {
+                width: calc(100% - 70px);
+                margin-left: 70px;
+                padding: 25px 18px 40px;
+            }
+
+            .welcome-section {
+                display: block;
+            }
+
+            .submit-button {
+                margin-top: 20px;
+            }
+
+            .submission-row {
+                grid-template-columns: 1.6fr 0.8fr 0.7fr;
+            }
+
+            .submission-row > :nth-child(2) {
+                display: none;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-topbar {
+                margin-bottom: 30px;
+            }
+
+            .dashboard-date {
+                display: none;
+            }
+
+            .welcome-section h1 {
+                font-size: 32px;
+            }
+
+            .submission-row {
+                grid-template-columns: 1fr 0.7fr;
+                gap: 10px;
+            }
+
+            .submission-row > :nth-child(3) {
+                display: none;
+            }
+
+            .submission-row > :nth-child(4) {
+                text-align: right;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================================
+         BACKGROUND
+    ========================================= -->
+
+    <div class="background">
+        <div class="grid"></div>
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
+    </div>
+
+
+    <div class="dashboard-page">
+
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
+        <aside class="dashboard-sidebar">
+
+            <div class="dashboard-brand">
+
+                <div class="dashboard-brand-name">
+                    VERI<span>TEXT</span>
+                </div>
+
+                <span class="dashboard-brand-subtitle">
+                    STUDENT PORTAL
+                </span>
+
+            </div>
+
+
+            <div class="sidebar-label">
+                WORKSPACE
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="student-dashboard.html"
+                   class="sidebar-link active">
+
+                    <span class="sidebar-icon">⌂</span>
+                    <span>Overview</span>
+
+                </a>
+
+
+                <a href="submit.html"
+                   class="sidebar-link">
+
+                    <span class="sidebar-icon">↑</span>
+                    <span>Submit Assignment</span>
+
+                </a>
+
+
+                <a href="submissions.html"
+                   class="sidebar-link">
+
+                    <span class="sidebar-icon">▤</span>
+                    <span>My Submissions</span>
+
+                </a>
+
+
+                <a href="report.html"
+   id="reportsSidebarLink"
+   class="sidebar-link">
+    <span class="sidebar-icon">◫</span>
+    <span>Reports</span>
+</a>
+
+            </nav>
+
+
+            <div class="sidebar-label" style="margin-top: 28px;">
+                ACCOUNT
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="student-profile.html"
+                   class="sidebar-link">
+
+                    <span class="sidebar-icon">○</span>
+                    <span>Profile</span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="student-mini-profile">
+
+                    <div class="profile-avatar">
+                        HP
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>
+                            Student
+                        </strong>
+
+                        <span>
+                            Academic account
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <a href="login.html"
+                   class="sidebar-link sign-out">
+
+                    <span class="sidebar-icon">↪</span>
+                    <span>Sign Out</span>
+
+                </a>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+
+        <main class="dashboard-main">
+
+
+            <!-- TOPBAR -->
+
+            <div class="dashboard-topbar dashboard-reveal">
+
+                <div class="dashboard-location">
+                    VERITEXT / STUDENT
+                </div>
+
+                <div class="dashboard-date">
+                    Academic Workspace
+                </div>
+
+            </div>
+
+
+            <!-- WELCOME -->
+
+            <section class="welcome-section dashboard-reveal delay-1">
+
+                <div>
+
+                    <div class="welcome-label">
+                        STUDENT WORKSPACE
+                    </div>
+
+                    <h1>
+                        Welcome back,
+                        <span>Student.</span>
+                    </h1>
+
+                    <p class="welcome-description">
+                        Track your academic submissions, review similarity
+                        results, and understand your plagiarism analysis
+                        from one workspace.
+                    </p>
+
+                </div>
+
+
+                <a href="submit.html"
+                   class="submit-button">
+
+                    Submit Assignment
+                    <span>↗</span>
+
+                </a>
+
+            </section>
+
+
+
+            <!-- STATISTICS -->
+
+        <section class="stats-grid dashboard-reveal delay-2">
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+            <span class="stat-label">
+                SUBMISSIONS
+            </span>
+
+            <span class="stat-icon">
+                ↗
+            </span>
+        </div>
+
+        <div class="stat-number" id="totalSubmissions">
+            —
+        </div>
+
+        <div class="stat-change positive" id="submissionChange">
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+            <span class="stat-label">
+                ANALYZED
+            </span>
+
+            <span class="stat-icon">
+                ◌
+            </span>
+        </div>
+
+        <div class="stat-number" id="analyzedSubmissions">
+            —
+        </div>
+
+        <div class="stat-change" id="analyzedPercentage">
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+            <span class="stat-label">
+                AVG. SIMILARITY
+            </span>
+
+            <span class="stat-icon">
+                %
+            </span>
+        </div>
+
+        <div class="stat-number" id="averageSimilarity">
+            —
+        </div>
+
+        <div class="stat-change positive">
+            Across analyzed work
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+            <span class="stat-label">
+                REPORTS
+            </span>
+
+            <span class="stat-icon">
+                ▣
+            </span>
+        </div>
+
+        <div class="stat-number" id="availableReports">
+            —
+        </div>
+
+        <div class="stat-change">
+            Available to review
+        </div>
+
+    </div>
+
+</section>
+
+
+            <section class="dashboard-card dashboard-reveal delay-3" style="margin-bottom:24px;">
+                <div class="card-heading">
+                    <div>
+                        <h2>Assignments for your class</h2>
+                        <span>WORK PUBLISHED BY YOUR FACULTY</span>
+                    </div>
+                    <a href="submit.html" class="view-all">Submit work →</a>
+                </div>
+                <div id="availableAssignments" class="assignment-list">
+                    <div class="table-value">Loading class assignments...</div>
+                </div>
+            </section>
+
+
+            <!-- MAIN GRID -->
+
+            <section class="dashboard-grid dashboard-reveal delay-3">
+
+
+                <!-- RECENT SUBMISSIONS -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h2>
+                                Recent submissions
+                            </h2>
+
+                            <span>
+                                YOUR ACADEMIC ACTIVITY
+                            </span>
+
+                        </div>
+
+                        <a href="submissions.html"
+                           class="view-all">
+                            View all →
+                        </a>
+
+                    </div>
+
+
+                    <!-- Header -->
+<!-- Header -->
+
+<div class="submission-row">
+
+    <div class="table-value">
+        DOCUMENT
+    </div>
+
+    <div class="table-value">
+        DATE
+    </div>
+
+    <div class="table-value">
+        SIMILARITY
+    </div>
+
+    <div class="table-value">
+        STATUS
+    </div>
+
+</div>
+
+
+<!-- Dynamic submissions -->
+
+<div id="recentSubmissions">
+
+    <div class="submission-row">
+
+        <div class="table-value">
+            Loading submissions...
+        </div>
+
+    </div>
+
+</div>
+                    
+
+                <!-- RIGHT COLUMN -->
+
+                <div>
+
+
+                    <!-- ANALYSIS OVERVIEW -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <h2>
+                                    Similarity overview
+                                </h2>
+
+                                <span>
+                                    YOUR RECENT ANALYSIS
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="analysis-overview">
+
+                            <div class="score-circle">
+
+                                <div class="score-number">
+    <strong id="overviewSimilarity">
+        —
+    </strong>
+
+                                    <span>
+                                        AVG. SIMILARITY
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <p class="overview-text">
+
+                                Average similarity across your
+                                recently analyzed academic submissions.
+
+                            </p>
+
+
+                            <div class="overview-metrics">
+
+                                <div class="overview-metric">
+
+    <strong id="overviewAnalyzed">
+        —
+    </strong>
+
+    <span>
+        ANALYZED
+    </span>
+
+</div>
+
+
+                              <div class="overview-metric">
+
+    <strong id="overviewPending">
+        —
+    </strong>
+
+    <span>
+        NEED REVIEW
+    </span>
+
+</div>  
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- QUICK ACTIONS -->
+
+                    <div class="dashboard-card quick-actions">
+
+                        <div class="card-heading"
+                             style="padding: 0 0 10px; border: none;">
+
+                            <h2>
+                                Quick actions
+                            </h2>
+
+                        </div>
+
+
+                        <a href="submit.html"
+                           class="quick-action">
+
+                            <span>
+                                Submit new assignment
+                            </span>
+
+                            <span>
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <a href="submissions.html"
+                           class="quick-action">
+
+                            <span>
+                                View submission history
+                            </span>
+
+                            <span>
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <a href="#"
+                           id="latestReportLink"
+                           class="quick-action">
+
+                            <span>
+                                Open latest report
+                            </span>
+
+                            <span>
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+<script>
+
+const API_BASE = "http://127.0.0.1:8000";
+
+
+async function loadDashboard() {
+
+    try {
+
+        let studentId = localStorage.getItem("veritext_student_id");
+        if (studentId) {
+            const studentResponse = await fetch(
+                `${API_BASE}/api/portal/students/${encodeURIComponent(studentId)}`
+            );
+            if (studentResponse.status === 404) {
+                localStorage.removeItem("veritext_student_id");
+                studentId = null;
+            } else if (!studentResponse.ok) {
+                throw new Error("Unable to validate your student account.");
+            } else {
+                const studentData = await studentResponse.json();
+                localStorage.setItem("veritext_student_profile", JSON.stringify(studentData.student));
+            }
+        }
+        if (!studentId) {
+            const email = localStorage.getItem("veritextUser");
+            if (email) {
+                const identityResponse = await fetch(
+                    `${API_BASE}/api/portal/students/resolve?email=${encodeURIComponent(email)}`
+                );
+                const identityData = await identityResponse.json();
+                if (identityResponse.ok) {
+                    studentId = identityData.student.student_id;
+                    localStorage.setItem("veritext_student_id", studentId);
+                    localStorage.setItem("veritext_student_profile", JSON.stringify(identityData.student));
+                }
+            }
+        }
+        if (!studentId) {
+            throw new Error("Link your student account once from Profile to see your assignments and submissions.");
+        }
+
+        const [submissionResponse, assignmentResponse] = await Promise.all([
+            fetch(`${API_BASE}/api/roster/students/${encodeURIComponent(studentId)}/submissions`),
+            fetch(`${API_BASE}/api/roster/students/${encodeURIComponent(studentId)}/assignments`)
+        ]);
+        const data = await submissionResponse.json();
+        const assignmentData = await assignmentResponse.json();
+        if (!submissionResponse.ok) {
+            throw new Error(data.detail || "Unable to load your submissions.");
+        }
+        if (!assignmentResponse.ok) {
+            throw new Error(assignmentData.detail || "Unable to load your class assignments.");
+        }
+
+        const submissions = data.submissions || [];
+        const evaluations = submissions
+            .filter(submission => submission.evaluation)
+            .map(submission => ({
+                submission_id: submission.id,
+                ...submission.evaluation
+            }));
+        const profile = JSON.parse(localStorage.getItem("veritext_student_profile") || "{}");
+        const displayName = data.student || profile.name || "Student";
+        const welcomeName = document.querySelector(".welcome-section h1 span");
+        if (welcomeName) welcomeName.textContent = displayName + ".";
+        const sidebarName = document.querySelector(".profile-info strong");
+        if (sidebarName) sidebarName.textContent = displayName;
+        const avatar = document.querySelector(".student-mini-profile .profile-avatar");
+        if (avatar) avatar.textContent = displayName.trim().charAt(0).toUpperCase() || "S";
+        renderAvailableAssignments(assignmentData.assignments || []);
+
+
+        /*
+         * ----------------------------------------
+         * BASIC COUNTS
+         * ----------------------------------------
+         */
+
+        const total =
+            submissions.length;
+
+        const evaluated =
+            submissions.filter(
+                submission =>
+                    submission.status === "EVALUATED"
+            );
+
+        const pending =
+            submissions.filter(
+                submission =>
+                    submission.status === "PENDING"
+            );
+
+        const evaluating =
+            submissions.filter(
+                submission =>
+                    submission.status === "EVALUATING"
+            );
+
+
+        /*
+         * ----------------------------------------
+         * TOTAL SUBMISSIONS
+         * ----------------------------------------
+         */
+
+        document.getElementById(
+            "totalSubmissions"
+        ).textContent = total;
+
+        document.getElementById(
+            "submissionChange"
+        ).textContent = `${total} submission${total === 1 ? "" : "s"} recorded`;
+
+
+        /*
+         * ----------------------------------------
+         * ANALYZED
+         * ----------------------------------------
+         */
+
+        const analyzedCount =
+            evaluated.length;
+
+        document.getElementById(
+            "analyzedSubmissions"
+        ).textContent = analyzedCount;
+
+
+        const analyzedPercentage =
+            total > 0
+                ? Math.round(
+                    (analyzedCount / total) * 100
+                )
+                : 0;
+
+
+        document.getElementById(
+            "analyzedPercentage"
+        ).textContent =
+            `${analyzedPercentage}% of submissions`;
+
+
+        /*
+         * ----------------------------------------
+         * REPORTS
+         * ----------------------------------------
+         */
+
+        document.getElementById(
+            "availableReports"
+        ).textContent =
+            analyzedCount;
+
+
+        /*
+         * ----------------------------------------
+         * PENDING / NEED REVIEW
+         * ----------------------------------------
+         */
+
+        const needReview =
+            pending.length + evaluating.length;
+
+        document.getElementById(
+            "overviewPending"
+        ).textContent =
+            needReview;
+
+
+        /*
+         * ----------------------------------------
+         * LOAD EVALUATIONS
+         * ----------------------------------------
+         */
+
+        /* ========================================
+ * AVERAGE SIMILARITY
+ * Uses only the latest evaluation
+ * for each submission
+ * ========================================
+ */
+
+const latestEvaluations = {};
+
+evaluations.forEach(evaluation => {
+
+    const submissionId =
+        Number(evaluation.submission_id);
+
+    const existing =
+        latestEvaluations[submissionId];
+
+    if (
+        !existing ||
+        new Date(evaluation.evaluated_at || 0) >
+        new Date(existing.evaluated_at || 0)
+    ) {
+        latestEvaluations[submissionId] =
+            evaluation;
+    }
+
+});
+
+const similarityValues =
+    Object.values(latestEvaluations)
+        .filter(
+            evaluation =>
+                evaluation.similarity_percentage !== null &&
+                evaluation.similarity_percentage !== undefined
+        )
+        .map(
+            evaluation =>
+                Number(
+                    evaluation.similarity_percentage
+                )
+        )
+        .filter(
+            value =>
+                Number.isFinite(value)
+        );
+
+let averageSimilarity = 0;
+
+if (similarityValues.length > 0) {
+
+    averageSimilarity =
+        similarityValues.reduce(
+            (sum, value) =>
+                sum + value,
+            0
+        ) / similarityValues.length;
+
+}
+
+averageSimilarity =
+    Number(
+        averageSimilarity.toFixed(1)
+    );
+
+document.getElementById(
+    "averageSimilarity"
+).textContent =
+    `${averageSimilarity}%`;
+
+document.getElementById(
+    "overviewSimilarity"
+).textContent =
+    `${averageSimilarity}%`;
+
+document.getElementById(
+    "overviewAnalyzed"
+).textContent =
+    Object.keys(latestEvaluations).length;
+
+        
+        /*
+         * ----------------------------------------
+         * RECENT SUBMISSIONS
+         * ----------------------------------------
+         */
+
+        renderRecentSubmissions(
+            submissions,
+            evaluations
+        );
+
+
+        /*
+         * ----------------------------------------
+         * LATEST REPORT
+         * ----------------------------------------
+         */
+
+        setupLatestReport(
+            submissions,
+            evaluations
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Dashboard loading error:",
+            error
+        );
+
+
+        document.getElementById(
+            "totalSubmissions"
+        ).textContent = "—";
+
+
+        document.getElementById(
+            "analyzedSubmissions"
+        ).textContent = "—";
+
+
+        document.getElementById(
+            "averageSimilarity"
+        ).textContent = "—";
+
+
+        document.getElementById(
+            "availableReports"
+        ).textContent = "—";
+        document.getElementById(
+            "submissionChange"
+        ).textContent = "Unable to load account activity";
+
+        const assignmentList = document.getElementById("availableAssignments");
+        if (assignmentList) {
+            assignmentList.innerHTML = `<div class="table-value">${escapeHtml(error.message)}${error.message.includes("Link your student account") ? '<br><a href="student-profile.html">Connect your account →</a>' : ""}</div>`;
+        }
+
+
+        document.getElementById(
+            "recentSubmissions"
+        ).innerHTML = `
+
+            <div class="submission-row">
+
+                <div class="table-value">
+
+                    Unable to load submissions.
+
+                    <br>
+
+                    <small>
+                        Make sure the VeriText backend is running.
+                    </small>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+    function renderAvailableAssignments(assignments) {
+        const container = document.getElementById("availableAssignments");
+        if (!container) return;
+        if (!assignments.length) {
+            container.innerHTML = '<div class="table-value">No assignments have been published for your class yet.</div>';
+            return;
+        }
+        container.innerHTML = assignments.map(assignment => `
+            <div class="assignment-list-item">
+                <div>
+                    <strong>${escapeHtml(assignment.title)}</strong>
+                    <span>${escapeHtml(assignment.subject)}${assignment.due_date ? ` · Due ${new Date(assignment.due_date).toLocaleString()}` : ""}</span>
+                    ${assignment.description ? `<p>${escapeHtml(assignment.description)}</p>` : ""}
+                </div>
+                ${assignment.submission_id
+                    ? `<span class="assignment-state submitted">SUBMITTED</span>`
+                    : `<a class="assignment-submit-link" href="submit.html?assignment_id=${encodeURIComponent(assignment.id)}">SUBMIT →</a>`}
+            </div>
+        `).join("");
+    }
+
+}
+
+
+/*
+ * ========================================
+ * RENDER RECENT SUBMISSIONS
+ * ========================================
+ */
+
+function renderRecentSubmissions(
+    submissions,
+    evaluations
+) {
+
+    const container =
+        document.getElementById(
+            "recentSubmissions"
+        );
+
+
+    if (!submissions.length) {
+
+        container.innerHTML = `
+
+            <div class="submission-row">
+
+                <div class="table-value">
+
+                    No submissions yet.
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    /*
+     * Latest submissions first
+     */
+
+    const recent =
+        [...submissions]
+            .sort(
+                (a, b) =>
+                    new Date(
+                        b.submitted_at || 0
+                    ) -
+                    new Date(
+                        a.submitted_at || 0
+                    )
+            )
+            .slice(0, 4);
+
+
+    container.innerHTML = "";
+
+
+    recent.forEach(
+        (submission, index) => {
+
+            const evaluation =
+                getLatestEvaluation(
+                    evaluations,
+                    submission.id
+                );
+
+
+            const similarity =
+                evaluation &&
+                evaluation.similarity_percentage !== null
+                    ? Number(
+                        evaluation.similarity_percentage
+                    )
+                    : null;
+
+
+            const date =
+                submission.submitted_at
+                    ? formatDate(
+                        submission.submitted_at
+                    )
+                    : "—";
+
+
+            let statusClass =
+                "status-review";
+
+            let statusText =
+                "PENDING";
+
+
+            if (
+                submission.status ===
+                "EVALUATED"
+            ) {
+
+                statusClass =
+                    "status-complete";
+
+                statusText =
+                    "COMPLETE";
+
+            } else if (
+                submission.status ===
+                "EVALUATING"
+            ) {
+
+                statusClass =
+                    "status-review";
+
+                statusText =
+                    "REVIEW";
+
+            }
+
+
+            let similarityClass =
+                "similarity-low";
+
+
+            if (
+                similarity !== null &&
+                similarity >= 20
+            ) {
+
+                similarityClass =
+                    "similarity-medium";
+
+            }
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "submission-row";
+
+
+            row.style.opacity = "0";
+
+            row.style.transform =
+                "translateY(8px)";
+
+
+            row.innerHTML = `
+
+                <div class="document-name">
+
+                    <div class="document-small-icon">
+
+                        ${getFileType(
+                            submission.filename
+                        )}
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${escapeHtml(
+                                submission.assignment_title
+                            )}
+                        </strong>
+
+                        <span>
+                            ${escapeHtml(
+                                submission.filename
+                            )}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-value">
+                    ${date}
+                </div>
+
+
+                <div class="similarity-value ${similarityClass}">
+
+                    ${
+                        similarity !== null
+                            ? `${similarity}%`
+                            : "—"
+                    }
+
+                </div>
+
+
+                <div>
+
+                    <span
+                        class="status-badge ${statusClass}"
+                    >
+                        ${statusText}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(row);
+
+
+            setTimeout(
+                () => {
+
+                    row.style.transition =
+                        "opacity .4s ease, transform .4s ease";
+
+                    row.style.opacity = "1";
+
+                    row.style.transform =
+                        "translateY(0)";
+
+                },
+                100 + (index * 80)
+            );
+
+        }
+    );
+
+}
+
+
+/*
+ * ========================================
+ * LATEST EVALUATION
+ * ========================================
+ */
+
+function getLatestEvaluation(
+    evaluations,
+    submissionId
+) {
+
+    const matching =
+        evaluations
+            .filter(
+                evaluation =>
+                    Number(
+                        evaluation.submission_id
+                    ) === Number(
+                        submissionId
+                    )
+            )
+            .sort(
+                (a, b) =>
+                    new Date(
+                        b.evaluated_at || 0
+                    ) -
+                    new Date(
+                        a.evaluated_at || 0
+                    )
+            );
+
+
+    return matching.length
+        ? matching[0]
+        : null;
+
+}
+
+
+/*
+ * ========================================
+ * LATEST REPORT
+ * ========================================
+ */
+
+function setupLatestReport(
+    submissions,
+    evaluations
+) {
+    const link =
+        document.getElementById(
+            "latestReportLink"
+        );
+
+    const evaluatedSubmissions =
+        submissions
+            .map(submission => {
+                const evaluation =
+                    getLatestEvaluation(
+                        evaluations,
+                        submission.id
+                    );
+
+                if (!evaluation) {
+                    return null;
+                }
+
+                return {
+                    submission,
+                    evaluation
+                };
+            })
+            .filter(item => item !== null)
+            .sort(
+                (a, b) =>
+                    new Date(
+                        b.evaluation.evaluated_at || 0
+                    ) -
+                    new Date(
+                        a.evaluation.evaluated_at || 0
+                    )
+            );
+
+    /*
+     * No evaluated reports yet
+     */
+    if (!evaluatedSubmissions.length) {
+
+        if (link) {
+            link.href = "submissions.html";
+        }
+
+        return;
+    }
+
+    /*
+     * Latest evaluated submission
+     */
+    const latest =
+        evaluatedSubmissions[0];
+
+    const reportUrl =
+        `report.html?submission_id=${latest.submission.id}`;
+
+    /*
+     * Quick Actions → Open latest report
+     */
+    if (link) {
+        link.href = reportUrl;
+    }
+
+}
+/*
+ * ========================================
+ * DATE FORMAT
+ * ========================================
+ */
+
+function formatDate(dateValue) {
+
+    const date =
+        new Date(dateValue);
+
+
+    if (Number.isNaN(date.getTime())) {
+        return "—";
+    }
+
+
+    return date.toLocaleDateString(
+        "en-US",
+        {
+            month: "short",
+            day: "numeric"
+        }
+    );
+
+}
+
+
+/*
+ * ========================================
+ * FILE TYPE
+ * ========================================
+ */
+
+function getFileType(filename) {
+
+    if (!filename) {
+        return "FILE";
+    }
+
+
+    const extension =
+        filename
+            .split(".")
+            .pop()
+            .toUpperCase();
+
+
+    if (extension === "PDF") {
+        return "PDF";
+    }
+
+
+    if (
+        extension === "DOC" ||
+        extension === "DOCX"
+    ) {
+        return "DOC";
+    }
+
+
+    if (extension === "TXT") {
+        return "TXT";
+    }
+
+
+    return extension.substring(0, 4);
+
+}
+
+
+/*
+ * ========================================
+ * HTML SAFETY
+ * ========================================
+ */
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        value ?? "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/*
+ * ========================================
+ * START
+ * ========================================
+ */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadDashboard
+);
+
+</script>
+</body>
+</html>

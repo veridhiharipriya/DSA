@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Faculty Dashboard | VeriText</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================================
+           FACULTY DASHBOARD
+        ========================================================= */
+
+        .faculty-page {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 80% 8%, rgba(141, 245, 194, 0.055), transparent 27%),
+                radial-gradient(circle at 5% 80%, rgba(100, 180, 255, 0.035), transparent 25%);
+        }
+
+        .faculty-main {
+            margin-left: 245px;
+            padding: 42px 48px 70px;
+        }
+
+        /* TOP BAR */
+
+        .faculty-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 38px;
+        }
+
+        .faculty-breadcrumb {
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 1.6px;
+            color: #71807c;
+            text-transform: uppercase;
+        }
+
+        .faculty-breadcrumb span {
+            color: #8df5c2;
+        }
+
+        .faculty-account {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: #87938f;
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+        }
+
+        .faculty-account-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #8df5c2;
+            box-shadow: 0 0 12px rgba(141, 245, 194, 0.65);
+        }
+
+        /* HEADER */
+
+        .faculty-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 30px;
+            margin-bottom: 32px;
+        }
+
+        .faculty-label {
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .faculty-header h1 {
+            margin: 0;
+            color: #edf4f1;
+            font-size: clamp(34px, 4vw, 54px);
+            line-height: 1;
+            letter-spacing: -2.5px;
+        }
+
+        .faculty-header p {
+            max-width: 650px;
+            margin: 15px 0 0;
+            color: #7d8986;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .review-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            padding: 13px 18px;
+            border-radius: 10px;
+            background: #8df5c2;
+            color: #08110d;
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+            transition: 0.3s ease;
+        }
+
+        .review-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(141, 245, 194, 0.12);
+        }
+
+        /* STATS */
+
+        .faculty-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .faculty-stat {
+            position: relative;
+            overflow: hidden;
+            padding: 22px;
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 15px;
+
+            background: rgba(255, 255, 255, 0.025);
+            backdrop-filter: blur(16px);
+
+            transition: 0.3s ease;
+        }
+
+        .faculty-stat:hover {
+            transform: translateY(-3px);
+            border-color: rgba(141, 245, 194, 0.15);
+        }
+
+        .faculty-stat::after {
+            content: "";
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            right: -35px;
+            bottom: -45px;
+            border-radius: 50%;
+            background: rgba(141, 245, 194, 0.035);
+        }
+
+        .stat-label {
+            color: #687571;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            margin-top: 12px;
+            color: #edf4f1;
+            font-size: 30px;
+            font-weight: 600;
+            letter-spacing: -1px;
+        }
+
+        .stat-note {
+            margin-top: 5px;
+            color: #65716e;
+            font-size: 10px;
+        }
+
+        .stat-accent {
+            color: #8df5c2;
+        }
+
+        /* MAIN GRID */
+
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 0.6fr;
+            gap: 24px;
+        }
+
+        .faculty-card {
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.025);
+            backdrop-filter: blur(18px);
+        }
+
+        .faculty-card-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+
+            padding: 22px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .heading-label {
+            display: block;
+            margin-bottom: 6px;
+
+            color: #66736f;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .faculty-card-heading h2 {
+            margin: 0;
+            color: #e6efeb;
+            font-size: 17px;
+        }
+
+        .view-all {
+            color: #778480;
+            text-decoration: none;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.8px;
+            transition: 0.25s ease;
+        }
+
+        .view-all:hover {
+            color: #8df5c2;
+        }
+
+        /* SUBMISSION QUEUE */
+
+        .queue-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .queue-item {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            align-items: center;
+            gap: 20px;
+
+            padding: 20px 24px;
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+
+            transition: 0.25s ease;
+        }
+
+        .queue-item:last-child {
+            border-bottom: none;
+        }
+
+        .queue-item:hover {
+            background: rgba(255, 255, 255, 0.018);
+        }
+
+        .submission-title {
+            color: #d7e0dd;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .submission-meta {
+            color: #66736f;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+        }
+
+        .queue-status {
+            padding: 7px 10px;
+            border-radius: 7px;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+        }
+
+        .queue-status.pending {
+            color: #f0c674;
+            border: 1px solid rgba(240, 198, 116, 0.16);
+            background: rgba(240, 198, 116, 0.06);
+        }
+
+        .queue-status.review {
+            color: #8df5c2;
+            border: 1px solid rgba(141, 245, 194, 0.16);
+            background: rgba(141, 245, 194, 0.06);
+        }
+
+        .queue-status.complete {
+            color: #82908c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .evaluate-link {
+            color: #8df5c2;
+            text-decoration: none;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            white-space: nowrap;
+            transition: 0.25s ease;
+        }
+
+        .evaluate-link:hover {
+            letter-spacing: 0.5px;
+        }
+
+        /* RIGHT COLUMN */
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 13px;
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-dot {
+            width: 7px;
+            height: 7px;
+            min-width: 7px;
+            margin-top: 5px;
+            border-radius: 50%;
+            background: #8df5c2;
+            box-shadow: 0 0 10px rgba(141, 245, 194, 0.35);
+        }
+
+        .activity-text {
+            color: #87938f;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .activity-text strong {
+            color: #cdd8d4;
+            font-weight: 500;
+        }
+
+        .activity-time {
+            display: block;
+            margin-top: 5px;
+            color: #596561;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+        }
+
+        /* ANALYSIS CARD */
+
+        .analysis-card {
+            margin-top: 24px;
+        }
+
+        .analysis-content {
+            padding: 25px 24px;
+        }
+
+        .analysis-pipeline {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+    box-sizing: border-box;
+    padding-bottom: 4px;
+}
+
+.pipeline-node {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 14px 8px;
+    text-align: center;
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.018);
+
+    transition: 0.3s ease;
+}
+
+.pipeline-arrow {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    color: #4e5a56;
+    font-size: 12px;
+}
+
+        .pipeline-node {
+            flex: 1;
+            min-width: 100px;
+            padding: 14px 12px;
+            text-align: center;
+
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.018);
+
+            transition: 0.3s ease;
+        }
+
+        .pipeline-node:hover {
+            border-color: rgba(141, 245, 194, 0.18);
+            transform: translateY(-2px);
+        }
+
+        .pipeline-node span {
+    display: block;
+    color: #596662;
+    font-family: "DM Mono", monospace;
+    font-size: 8px;
+    margin-bottom: 6px;
+}
+
+        .pipeline-node strong {
+    display: block;
+    color: #c9d4d0;
+    font-size: clamp(8px, 0.7vw, 10px);
+    line-height: 1.25;
+    font-weight: 500;
+    white-space: normal;
+}
+
+        .pipeline-arrow {
+            color: #4e5a56;
+            font-size: 14px;
+        }
+
+        /* REVEAL */
+
+        .faculty-reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            animation: facultyReveal 0.7s ease forwards;
+        }
+
+        .faculty-reveal:nth-child(2) {
+            animation-delay: 0.08s;
+        }
+
+        .faculty-reveal:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+
+        @keyframes facultyReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1100px) {
+
+            .faculty-main {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+    padding: 36px 30px 60px;
+}
+
+            .faculty-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .faculty-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .faculty-main {
+                margin-left: 0;
+                width: 100%;
+                padding: 30px 20px 50px;
+            }
+
+            .faculty-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .faculty-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .queue-item {
+                grid-template-columns: 1fr auto;
+            }
+
+            .queue-status {
+                display: none;
+            }
+
+            @media (max-width: 760px) {
+
+    .analysis-pipeline {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .pipeline-arrow {
+        display: none;
+    }
+
+    .pipeline-node {
+        width: 100%;
+        min-width: 0;
+    }
+
+}
+        }
+
+        @media (max-width: 480px) {
+
+            .faculty-main {
+                padding: 25px 15px 40px;
+            }
+
+            .faculty-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .faculty-header h1 {
+                font-size: 36px;
+            }
+
+            .queue-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .evaluate-link {
+                width: fit-content;
+            }
+        }
+        /* Prevent faculty content from ever slipping underneath the sidebar */
+.faculty-main {
+    width: calc(100% - 245px);
+    box-sizing: border-box;
+}
+
+.faculty-grid,
+.faculty-stats,
+.analysis-card {
+    min-width: 0;
+}
+
+.faculty-card {
+    min-width: 0;
+}
+/* =========================================================
+   FINAL RESPONSIVE ANALYSIS PIPELINE
+   ========================================================= */
+
+.analysis-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.analysis-content {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 25px 24px;
+}
+
+.analysis-pipeline {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+
+    gap: 10px !important;
+
+    box-sizing: border-box;
+
+    overflow: visible !important;
+    padding: 0 !important;
+}
+
+/* Hide the old flex arrows */
+.analysis-pipeline .pipeline-arrow {
+    display: none !important;
+}
+
+.analysis-pipeline .pipeline-node {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+
+    box-sizing: border-box;
+
+    padding: 15px 8px !important;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.018);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease;
+}
+
+.analysis-pipeline .pipeline-node:hover {
+    transform: translateY(-3px);
+    border-color: rgba(141, 245, 194, 0.2);
+    background: rgba(141, 245, 194, 0.035);
+}
+
+.analysis-pipeline .pipeline-node span {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #596662;
+
+    font-family: "DM Mono", monospace;
+    font-size: 8px;
+}
+
+.analysis-pipeline .pipeline-node strong {
+    display: block;
+
+    width: 100%;
+
+    color: #c9d4d0;
+
+    font-size: 10px;
+    line-height: 1.3;
+    font-weight: 500;
+
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+/* Add arrows visually between the cards */
+.analysis-pipeline .pipeline-node:not(:last-child) {
+    position: relative;
+}
+
+.analysis-pipeline .pipeline-node:not(:last-child)::after {
+    content: "→";
+
+    position: absolute;
+
+    right: -15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #4e5a56;
+
+    font-family: "DM Mono", monospace;
+    font-size: 12px;
+
+    z-index: 5;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .analysis-pipeline {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+
+    .analysis-pipeline .pipeline-node::after {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .analysis-content {
+        padding: 20px !important;
+    }
+
+    .analysis-pipeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+
+    .analysis-pipeline .pipeline-node {
+        padding: 14px 8px !important;
+    }
+
+    .analysis-pipeline .pipeline-node::after {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .analysis-content {
+        padding: 16px !important;
+    }
+
+    .analysis-pipeline {
+        grid-template-columns: 1fr !important;
+    }
+
+}
+    </style>
+</head>
+
+<body>
+
+<div class="faculty-page">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-mark">V</div>
+
+            <div>
+                <strong>VERITEXT</strong>
+                <span>FACULTY PORTAL</span>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">FACULTY WORKSPACE</span>
+
+            <a href="faculty-dashboard.html" class="sidebar-link active">
+                <span>01</span>
+                Dashboard
+            </a>
+
+            <a href="faculty-dashboard.html#submission-queue" class="sidebar-link">
+                <span>02</span>
+                Submission Queue
+            </a>
+
+            <a href="faculty-roster.html" class="sidebar-link">
+                <span>03</span>
+                Submission Tracking
+            </a>
+
+            <a href="faculty-evaluated.html" class="sidebar-link">
+                <span>04</span>
+                Evaluated Work
+            </a>
+
+            <a href="faculty-reports.html" class="sidebar-link">
+                <span>05</span>
+                Reports
+            </a>
+
+        </div>
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">ACCOUNT</span>
+
+            <a href="faculty-profile.html" class="sidebar-link">
+                <span>06</span>
+                Profile
+            </a>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+            <div class="student-mini">
+
+                <div class="student-avatar">F</div>
+
+                <div>
+                    <strong>Faculty</strong>
+                    <span>Evaluator Account</span>
+                </div>
+
+            </div>
+
+            <a href="login.html" class="sign-out">
+                Sign Out
+                <span>↗</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="faculty-main">
+
+        <!-- TOP BAR -->
+
+        <div class="faculty-topbar">
+
+            <div class="faculty-breadcrumb">
+                VERITEXT / <span>FACULTY DASHBOARD</span>
+            </div>
+
+            <div class="faculty-account">
+                <span class="faculty-account-dot"></span>
+                FACULTY SESSION ACTIVE
+            </div>
+
+        </div>
+
+
+        <!-- HEADER -->
+
+        <section class="faculty-header faculty-reveal">
+
+            <div>
+
+                <div class="faculty-label">
+                    Faculty Workspace
+                </div>
+
+                <h1>
+                    Evaluation<br>
+                    control center.
+                </h1>
+
+                <p>
+                    Review student submissions, run plagiarism analysis,
+                    evaluate academic work, and release final reports.
+                </p>
+
+            </div>
+
+            <a href="faculty-dashboard.html#submission-queue" class="review-button">
+                OPEN NEXT REVIEW
+                <span>→</span>
+            </a>
+
+        </section>
+
+
+        <!-- STATS -->
+
+        <section class="faculty-stats faculty-reveal">
+
+    <div class="faculty-stat">
+        <div class="stat-label">Pending Reviews</div>
+
+        <div class="stat-value stat-accent" id="pendingReviews">
+            —
+        </div>
+
+        <div class="stat-note">
+            Require evaluation
+        </div>
+    </div>
+
+
+    <div class="faculty-stat">
+        <div class="stat-label">Under Review</div>
+
+        <div class="stat-value" id="underReview">
+            —
+        </div>
+
+        <div class="stat-note">
+            Currently being evaluated
+        </div>
+    </div>
+
+
+    <div class="faculty-stat">
+        <div class="stat-label">Evaluated</div>
+
+        <div class="stat-value" id="evaluatedCount">
+            —
+        </div>
+
+        <div class="stat-note">
+            Reports released
+        </div>
+    </div>
+
+
+    <div class="faculty-stat">
+        <div class="stat-label">Avg. Similarity</div>
+
+        <div class="stat-value" id="averageSimilarity">
+            —
+        </div>
+
+        <div class="stat-note">
+            Across analyzed submissions
+        </div>
+    </div>
+
+</section>
+
+        <section class="faculty-card faculty-reveal" style="margin: 24px 0;">
+            <div class="faculty-card-heading">
+                <div>
+                    <span class="heading-label">SECTION WORKFLOW</span>
+                    <h2>Assign work to a class</h2>
+                </div>
+                <a href="faculty-roster.html" class="view-all">OPEN SUBMISSION TRACKING →</a>
+            </div>
+            <form id="assignmentForm" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;align-items:end;">
+                <label>Section
+                    <select id="assignmentSection" required class="section-select"><option value="">Loading sections...</option></select>
+                </label>
+                <label>Assignment title
+                    <input id="assignmentTitle" required maxlength="200" placeholder="e.g. Sorting algorithms" class="section-select">
+                </label>
+                <label>Subject
+                    <input id="assignmentSubject" required maxlength="150" placeholder="e.g. Data Structures" class="section-select">
+                </label>
+                <label>Due date
+                    <input id="assignmentDueDate" type="date" class="section-select">
+                </label>
+                <label>Due time
+                    <input id="assignmentDueTime" type="time" step="60" class="section-select">
+                </label>
+                <label style="grid-column:1/-1;">Instructions
+                    <textarea id="assignmentDescription" rows="2" maxlength="3000" placeholder="Assignment instructions (optional)" class="section-select"></textarea>
+                </label>
+                <button class="review-button" type="submit">ASSIGN TO SECTION →</button>
+                <span id="assignmentMessage" role="status" aria-live="polite"></span>
+            </form>
+            <div id="assignmentList" class="queue-list" style="margin-top:20px;"></div>
+        </section>
+
+        <!-- MAIN GRID -->
+
+        <section
+    class="faculty-grid faculty-reveal"
+    id="submission-queue"
+>
+
+            <!-- SUBMISSION QUEUE -->
+
+            <div class="faculty-card">
+
+                <div class="faculty-card-heading">
+
+                    <div>
+                        <span class="heading-label">
+                            Evaluation Queue
+                        </span>
+
+                        <h2>
+                            Recent submissions
+                        </h2>
+                    </div>
+
+                    <a href="faculty-evaluated.html" class="view-all">
+                        VIEW ALL →
+                    </a>
+
+                </div>
+
+<div class="queue-list" id="submissionQueue">
+
+    <!-- Real submissions will be loaded here -->
+
+    <div class="queue-item">
+        <div>
+            <div class="submission-title">
+                Loading submissions...
+            </div>
+
+            <div class="submission-meta">
+                Connecting to VeriText database
+            </div>
+        </div>
+
+        <div class="queue-status review">
+            LOADING
+        </div>
+    </div>
+
+</div>
+
+</div>
+            <!-- ACTIVITY -->
+
+            <div class="faculty-card">
+
+                <div class="faculty-card-heading">
+
+                    <div>
+                        <span class="heading-label">
+                            System Activity
+                        </span>
+
+                        <h2>
+                            Recent activity
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="activity-list" id="facultyActivityList">
+
+                    <div class="activity-item">
+
+                        <div class="activity-dot"></div>
+
+                        <div class="activity-text">
+
+                            <strong>New submission received</strong>
+                            from Student 01.
+
+                            <span class="activity-time">
+                                8 MINUTES AGO
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-dot"></div>
+
+                        <div class="activity-text">
+
+                            <strong>Analysis completed</strong>
+                            for Database Systems Report.
+
+                            <span class="activity-time">
+                                32 MINUTES AGO
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-dot"></div>
+
+                        <div class="activity-text">
+
+                            <strong>Report released</strong>
+                            to Student 04.
+
+                            <span class="activity-time">
+                                1 HOUR AGO
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-dot"></div>
+
+                        <div class="activity-text">
+
+                            <strong>Evaluation completed</strong>
+                            for Computer Networks Lab.
+
+                            <span class="activity-time">
+                                3 HOURS AGO
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ANALYSIS PIPELINE -->
+
+        <section class="faculty-card analysis-card faculty-reveal">
+
+            <div class="faculty-card-heading">
+
+                <div>
+
+                    <span class="heading-label">
+                        DSA Engine
+                    </span>
+
+                    <h2>
+                        Plagiarism analysis pipeline
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="analysis-content">
+
+                <div class="analysis-pipeline">
+
+                    <div class="pipeline-node">
+                        <span>01</span>
+                        <strong>Submission</strong>
+                    </div>
+
+                    <div class="pipeline-arrow">→</div>
+
+                    <div class="pipeline-node">
+                        <span>02</span>
+                        <strong>Preprocessing</strong>
+                    </div>
+
+                    <div class="pipeline-arrow">→</div>
+
+                    <div class="pipeline-node">
+                        <span>03</span>
+                        <strong>Rabin-Karp</strong>
+                    </div>
+
+                    <div class="pipeline-arrow">→</div>
+
+                    <div class="pipeline-node">
+                        <span>04</span>
+                        <strong>Winnowing</strong>
+                    </div>
+
+                    <div class="pipeline-arrow">→</div>
+
+                    <div class="pipeline-node">
+                        <span>05</span>
+                        <strong>Suffix Array</strong>
+                    </div>
+
+                    <div class="pipeline-arrow">→</div>
+
+                    <div class="pipeline-node">
+                        <span>06</span>
+                        <strong>LCP Analysis</strong>
+                    </div>
+
+                    <div class="pipeline-arrow">→</div>
+
+                    <div class="pipeline-node">
+                        <span>07</span>
+                        <strong>Report</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+
+const API_BASE =
+    "http://127.0.0.1:8000";
+let assignedSectionIds = [];
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        loadFacultyDashboard();
+        loadAssignmentSections();
+        document.getElementById("assignmentForm").addEventListener("submit", createFacultyAssignment);
+    }
+);
+
+async function loadAssignmentSections() {
+    const select = document.getElementById("assignmentSection");
+    try {
+        const response = await fetch(`${API_BASE}/api/sections`);
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "Could not load sections.");
+        const facultyEmail = (localStorage.getItem("veritextUser") || "").trim().toLowerCase();
+        const sections = (data.sections || []).filter(section =>
+            (section.faculty_name || "").trim().toLowerCase() === facultyEmail
+        );
+        assignedSectionIds = sections.map(section => Number(section.id));
+        select.innerHTML = '<option value="">Select a section</option>';
+        sections.forEach(section => {
+            const option = document.createElement("option");
+            option.value = section.id;
+            option.textContent = `${section.name} · ${section.student_count} students`;
+            select.appendChild(option);
+        });
+        if (sections.length) {
+            select.value = sections[0].id;
+        } else {
+            select.innerHTML = '<option value="">No sections assigned to this faculty email</option>';
+        }
+        await loadFacultyAssignments();
+    } catch (error) {
+        select.innerHTML = '<option value="">Unable to load sections</option>';
+        document.getElementById("assignmentMessage").textContent = error.message;
+    }
+}
+
+async function loadFacultyAssignments() {
+    const list = document.getElementById("assignmentList");
+    try {
+        const response = await fetch(`${API_BASE}/api/assignments`);
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "Could not load assignments.");
+        const assignments = (data.assignments || []).filter(item =>
+            assignedSectionIds.includes(Number(item.section_id))
+        );
+        list.innerHTML = assignments.length ? assignments.map(item => `
+            <div class="queue-item">
+                <div><div class="submission-title">${escapeHtml(item.title)}</div>
+                <div class="submission-meta">${escapeHtml(item.section_name)} · ${escapeHtml(item.subject)}${item.due_date ? ` · Due ${new Date(item.due_date).toLocaleString()}` : ""}</div></div>
+                <a class="evaluate-link" href="faculty-roster.html?section_id=${encodeURIComponent(item.section_id)}&assignment_id=${encodeURIComponent(item.id)}">TRACK SUBMISSIONS →</a>
+            </div>`).join("") : '<p>No assignments published yet.</p>';
+    } catch (error) {
+        list.textContent = error.message;
+    }
+}
+
+async function createFacultyAssignment(event) {
+    event.preventDefault();
+    const message = document.getElementById("assignmentMessage");
+    const button = event.submitter;
+    const dueDate = document.getElementById("assignmentDueDate").value;
+    const dueTime = document.getElementById("assignmentDueTime").value;
+    if (Boolean(dueDate) !== Boolean(dueTime)) {
+        message.textContent = "Select both a due date and time, or leave both blank.";
+        return;
+    }
+    button.disabled = true;
+    message.textContent = "Publishing assignment...";
+    const facultyProfile = JSON.parse(localStorage.getItem("veritext_faculty_profile") || "{}");
+    try {
+        const dueDateTime = dueDate ? new Date(`${dueDate}T${dueTime}`) : null;
+        if (dueDateTime && Number.isNaN(dueDateTime.getTime())) {
+            throw new Error("Enter a valid due date and time.");
+        }
+        const response = await fetch(`${API_BASE}/api/assignments`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                section_id: Number(document.getElementById("assignmentSection").value),
+                title: document.getElementById("assignmentTitle").value.trim(),
+                subject: document.getElementById("assignmentSubject").value.trim(),
+                due_date: dueDateTime ? dueDateTime.toISOString() : null,
+                description: document.getElementById("assignmentDescription").value.trim() || null,
+                faculty_name: facultyProfile.name || localStorage.getItem("veritextUser") || "Faculty"
+            })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "Could not publish assignment.");
+        const sectionId = document.getElementById("assignmentSection").value;
+        document.getElementById("assignmentForm").reset();
+        document.getElementById("assignmentSection").value = sectionId;
+        message.textContent = "Assignment published for the selected section.";
+        await loadFacultyAssignments();
+    } catch (error) {
+        message.textContent = error.message;
+    } finally {
+        button.disabled = false;
+    }
+}
+
+
+/* =========================================================
+   LOAD FACULTY DASHBOARD
+========================================================= */
+
+async function loadFacultyDashboard() {
+
+    try {
+
+        const [
+            submissionsResponse,
+            evaluationsResponse
+        ] = await Promise.all([
+
+            fetch(
+                `${API_BASE}/api/submissions`
+            ),
+
+            fetch(
+                `${API_BASE}/api/evaluations`
+            )
+
+        ]);
+
+
+        if (
+            !submissionsResponse.ok ||
+            !evaluationsResponse.ok
+        ) {
+            throw new Error(
+                "Failed to load dashboard data"
+            );
+        }
+
+
+        const submissionsData =
+            await submissionsResponse.json();
+
+        const evaluationsData =
+            await evaluationsResponse.json();
+
+
+        const submissions =
+            submissionsData.submissions || [];
+
+        const evaluations =
+            evaluationsData.evaluations || [];
+
+        renderFacultyActivity(submissions);
+
+        updateFacultyStats(
+            submissions,
+            evaluations
+        );
+
+
+        renderSubmissionQueue(
+            submissions,
+            evaluations
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Faculty dashboard error:",
+            error
+        );
+
+        showDashboardError();
+
+    }
+
+    function renderFacultyActivity(submissions) {
+        const activity = document.getElementById("facultyActivityList");
+        if (!activity) return;
+        const recent = [...submissions]
+            .sort((a, b) => new Date(b.submitted_at || 0) - new Date(a.submitted_at || 0))
+            .slice(0, 4);
+        if (!recent.length) {
+            activity.innerHTML = '<p class="activity-text">No student submissions have arrived yet.</p>';
+            return;
+        }
+        activity.innerHTML = recent.map(item => `
+            <div class="activity-item">
+                <div class="activity-dot"></div>
+                <div class="activity-text">
+                    <strong>${escapeHtml(item.student_name || "Student")}</strong>
+                    submitted <strong>${escapeHtml(item.assignment_title || "an assignment")}</strong>.
+                    <span class="activity-time">${item.submitted_at ? new Date(item.submitted_at).toLocaleString() : "DATE UNKNOWN"}</span>
+                </div>
+            </div>
+        `).join("");
+    }
+
+}
+
+
+/* =========================================================
+   FACULTY STATISTICS
+========================================================= */
+
+function updateFacultyStats(
+    submissions,
+    evaluations
+) {
+
+    let pending = 0;
+    let underReview = 0;
+    let evaluated = 0;
+
+
+    submissions.forEach(
+        submission => {
+
+            const status =
+                String(
+                    submission.status || ""
+                ).toUpperCase();
+
+
+            if (status === "PENDING") {
+
+                pending++;
+
+            }
+            else if (
+                status === "EVALUATING"
+            ) {
+
+                underReview++;
+
+            }
+            else if (
+                status === "EVALUATED"
+            ) {
+
+                evaluated++;
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       LATEST EVALUATION PER SUBMISSION
+    ========================================= */
+
+    const latestEvaluations = {};
+
+
+    evaluations.forEach(
+        evaluation => {
+
+            const submissionId =
+                Number(
+                    evaluation.submission_id
+                );
+
+
+            const existing =
+                latestEvaluations[
+                    submissionId
+                ];
+
+
+            if (
+                !existing ||
+                new Date(
+                    evaluation.evaluated_at || 0
+                ) >
+                new Date(
+                    existing.evaluated_at || 0
+                )
+            ) {
+
+                latestEvaluations[
+                    submissionId
+                ] = evaluation;
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       AVERAGE SIMILARITY
+    ========================================= */
+
+    const similarityValues =
+        Object.values(
+            latestEvaluations
+        )
+        .filter(
+            evaluation =>
+                evaluation.similarity_percentage !== null &&
+                evaluation.similarity_percentage !== undefined
+        )
+        .map(
+            evaluation =>
+                Number(
+                    evaluation.similarity_percentage
+                )
+        )
+        .filter(
+            value =>
+                Number.isFinite(value)
+        );
+
+
+    let averageSimilarity = 0;
+
+
+    if (
+        similarityValues.length > 0
+    ) {
+
+        averageSimilarity =
+            similarityValues.reduce(
+                (sum, value) =>
+                    sum + value,
+                0
+            )
+            /
+            similarityValues.length;
+
+    }
+
+
+    averageSimilarity =
+        Number(
+            averageSimilarity.toFixed(1)
+        );
+
+
+    /* =========================================
+       UPDATE UI
+    ========================================= */
+
+    setText(
+        "pendingReviews",
+        pending
+    );
+
+    setText(
+        "underReview",
+        underReview
+    );
+
+    setText(
+        "evaluatedCount",
+        evaluated
+    );
+
+    setText(
+        "averageSimilarity",
+        `${averageSimilarity}%`
+    );
+
+}
+
+
+/* =========================================================
+   SUBMISSION QUEUE
+========================================================= */
+
+function renderSubmissionQueue(
+    submissions,
+    evaluations
+) {
+
+    const queue =
+        document.getElementById(
+            "submissionQueue"
+        );
+
+
+    if (!queue) {
+        return;
+    }
+
+
+    if (
+        submissions.length === 0
+    ) {
+
+        queue.innerHTML = `
+            <div class="queue-item">
+
+                <div>
+                    <div class="submission-title">
+                        No submissions yet
+                    </div>
+
+                    <div class="submission-meta">
+                        Student assignments will appear here
+                    </div>
+                </div>
+
+                <div class="queue-status complete">
+                    EMPTY
+                </div>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    /* =========================================
+       LATEST EVALUATION PER SUBMISSION
+    ========================================= */
+
+    const latestEvaluations = {};
+
+
+    evaluations.forEach(
+        evaluation => {
+
+            const submissionId =
+                Number(
+                    evaluation.submission_id
+                );
+
+
+            const existing =
+                latestEvaluations[
+                    submissionId
+                ];
+
+
+            if (
+                !existing ||
+                new Date(
+                    evaluation.evaluated_at || 0
+                ) >
+                new Date(
+                    existing.evaluated_at || 0
+                )
+            ) {
+
+                latestEvaluations[
+                    submissionId
+                ] = evaluation;
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       SORT NEWEST FIRST
+    ========================================= */
+
+    const queueSubmissions =
+        [...submissions]
+        .sort(
+            (a, b) =>
+                new Date(
+                    b.submitted_at || 0
+                ) -
+                new Date(
+                    a.submitted_at || 0
+                )
+        )
+        .slice(0, 5);
+
+
+    queue.innerHTML = "";
+
+
+    queueSubmissions.forEach(
+        submission => {
+
+            const evaluation =
+                latestEvaluations[
+                    Number(
+                        submission.id
+                    )
+                ];
+
+
+            const status =
+                String(
+                    submission.status || "PENDING"
+                ).toUpperCase();
+
+
+            let statusClass =
+                "pending";
+
+            let statusText =
+                "PENDING";
+
+
+            if (
+                status === "EVALUATING"
+            ) {
+
+                statusClass =
+                    "review";
+
+                statusText =
+                    "IN REVIEW";
+
+            }
+            else if (
+                status === "EVALUATED"
+            ) {
+
+                statusClass =
+                    "complete";
+
+                statusText =
+                    "EVALUATED";
+
+            }
+
+
+            const date =
+                submission.submitted_at
+                    ? new Date(
+                        submission.submitted_at
+                    ).toLocaleDateString(
+                        "en-US",
+                        {
+                            month: "short",
+                            day: "numeric"
+                        }
+                    ).toUpperCase()
+                    : "DATE UNKNOWN";
+
+
+            const queueItem =
+                document.createElement(
+                    "div"
+                );
+
+
+            queueItem.className =
+                "queue-item";
+
+
+            const action =
+                status === "EVALUATED"
+
+                    ? `
+                        <a
+                            href="faculty-report-view.html?submission_id=${submission.id}"
+                            class="evaluate-link"
+                        >
+                            VIEW REPORT →
+                        </a>
+                    `
+
+                    : `
+                        <a
+                            href="faculty-evaluation.html?submission_id=${submission.id}"
+                            class="evaluate-link"
+                        >
+                            EVALUATE →
+                        </a>
+                    `;
+
+
+            queueItem.innerHTML = `
+
+                <div>
+
+                    <div class="submission-title">
+
+                        ${escapeHtml(
+                            submission.assignment_title
+                        )}
+
+                    </div>
+
+                    <div class="submission-meta">
+
+                        S-${String(
+                            submission.id
+                        ).padStart(4, "0")}
+
+                        ·
+
+                        ${escapeHtml(
+                            submission.student_name
+                        )}
+
+                        ·
+
+                        ${date}
+
+                    </div>
+
+                </div>
+
+
+                <div class="queue-status ${statusClass}">
+                    ${statusText}
+                </div>
+
+
+                ${action}
+
+            `;
+
+
+            queue.appendChild(
+                queueItem
+            );
+
+        }
+
+    );
+
+}
+
+
+/* =========================================================
+   DASHBOARD ERROR
+========================================================= */
+
+function showDashboardError() {
+
+    setText(
+        "pendingReviews",
+        "—"
+    );
+
+    setText(
+        "underReview",
+        "—"
+    );
+
+    setText(
+        "evaluatedCount",
+        "—"
+    );
+
+    setText(
+        "averageSimilarity",
+        "—"
+    );
+
+
+    const queue =
+        document.getElementById(
+            "submissionQueue"
+        );
+
+
+    if (queue) {
+
+        queue.innerHTML = `
+            <div class="queue-item">
+
+                <div>
+
+                    <div class="submission-title">
+                        Unable to load dashboard
+                    </div>
+
+                    <div class="submission-meta">
+                        Make sure the VeriText backend is running
+                    </div>
+
+                </div>
+
+                <div class="queue-status pending">
+                    OFFLINE
+                </div>
+
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   HELPER — SET TEXT
+========================================================= */
+
+function setText(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(id);
+
+
+    if (element) {
+
+        element.textContent =
+            value;
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE DATABASE CONTENT
+========================================================= */
+
+function escapeHtml(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value ?? "";
+
+
+    return div.innerHTML;
+
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Faculty Reports | VeriText</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           FACULTY REPORTS
+        ========================================== */
+
+        .reports-page {
+            min-height: 100vh;
+            margin-left: 245px;
+            padding: 42px 48px 70px;
+        }
+
+        .reports-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 30px;
+            margin-bottom: 36px;
+        }
+
+        .reports-breadcrumb {
+            font-family: "DM Mono", monospace;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            color: rgba(255,255,255,0.38);
+            margin-bottom: 15px;
+        }
+
+        .reports-breadcrumb span {
+            color: #8df5c2;
+        }
+
+        .reports-header h1 {
+            margin: 0;
+            font-size: clamp(30px, 4vw, 48px);
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
+        .reports-header p {
+            margin: 13px 0 0;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+        }
+
+        .reports-count {
+            padding: 10px 15px;
+            border: 1px solid rgba(141,245,194,0.18);
+            border-radius: 999px;
+            background: rgba(141,245,194,0.05);
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        /* SUMMARY */
+
+        .report-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+            max-width: 1180px;
+        }
+
+        .summary-card {
+            padding: 21px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 17px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.018)
+                );
+        }
+
+        .summary-label {
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.12em;
+            color: rgba(255,255,255,0.38);
+        }
+
+        .summary-value {
+            margin-top: 11px;
+            font-size: 27px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+
+        .summary-value.green {
+            color: #8df5c2;
+        }
+
+        .summary-sub {
+            margin-top: 5px;
+            font-size: 10px;
+            color: rgba(255,255,255,0.34);
+        }
+
+        /* REPORT PANEL */
+
+        .reports-panel {
+            max-width: 1180px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.045),
+                    rgba(255,255,255,0.015)
+                );
+            box-shadow: 0 18px 60px rgba(0,0,0,0.18);
+        }
+
+        .panel-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 24px 26px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .panel-icon {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            border: 1px solid rgba(141,245,194,0.15);
+            background: rgba(141,245,194,0.06);
+            color: #8df5c2;
+            font-family: "DM Mono", monospace;
+            font-size: 12px;
+        }
+
+        .panel-title h2 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .panel-title span {
+            display: block;
+            margin-top: 4px;
+            font-size: 10px;
+            color: rgba(255,255,255,0.36);
+        }
+
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .report-table th {
+            padding: 15px 20px;
+            text-align: left;
+            font-family: "DM Mono", monospace;
+            font-size: 9px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.32);
+            background: rgba(255,255,255,0.018);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .report-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.055);
+            font-size: 12px;
+            color: rgba(255,255,255,0.68);
+        }
+
+        .report-table tbody tr {
+            transition:
+                background 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .report-table tbody tr:hover {
+            background: rgba(141,245,194,0.025);
+        }
+
+        .report-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .report-id {
+            font-family: "DM Mono", monospace;
+            color: rgba(255,255,255,0.38);
+            font-size: 10px;
+        }
+
+        .student-name {
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+        }
+
+        .assignment-name {
+            color: rgba(255,255,255,0.76);
+        }
+
+        .subject-name {
+            display: block;
+            margin-top: 4px;
+            color: rgba(255,255,255,0.32);
+            font-size: 10px;
+        }
+
+        .similarity {
+            font-family: "DM Mono", monospace;
+            font-size: 11px;
+        }
+
+        .similarity.low {
+            color: #8df5c2;
+        }
+
+        .similarity.medium {
+            color: #f2d58a;
+        }
+
+        .similarity.high {
+            color: #ff9b9b;
+        }
+
+        .marks {
+            font-family: "DM Mono", monospace;
+            color: rgba(255,255,255,0.82);
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 9px;
+            border-radius: 999px;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .status::before {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        .status.complete {
+            color: #8df5c2;
+            background: rgba(141,245,194,0.07);
+            border: 1px solid rgba(141,245,194,0.13);
+        }
+
+        .status.complete::before {
+            background: #8df5c2;
+            box-shadow: 0 0 8px rgba(141,245,194,0.6);
+        }
+
+        .view-report {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 11px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-family: "DM Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 0.06em;
+            transition:
+                border-color 0.25s ease,
+                color 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .view-report:hover {
+            color: #8df5c2;
+            border-color: rgba(141,245,194,0.3);
+            background: rgba(141,245,194,0.05);
+        }
+
+        /* EMPTY NOTE */
+
+        .reports-note {
+            margin-top: 18px;
+            max-width: 1180px;
+            padding: 16px 18px;
+            border-left: 2px solid rgba(141,245,194,0.35);
+            color: rgba(255,255,255,0.38);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1100px) {
+            .report-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .reports-panel {
+                overflow-x: auto;
+            }
+
+            .report-table {
+                min-width: 850px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .reports-page {
+                margin-left: 0;
+                padding: 30px 22px 60px;
+            }
+
+            .reports-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .report-summary {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .reports-page {
+                padding: 24px 16px 50px;
+            }
+
+            .report-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .reports-header h1 {
+                font-size: 32px;
+            }
+
+            .panel-top {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================
+         FACULTY SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-mark">V</div>
+
+            <div>
+                <div class="brand-name">VERITEXT</div>
+                <div class="brand-role">FACULTY PORTAL</div>
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                FACULTY WORKSPACE
+            </span>
+
+            <a href="faculty-dashboard.html" class="sidebar-link">
+                <span>01</span>
+                Dashboard
+            </a>
+
+            <a href="faculty-dashboard.html#submission-queue" class="sidebar-link">
+                <span>02</span>
+                Submission Queue
+            </a>
+
+            <a href="faculty-roster.html" class="sidebar-link">
+                <span>03</span>
+                Submission Tracking
+            </a>
+
+            <a href="faculty-evaluated.html" class="sidebar-link">
+                <span>04</span>
+                Evaluated Work
+            </a>
+
+            <a href="faculty-reports.html" class="sidebar-link active">
+                <span>05</span>
+                Reports
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                ACCOUNT
+            </span>
+
+            <a href="faculty-profile.html" class="sidebar-link">
+                <span>06</span>
+                Profile
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="student-mini">
+
+                <div class="student-avatar">
+                    F
+                </div>
+
+                <div>
+                    <strong>Faculty</strong>
+                    <span>VERITEXT</span>
+                </div>
+
+            </div>
+
+
+            <a href="login.html" class="sign-out">
+                SIGN OUT
+                <span>↗</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================
+         REPORTS PAGE
+    ========================================== -->
+
+    <main class="reports-page">
+
+        <header class="reports-header">
+
+            <div>
+
+                <div class="reports-breadcrumb">
+                    VERITEXT / FACULTY / <span>REPORTS</span>
+                </div>
+
+                <h1>Evaluation Reports</h1>
+
+                <p>
+                    Review and access reports generated from completed faculty evaluations.
+                </p>
+
+            </div>
+
+
+            <div class="reports-count" id="reportsCount">
+    — REPORTS GENERATED
+</div>
+
+        </header>
+
+
+        <!-- SUMMARY -->
+
+        <section class="report-summary">
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    TOTAL REPORTS
+                </div>
+
+                <div class="summary-value" id="totalReports">
+    —
+</div>
+
+                <div class="summary-sub">
+                    Generated evaluations
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    AVG. SIMILARITY
+                </div>
+
+                <div class="summary-value green" id="averageSimilarity">
+    —
+</div>
+
+                <div class="summary-sub">
+                    Across evaluated work
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    AVG. MARKS
+                </div>
+
+                <div class="summary-value" id="averageMarks">
+    —
+</div>
+
+                <div class="summary-sub">
+                    Out of 100
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    THIS MONTH
+                </div>
+
+                <div class="summary-value" id="thisMonth">
+    —
+</div>
+
+                <div class="summary-sub">
+                    Reports generated
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REPORT TABLE -->
+
+        <section class="reports-panel">
+
+            <div class="panel-top">
+
+                <div class="panel-title">
+
+                    <div class="panel-icon">
+                        R
+                    </div>
+
+                    <div>
+                        <h2>Generated Reports</h2>
+
+                        <span>
+                            Faculty evaluation records
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="report-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>REPORT ID</th>
+                            <th>STUDENT</th>
+                            <th>ASSIGNMENT</th>
+                            <th>SIMILARITY</th>
+                            <th>MARKS</th>
+                            <th>STATUS</th>
+                            <th>ACTION</th>
+                        </tr>
+
+                    </thead>
+
+                <tbody id="reportsTableBody">
+    <tr>
+        <td colspan="7" style="text-align:center; padding:40px;">
+            Loading reports...
+        </td>
+    </tr>
+</tbody>
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <div class="reports-note">
+    Reports shown here represent completed faculty evaluations.
+    Each report is generated from the latest evaluation associated
+    with a student submission.
+</div>
+
+    </main>
+
+<script>
+
+    const API_BASE = "http://127.0.0.1:8000";
+
+
+    /* =========================================
+       LOAD FACULTY REPORTS
+    ========================================== */
+
+    async function loadReports() {
+
+        const tableBody =
+            document.getElementById("reportsTableBody");
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/api/evaluations`
+                );
+
+            if (!response.ok) {
+                throw new Error(
+                    "Failed to load evaluations"
+                );
+            }
+
+            const data =
+                await response.json();
+
+            const evaluations =
+                data.evaluations || [];
+
+            /*
+                Keep only the latest evaluation
+                for each submission.
+            */
+
+            const latestEvaluations = {};
+
+            evaluations.forEach(evaluation => {
+
+                const submissionId =
+                    Number(evaluation.submission_id);
+
+                const existing =
+                    latestEvaluations[submissionId];
+
+                if (
+                    !existing ||
+                    new Date(
+                        evaluation.evaluated_at || 0
+                    ) >
+                    new Date(
+                        existing.evaluated_at || 0
+                    )
+                ) {
+
+                    latestEvaluations[submissionId] =
+                        evaluation;
+
+                }
+
+            });
+
+
+            const reports =
+                Object.values(
+                    latestEvaluations
+                )
+                .sort(
+                    (a, b) =>
+                        new Date(
+                            b.evaluated_at || 0
+                        ) -
+                        new Date(
+                            a.evaluated_at || 0
+                        )
+                );
+
+
+            updateSummary(reports);
+
+            renderReports(reports);
+
+
+        } catch (error) {
+
+            console.error(
+                "Reports loading error:",
+                error
+            );
+
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="7"
+                        style="
+                            text-align:center;
+                            padding:40px;
+                            color:rgba(255,255,255,0.4);
+                        ">
+                        Unable to load reports.
+                        Please make sure the backend is running.
+                    </td>
+                </tr>
+            `;
+
+        }
+
+    }
+
+
+    /* =========================================
+       UPDATE SUMMARY
+    ========================================== */
+
+    function updateSummary(reports) {
+
+        const total =
+            reports.length;
+
+
+        document.getElementById(
+            "reportsCount"
+        ).textContent =
+            `${total} REPORTS GENERATED`;
+
+
+        document.getElementById(
+            "totalReports"
+        ).textContent =
+            total;
+
+
+        /*
+            Average similarity
+        */
+
+        const similarityValues =
+            reports
+                .map(
+                    report =>
+                        Number(
+                            report.similarity_percentage
+                        )
+                )
+                .filter(
+                    value =>
+                        Number.isFinite(value)
+                );
+
+
+        let averageSimilarity = 0;
+
+        if (similarityValues.length > 0) {
+
+            averageSimilarity =
+                similarityValues.reduce(
+                    (sum, value) =>
+                        sum + value,
+                    0
+                ) /
+                similarityValues.length;
+
+        }
+
+
+        document.getElementById(
+            "averageSimilarity"
+        ).textContent =
+            `${averageSimilarity.toFixed(1)}%`;
+
+
+        /*
+            Average marks
+        */
+
+        const marksValues =
+            reports
+                .map(
+                    report =>
+                        Number(report.marks)
+                )
+                .filter(
+                    value =>
+                        Number.isFinite(value)
+                );
+
+
+        let averageMarks = 0;
+
+        if (marksValues.length > 0) {
+
+            averageMarks =
+                marksValues.reduce(
+                    (sum, value) =>
+                        sum + value,
+                    0
+                ) /
+                marksValues.length;
+
+        }
+
+
+        document.getElementById(
+            "averageMarks"
+        ).textContent =
+            averageMarks.toFixed(1);
+
+
+        /*
+            Reports generated this month
+        */
+
+        const now =
+            new Date();
+
+        const currentMonth =
+            now.getMonth();
+
+        const currentYear =
+            now.getFullYear();
+
+
+        const thisMonthCount =
+            reports.filter(report => {
+
+                if (!report.evaluated_at) {
+                    return false;
+                }
+
+                const date =
+                    new Date(
+                        report.evaluated_at
+                    );
+
+                return (
+                    date.getMonth() === currentMonth &&
+                    date.getFullYear() === currentYear
+                );
+
+            }).length;
+
+
+        document.getElementById(
+            "thisMonth"
+        ).textContent =
+            thisMonthCount;
+
+    }
+
+
+    /* =========================================
+       RENDER REPORT TABLE
+    ========================================== */
+
+    function renderReports(reports) {
+
+        const tableBody =
+            document.getElementById(
+                "reportsTableBody"
+            );
+
+
+        if (!reports.length) {
+
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="7"
+                        style="
+                            text-align:center;
+                            padding:45px;
+                            color:rgba(255,255,255,0.4);
+                        ">
+                        No completed evaluation reports yet.
+                    </td>
+                </tr>
+            `;
+
+            return;
+
+        }
+
+
+        tableBody.innerHTML =
+            reports.map(
+                (report, index) => {
+
+                    const similarity =
+                        Number(
+                            report.similarity_percentage
+                        );
+
+
+                    let similarityClass =
+                        "low";
+
+                    if (similarity >= 70) {
+
+                        similarityClass =
+                            "high";
+
+                    } else if (similarity >= 40) {
+
+                        similarityClass =
+                            "medium";
+
+                    }
+
+
+                    const marks =
+                        report.marks !== null &&
+                        report.marks !== undefined
+                            ? Number(report.marks).toFixed(1)
+                            : "—";
+
+
+                    const date =
+                        report.evaluated_at
+                            ? new Date(
+                                report.evaluated_at
+                              ).toLocaleDateString(
+                                "en-IN",
+                                {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric"
+                                }
+                              )
+                            : "—";
+
+
+                    return `
+                        <tr>
+
+                            <td>
+                                <span class="report-id">
+                                    RPT-${String(
+                                        report.evaluation_id
+                                    ).padStart(3, "0")}
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="student-name">
+                                    ${escapeHtml(
+                                        report.student_name ||
+                                        "Unknown Student"
+                                    )}
+                                </span>
+                            </td>
+
+
+                            <td>
+
+                                <span class="assignment-name">
+                                    ${escapeHtml(
+                                        report.assignment_title ||
+                                        "Untitled Assignment"
+                                    )}
+                                </span>
+
+                                <span class="subject-name">
+                                    ${escapeHtml(
+                                        report.subject ||
+                                        "—"
+                                    )}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="similarity ${similarityClass}">
+                                    ${
+                                        Number.isFinite(similarity)
+                                            ? similarity.toFixed(1) + "%"
+                                            : "—"
+                                    }
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="marks">
+                                    ${marks} / 100
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="status complete">
+                                    COMPLETED
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    href="faculty-report-view.html?submission_id=${report.submission_id}"
+                                    class="view-report"
+                                >
+                                    VIEW REPORT
+                                    <span>↗</span>
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    `;
+
+                }
+            ).join("");
+
+    }
+
+
+    /* =========================================
+       HTML SAFETY
+    ========================================== */
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================================
+       PAGE ENTRANCE ANIMATION
+    ========================================== */
+
+    function setupAnimations() {
+
+        const elements =
+            document.querySelectorAll(
+                ".summary-card, .reports-panel, .reports-note"
+            );
+
+
+        elements.forEach(
+            (element, index) => {
+
+                element.style.opacity = "0";
+
+                element.style.transform =
+                    "translateY(14px)";
+
+                element.style.transition =
+                    "opacity 0.55s ease, transform 0.55s ease";
+
+
+                setTimeout(() => {
+
+                    element.style.opacity = "1";
+
+                    element.style.transform =
+                        "translateY(0)";
+
+                }, 80 + index * 80);
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       START
+    ========================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+
+            loadReports();
+
+            setupAnimations();
+
+        }
+    );
+
+</script>
+</body>
+</html>

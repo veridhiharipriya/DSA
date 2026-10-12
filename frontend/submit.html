@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Submit Assignment | VeriText</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="portal-page">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-mark">V</div>
+
+            <div>
+                <div class="brand-name">VERITEXT</div>
+                <div class="brand-role">STUDENT PORTAL</div>
+            </div>
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-label">
+                WORKSPACE
+            </div>
+
+                        <nav class="sidebar-nav">
+
+                <a href="student-dashboard.html"
+                   class="sidebar-link active">
+
+                    <span class="sidebar-icon">⌂</span>
+                    <span>Overview</span>
+
+                </a>
+
+
+                <a href="submit.html"
+                   class="sidebar-link">
+
+                    <span class="sidebar-icon">↑</span>
+                    <span>Submit Assignment</span>
+
+                </a>
+
+
+                <a href="submissions.html"
+                   class="sidebar-link">
+
+                    <span class="sidebar-icon">▤</span>
+                    <span>My Submissions</span>
+
+                </a>
+
+
+                <a href="#"
+   id="reportsSidebarLink"
+   class="sidebar-link">
+    <span class="sidebar-icon">◫</span>
+    <span>Reports</span>
+</a>
+
+            </nav>
+
+
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-label">
+                ACCOUNT
+            </div>
+
+            <a href="student-profile.html" class="sidebar-link">
+                <span class="sidebar-icon">◉</span>
+                <span>Profile</span>
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="student-mini">
+
+                <div class="student-avatar">
+                    S
+                </div>
+
+                <div class="student-info">
+                    <strong>Student</strong>
+                    <span>Academic Account</span>
+                </div>
+
+            </div>
+
+            <a href="login.html" class="sign-out">
+                <span>↪</span>
+                Sign Out
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="portal-main">
+
+        <!-- TOP BAR -->
+
+        <header class="portal-header">
+
+            <div>
+
+                <div class="breadcrumb">
+                    VERITEXT
+                    <span>/</span>
+                    STUDENT
+                    <span>/</span>
+                    SUBMIT
+                </div>
+
+                <h1>
+                    Submit Assignment
+                </h1>
+
+                <p>
+                    Upload your academic work for faculty evaluation.
+                </p>
+
+            </div>
+
+
+            <div class="portal-status">
+
+                <span class="status-dot"></span>
+
+                SYSTEM ONLINE
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= SUBMISSION AREA ================= -->
+
+        <section class="submission-layout">
+
+
+            <!-- LEFT SIDE -->
+
+            <div class="submission-main">
+
+                <form id="submissionForm">
+
+
+                    <!-- ASSIGNMENT DETAILS -->
+
+                    <div class="submission-card">
+
+                        <div class="submission-card-header">
+
+                            <div>
+
+                                <span class="card-eyebrow">
+                                    STEP 01
+                                </span>
+
+                                <h2>
+                                    Assignment Details
+                                </h2>
+
+                            </div>
+
+                            <span class="step-number">
+                                01
+                            </span>
+
+                        </div>
+
+
+                        <div class="submission-card-body">
+
+
+                            <div class="form-group">
+                                <span class="assignment-account-label">SIGNED IN AS</span>
+                                <strong id="studentIdentity">Loading your student account...</strong>
+                                <a href="student-profile.html" class="assignment-profile-link">Manage account details</a>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="assignmentSelect">Assignment</label>
+                                <select id="assignmentSelect" required disabled>
+                                    <option value="">Loading assignments...</option>
+                                </select>
+                            </div>
+
+                            <div id="assignmentInfo" aria-live="polite"></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- FILE UPLOAD -->
+
+                    <div class="submission-card">
+
+                        <div class="submission-card-header">
+
+                            <div>
+
+                                <span class="card-eyebrow">
+                                    STEP 02
+                                </span>
+
+                                <h2>
+                                    Upload Your Work
+                                </h2>
+
+                            </div>
+
+                            <span class="step-number">
+                                02
+                            </span>
+
+                        </div>
+
+
+                        <div class="submission-card-body">
+
+
+                            <div
+                                class="drop-zone"
+                                id="dropZone"
+                            >
+
+                                <input
+                                    type="file"
+                                    id="fileInput"
+                                    accept=".pdf,.docx,.txt"
+                                    hidden
+                                >
+
+
+                                <div class="upload-icon">
+                                    ↑
+                                </div>
+
+
+                                <h3>
+                                    Drop your assignment here
+                                </h3>
+
+
+                                <p>
+                                    or
+                                    <button
+                                        type="button"
+                                        class="browse-button"
+                                        id="browseButton"
+                                    >
+                                        browse files
+                                    </button>
+                                </p>
+
+
+                                <div class="upload-formats">
+                                    PDF · DOCX · TXT
+                                </div>
+
+
+                                <div class="upload-limit">
+                                    Maximum file size: 10 MB
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- SELECTED FILE -->
+
+                            <div
+                                class="file-list"
+                                id="fileList"
+                            ></div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- INFORMATION -->
+
+                    <div class="submission-info">
+
+                        <div class="info-icon">
+                            i
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                What happens after submission?
+                            </strong>
+
+                            <p>
+                                Your assignment will be securely stored and
+                                forwarded to the faculty portal. Faculty will
+                                review your work and run VeriText's plagiarism
+                                analysis during evaluation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SUBMIT -->
+
+                    <div class="submission-actions">
+
+                        <a
+                            href="student-dashboard.html"
+                            class="cancel-button"
+                        >
+                            Cancel
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="submit-button"
+                            id="submitButton"
+                            disabled
+                        >
+                            Submit Assignment
+                            <span>→</span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+
+                <!-- SUCCESS STATE -->
+
+                <div
+                    class="success-state"
+                    id="successState"
+                    style="display:none;"
+                >
+
+                    <div class="success-icon">
+                        ✓
+                    </div>
+
+                    <span class="card-eyebrow">
+                        SUBMISSION RECEIVED
+                    </span>
+
+                    <h2>
+                        Assignment Submitted
+                    </h2>
+
+                    <p id="successMessage">
+                        Your assignment has been successfully submitted
+                        for faculty evaluation.
+                    </p>
+
+
+                    <div class="success-actions">
+
+                        <a
+                            href="submissions.html"
+                            class="primary-button"
+                        >
+                            View My Submissions
+                            <span>→</span>
+                        </a>
+
+                        <a
+                            href="student-dashboard.html"
+                            class="secondary-button"
+                        >
+                            Back to Dashboard
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= RIGHT SIDE ================= -->
+
+            <aside class="submission-side">
+
+
+                <div class="side-card">
+
+                    <span class="card-eyebrow">
+                        SUBMISSION STATUS
+                    </span>
+
+                    <div class="status-large">
+
+                        <span class="status-dot"></span>
+
+                        READY
+
+                    </div>
+
+                    <p>
+                        Complete the assignment details and upload
+                        your document to continue.
+                    </p>
+
+                </div>
+
+
+
+                <div class="side-card">
+
+                    <span class="card-eyebrow">
+                        SUPPORTED FILES
+                    </span>
+
+
+                    <div class="file-type">
+
+                        <span class="file-symbol">
+                            PDF
+                        </span>
+
+                        <div>
+                            <strong>PDF Document</strong>
+                            <small>Portable Document Format</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="file-type">
+
+                        <span class="file-symbol">
+                            DOC
+                        </span>
+
+                        <div>
+                            <strong>DOCX Document</strong>
+                            <small>Microsoft Word</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="file-type">
+
+                        <span class="file-symbol">
+                            TXT
+                        </span>
+
+                        <div>
+                            <strong>Text File</strong>
+                            <small>Plain text document</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="side-card process-side">
+
+                    <span class="card-eyebrow">
+                        EVALUATION FLOW
+                    </span>
+
+
+                    <div class="mini-process">
+
+                        <span class="process-line"></span>
+
+
+                        <div class="mini-step">
+
+                            <span>01</span>
+
+                            <div>
+                                <strong>Submit</strong>
+                                <small>Your assignment is stored</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="mini-step">
+
+                            <span>02</span>
+
+                            <div>
+                                <strong>Faculty Review</strong>
+                                <small>Faculty evaluates your work</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="mini-step">
+
+                            <span>03</span>
+
+                            <div>
+                                <strong>VeriText Analysis</strong>
+                                <small>Similarity is calculated</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="mini-step">
+
+                            <span>04</span>
+
+                            <div>
+                                <strong>Final Report</strong>
+                                <small>Results become available</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ================= PAGE SCRIPT ================= -->
+
+    <script>
+
+        const form = document.getElementById("submissionForm");
+
+        const assignmentSelect = document.getElementById("assignmentSelect");
+        const assignmentInfo = document.getElementById("assignmentInfo");
+        const studentIdentity = document.getElementById("studentIdentity");
+        const API_BASE = "http://127.0.0.1:8000";
+        let currentStudent = null;
+
+        const fileInput =
+            document.getElementById("fileInput");
+
+        const browseButton =
+            document.getElementById("browseButton");
+
+        const dropZone =
+            document.getElementById("dropZone");
+
+        const fileList =
+            document.getElementById("fileList");
+
+        const submitButton =
+            document.getElementById("submitButton");
+
+        const successState =
+            document.getElementById("successState");
+
+        const successMessage =
+            document.getElementById("successMessage");
+
+
+        let selectedFile = null;
+
+
+
+        /* ================= FILE PICKER ================= */
+
+        browseButton.addEventListener("click", function () {
+
+            fileInput.click();
+
+        });
+
+
+
+        fileInput.addEventListener("change", function () {
+
+            if (this.files.length > 0) {
+
+                handleFile(this.files[0]);
+
+            }
+
+        });
+
+
+
+        /* ================= DRAG & DROP ================= */
+
+        dropZone.addEventListener("dragover", function (event) {
+
+            event.preventDefault();
+
+            dropZone.classList.add("dragging");
+
+        });
+
+
+
+        dropZone.addEventListener("dragleave", function () {
+
+            dropZone.classList.remove("dragging");
+
+        });
+
+
+
+        dropZone.addEventListener("drop", function (event) {
+
+            event.preventDefault();
+
+            dropZone.classList.remove("dragging");
+
+
+            if (event.dataTransfer.files.length > 0) {
+
+                handleFile(event.dataTransfer.files[0]);
+
+            }
+
+        });
+
+
+
+        /* ================= FILE VALIDATION ================= */
+
+        function handleFile(file) {
+
+            const allowedExtensions = [
+                ".pdf",
+                ".docx",
+                ".txt"
+            ];
+
+
+            const fileName =
+                file.name.toLowerCase();
+
+
+            const validExtension =
+                allowedExtensions.some(
+                    extension =>
+                        fileName.endsWith(extension)
+                );
+
+
+            if (!validExtension) {
+
+                alert(
+                    "Invalid file type. Please upload a PDF, DOCX, or TXT file."
+                );
+
+                return;
+
+            }
+
+
+            /* 10 MB LIMIT */
+
+            if (file.size > 10 * 1024 * 1024) {
+
+                alert(
+                    "File is too large. Maximum allowed size is 10 MB."
+                );
+
+                return;
+
+            }
+
+
+            selectedFile = file;
+
+            displayFile(file);
+
+            updateSubmitButton();
+
+        }
+
+
+
+        /* ================= DISPLAY FILE ================= */
+
+        function displayFile(file) {
+
+            const extension =
+                file.name
+                    .split(".")
+                    .pop()
+                    .toUpperCase();
+
+
+            const size =
+                formatFileSize(file.size);
+
+
+            fileList.innerHTML = `
+
+                <div class="selected-file">
+
+                    <div class="selected-file-icon">
+                        ${extension}
+                    </div>
+
+
+                    <div class="selected-file-info">
+
+                        <strong>
+                            ${escapeHTML(file.name)}
+                        </strong>
+
+                        <span>
+                            ${size}
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="remove-file"
+                        id="removeFile"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+            `;
+
+
+            document
+                .getElementById("removeFile")
+                .addEventListener(
+                    "click",
+                    removeFile
+                );
+
+        }
+
+
+
+        /* ================= REMOVE FILE ================= */
+
+        function removeFile() {
+
+            selectedFile = null;
+
+            fileInput.value = "";
+
+            fileList.innerHTML = "";
+
+            updateSubmitButton();
+
+        }
+
+
+
+        /* ================= FILE SIZE ================= */
+
+        function formatFileSize(bytes) {
+
+            if (bytes < 1024) {
+
+                return bytes + " B";
+
+            }
+
+
+            if (bytes < 1024 * 1024) {
+
+                return (
+                    (bytes / 1024).toFixed(1)
+                    + " KB"
+                );
+
+            }
+
+
+            return (
+                (bytes / (1024 * 1024)).toFixed(1)
+                + " MB"
+            );
+
+        }
+
+
+
+        /* ================= HTML SAFETY ================= */
+
+        function escapeHTML(value) {
+
+            return value
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+        /* ================= BUTTON STATE ================= */
+
+        function updateSubmitButton() {
+            const fileValid =
+                selectedFile !== null;
+
+            submitButton.disabled =
+                !(currentStudent &&
+                  assignmentSelect.value &&
+                  fileValid);
+
+        }
+
+        async function loadStudentAssignments() {
+            try {
+                let studentId = localStorage.getItem("veritext_student_id");
+                if (studentId) {
+                    const studentResponse = await fetch(
+                        `${API_BASE}/api/portal/students/${encodeURIComponent(studentId)}`
+                    );
+                    if (studentResponse.status === 404) {
+                        localStorage.removeItem("veritext_student_id");
+                        studentId = null;
+                    } else if (!studentResponse.ok) {
+                        throw new Error("Unable to validate your student account.");
+                    } else {
+                        const studentData = await studentResponse.json();
+                        localStorage.setItem("veritext_student_profile", JSON.stringify(studentData.student));
+                    }
+                }
+                if (!studentId) {
+                    const email = localStorage.getItem("veritextUser");
+                    if (email) {
+                        const identityResponse = await fetch(
+                            `${API_BASE}/api/portal/students/resolve?email=${encodeURIComponent(email)}`
+                        );
+                        const identityData = await identityResponse.json();
+                        if (identityResponse.ok) {
+                            studentId = identityData.student.student_id;
+                            localStorage.setItem("veritext_student_id", studentId);
+                            localStorage.setItem("veritext_student_profile", JSON.stringify(identityData.student));
+                        }
+                    }
+                }
+                if (!studentId) {
+                    studentIdentity.textContent = "Connect your student account once in Profile to load assignments.";
+                    assignmentSelect.innerHTML = '<option value="">Student account not linked</option>';
+                    assignmentSelect.disabled = true;
+                    assignmentInfo.innerHTML = '<a href="student-profile.html">Open Profile to connect your account →</a>';
+                    return;
+                }
+                const response = await fetch(
+                    `${API_BASE}/api/roster/students/${encodeURIComponent(studentId)}/assignments`
+                );
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.detail || "Unable to find student.");
+                }
+                currentStudent = data.student;
+                studentIdentity.textContent = `${currentStudent.name} · ${currentStudent.section_name}`;
+                localStorage.setItem("veritext_student_id", currentStudent.student_id);
+                const requestedAssignment = new URLSearchParams(window.location.search).get("assignment_id");
+                assignmentSelect.innerHTML = '<option value="">Select an assignment</option>';
+                data.assignments.forEach(assignment => {
+                    const option = document.createElement("option");
+                    option.value = assignment.id;
+                    option.textContent = `${assignment.title} · ${assignment.subject}`;
+                    option.disabled = Boolean(assignment.submission_id);
+                    if (assignment.submission_id) option.textContent += " · Submitted";
+                    option.dataset.description = assignment.description || "";
+                    option.dataset.dueDate = assignment.due_date || "";
+                    assignmentSelect.appendChild(option);
+                    if (String(assignment.id) === requestedAssignment && !option.disabled) {
+                        assignmentSelect.value = option.value;
+                    }
+                });
+                assignmentSelect.disabled = data.assignments.length === 0;
+                assignmentInfo.textContent = data.assignments.length
+                    ? `Section: ${currentStudent.section_name}. Assignments already submitted are disabled.`
+                    : "No assignments have been assigned to your section yet.";
+                if (!data.assignments.length) {
+                    assignmentSelect.innerHTML = '<option value="">No assignments available</option>';
+                } else if (requestedAssignment && assignmentSelect.value) {
+                    const selected = assignmentSelect.selectedOptions[0];
+                    const dueDate = selected.dataset.dueDate
+                        ? ` Due: ${new Date(selected.dataset.dueDate).toLocaleString()}.`
+                        : "";
+                    assignmentInfo.textContent =
+                        `${selected.dataset.description || ""}${dueDate}`;
+                }
+                updateSubmitButton();
+            } catch (error) {
+                currentStudent = null;
+                studentIdentity.textContent = "Unable to load your student account.";
+                assignmentSelect.innerHTML = '<option value="">Unable to load assignments</option>';
+                assignmentSelect.disabled = true;
+                assignmentInfo.textContent = error.message;
+                alert(error.message);
+                updateSubmitButton();
+            }
+        }
+
+        assignmentSelect.addEventListener("change", () => {
+            const option = assignmentSelect.selectedOptions[0];
+            const dueDate = option && option.dataset.dueDate
+                ? ` Due: ${new Date(option.dataset.dueDate).toLocaleString()}.`
+                : "";
+            assignmentInfo.textContent = option
+                ? `${option.dataset.description || ""}${dueDate}`
+                : "";
+            updateSubmitButton();
+        });
+
+
+        /* ================= FORM SUBMISSION ================= */
+
+        form.addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+
+            if (!selectedFile) {
+
+                alert("Please select an assignment file.");
+
+                return;
+
+            }
+
+
+            submitButton.disabled = true;
+
+            submitButton.innerHTML = `
+                Uploading
+                <span class="loading-spinner"></span>
+            `;
+
+
+            const formData =
+                new FormData();
+
+
+            formData.append("student_id", currentStudent.student_id);
+            formData.append("student_name", currentStudent.name);
+            formData.append("assignment_id", assignmentSelect.value);
+
+
+            formData.append(
+                "file",
+                selectedFile
+            );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_BASE}/api/submissions`,
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.detail ||
+                        "Submission failed."
+                    );
+
+                }
+
+
+
+                /* ================= SUCCESS ================= */
+
+                form.style.display = "none";
+
+                successState.style.display = "block";
+
+
+                successMessage.textContent =
+                    "Your assignment has been submitted successfully and is now waiting for faculty evaluation. Submission ID: "
+                    + result.submission_id;
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Submission error:",
+                    error
+                );
+
+
+                alert(error.message || "Unable to submit assignment.");
+
+
+                submitButton.disabled = false;
+
+                submitButton.innerHTML = `
+                    Submit Assignment
+                    <span>→</span>
+                `;
+
+            }
+
+        });
+
+
+
+        /* ================= INITIAL STATE ================= */
+
+        loadStudentAssignments();
+        updateSubmitButton();
+
+    </script>
+
+</body>
+</html>

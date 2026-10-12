@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VeriText — Login</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ================================
+           LOGIN PAGE
+        ================================= */
+
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 1050px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 24px;
+            overflow: hidden;
+            background: rgba(15, 18, 18, 0.78);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 30px 100px rgba(0,0,0,0.45);
+            animation: loginAppear 0.8s ease forwards;
+        }
+
+        @keyframes loginAppear {
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* LEFT SIDE */
+
+        .login-showcase {
+            padding: 55px;
+            position: relative;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            background:
+                radial-gradient(circle at 20% 20%, rgba(141,245,194,0.10), transparent 35%),
+                radial-gradient(circle at 80% 80%, rgba(100,160,255,0.08), transparent 35%);
+        }
+
+        .login-logo {
+            font-family: "DM Mono", monospace;
+            font-size: 18px;
+            letter-spacing: 0.18em;
+            color: #ffffff;
+            margin-bottom: 70px;
+        }
+
+        .login-logo span {
+            color: #8df5c2;
+        }
+
+        .showcase-label {
+            font-family: "DM Mono", monospace;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            color: #8df5c2;
+            margin-bottom: 18px;
+        }
+
+        .login-showcase h1 {
+            font-size: clamp(38px, 4vw, 58px);
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+            margin: 0 0 22px;
+        }
+
+        .login-showcase h1 span {
+            color: #8df5c2;
+        }
+
+        .showcase-description {
+            max-width: 430px;
+            color: #9da5a2;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .login-features {
+            margin-top: 45px;
+            display: grid;
+            gap: 15px;
+        }
+
+        .login-feature {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: #cbd1ce;
+            font-size: 14px;
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            background: rgba(141,245,194,0.08);
+            border: 1px solid rgba(141,245,194,0.15);
+            color: #8df5c2;
+        }
+
+        /* RIGHT SIDE */
+
+        .login-form-area {
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-heading {
+            margin-bottom: 30px;
+        }
+
+        .login-heading h2 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .login-heading p {
+            margin: 0;
+            color: #858d89;
+            font-size: 14px;
+        }
+
+        /* ROLE SELECTOR */
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .role-option:last-child {
+            grid-column: 1 / -1;
+        }
+
+        .role-option {
+            border: 1px solid rgba(255,255,255,0.09);
+            background: rgba(255,255,255,0.025);
+            border-radius: 13px;
+            padding: 15px;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .role-option:hover {
+            border-color: rgba(141,245,194,0.35);
+            transform: translateY(-2px);
+        }
+
+        .role-option.active {
+            border-color: rgba(141,245,194,0.65);
+            background: rgba(141,245,194,0.07);
+            box-shadow: 0 0 25px rgba(141,245,194,0.05);
+        }
+
+        .role-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .role-description {
+            font-size: 11px;
+            color: #777f7b;
+        }
+
+        /* FORM */
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: #aeb6b2;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px 15px;
+            border-radius: 11px;
+            border: 1px solid rgba(255,255,255,0.09);
+            background: rgba(255,255,255,0.035);
+            color: #ffffff;
+            outline: none;
+            font-family: inherit;
+            transition: 0.25s ease;
+        }
+
+        .input-wrapper input:focus {
+            border-color: rgba(141,245,194,0.55);
+            box-shadow: 0 0 0 3px rgba(141,245,194,0.06);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #737b77;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .password-toggle:hover {
+            color: #8df5c2;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0 25px;
+            font-size: 12px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #858d89;
+        }
+
+        .remember input {
+            accent-color: #8df5c2;
+        }
+
+        .forgot-password {
+            color: #8df5c2;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .login-submit {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 11px;
+            background: #bff8e5;
+            color: #08100c;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.25s ease;
+            font-family: inherit;
+        }
+
+        .login-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(141,245,194,0.14);
+        }
+
+        .login-footer {
+            margin-top: 25px;
+            text-align: center;
+            color: #707874;
+            font-size: 12px;
+        }
+
+        .back-home {
+            display: block;
+            margin-top: 18px;
+            text-align: center;
+            color: #8a928e;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+
+        .back-home:hover {
+            color: #ffcdf7;
+        }
+
+        /* TOAST */
+
+        .login-toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            background: #151a18;
+            border: 1px solid rgba(141,245,194,0.2);
+            color: #dce4df;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s ease;
+            z-index: 100;
+            font-size: 13px;
+        }
+
+        .login-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+
+            .login-showcase {
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.08);
+                padding: 40px;
+            }
+
+            .login-logo {
+                margin-bottom: 40px;
+            }
+
+            .login-form-area {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-page {
+                padding: 15px;
+            }
+
+            .login-showcase,
+            .login-form-area {
+                padding: 30px 22px;
+            }
+
+            .login-showcase h1 {
+                font-size: 36px;
+            }
+
+            .role-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="grid"></div>
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+    </div>
+
+    <main class="login-page">
+
+        <section class="login-container">
+
+            <!-- LEFT -->
+            <div class="login-showcase">
+
+                <div class="login-logo">
+                    VERI<span>TEXT</span>
+                </div>
+
+                <div class="showcase-label">
+                    SECURE ACADEMIC ANALYSIS
+                </div>
+
+                <h1>
+                    Verify work.<br>
+                    <span>Build trust.</span>
+                </h1>
+
+                <p class="showcase-description">
+                    A DSA-powered academic integrity platform designed
+                    to detect similarity, analyze matching content and
+                    generate transparent plagiarism reports.
+                </p>
+
+                <div class="login-features">
+
+                    <div class="login-feature">
+                        <div class="feature-icon">✓</div>
+                        Secure academic submissions
+                    </div>
+
+                    <div class="login-feature">
+                        <div class="feature-icon">⌁</div>
+                        Fingerprint-based comparison
+                    </div>
+
+                    <div class="login-feature">
+                        <div class="feature-icon">▣</div>
+                        Detailed similarity reports
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+            <div class="login-form-area">
+
+                <div class="login-heading">
+                    <h2>Welcome back</h2>
+                    <p>Choose your portal to continue.</p>
+                </div>
+
+
+                <!-- ROLE SELECTOR -->
+                <div class="role-selector">
+
+                    <div class="role-option active" data-role="student">
+
+                        <div class="role-title">
+                            Student
+                        </div>
+
+                        <div class="role-description">
+                            Submit & track assignments
+                        </div>
+
+                    </div>
+
+
+                    <div class="role-option" data-role="faculty">
+
+                        <div class="role-title">
+                            Faculty
+                        </div>
+
+                        <div class="role-description">
+                            Review & analyze submissions
+                        </div>
+
+                    </div>
+
+                        <div class="role-option" data-role="admin">
+
+                            <div class="role-title">
+                                Administrator
+                            </div>
+
+                            <div class="role-description">
+                                Manage student accounts & sections
+                            </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FORM -->
+                <form id="loginForm">
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="you@university.edu"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                            >
+                                SHOW
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-options">
+
+                        <label class="remember">
+
+                            <input type="checkbox">
+
+                            Remember me
+
+                        </label>
+
+                        <a href="#" class="forgot-password">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <button type="submit" class="login-submit">
+                        Continue to Portal →
+                    </button>
+
+                </form>
+
+
+                <div class="login-footer">
+                    Protected academic workspace
+                </div>
+
+                <a href="index.html" class="back-home">
+                    ← Back to VeriText home
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <div class="login-toast" id="loginToast"></div>
+
+
+    <script>
+
+        const roleOptions =
+            document.querySelectorAll(".role-option");
+
+        let selectedRole = "student";
+
+
+        roleOptions.forEach(option => {
+
+            option.addEventListener("click", () => {
+
+                roleOptions.forEach(item =>
+                    item.classList.remove("active")
+                );
+
+                option.classList.add("active");
+
+                selectedRole = option.dataset.role;
+
+            });
+
+        });
+
+
+        /* PASSWORD SHOW / HIDE */
+
+        const password =
+            document.getElementById("password");
+
+        const passwordToggle =
+            document.getElementById("passwordToggle");
+
+
+        passwordToggle.addEventListener("click", () => {
+
+            if (password.type === "password") {
+
+                password.type = "text";
+                passwordToggle.textContent = "HIDE";
+
+            } else {
+
+                password.type = "password";
+                passwordToggle.textContent = "SHOW";
+
+            }
+
+        });
+
+
+        /* LOGIN DEMO */
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const toast =
+            document.getElementById("loginToast");
+
+
+        loginForm.addEventListener("submit", async (event) => {
+
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const passwordValue = document.getElementById("password").value.trim();
+
+            if (!email || !passwordValue) {
+                toast.textContent = "Please enter your email and password.";
+                toast.classList.add("show");
+                return;
+            }
+
+            toast.textContent = `Opening ${selectedRole} portal...`;
+            toast.classList.add("show");
+
+            try {
+                let student = null;
+                if (selectedRole === "student") {
+                    const response = await fetch(
+                        `http://127.0.0.1:8000/api/portal/students/resolve?email=${encodeURIComponent(email)}`
+                    );
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.detail || "Unable to find a student account for this email.");
+                    }
+                    student = data.student;
+                }
+
+                const previousEmail = localStorage.getItem("veritextUser");
+                if (selectedRole !== "student" || previousEmail !== email) {
+                    localStorage.removeItem("veritext_student_id");
+                    localStorage.removeItem("veritext_student_profile");
+                    localStorage.removeItem("veritext_submission_id");
+                }
+                localStorage.setItem("veritextRole", selectedRole);
+                localStorage.setItem("veritextUser", email);
+                if (student) {
+                    localStorage.setItem("veritext_student_id", student.student_id);
+                    localStorage.setItem("veritext_student_profile", JSON.stringify(student));
+                }
+
+                const portal = {
+                    student: "student-dashboard.html",
+                    faculty: "faculty-dashboard.html",
+                    admin: "admin.html"
+                }[selectedRole];
+                window.location.href = portal;
+            } catch (error) {
+                toast.textContent = error.message || "Unable to sign in. Please try again.";
+                toast.classList.add("show");
+            }
+
+        });
+
+
+        /* FORGOT PASSWORD */
+
+        document
+            .querySelector(".forgot-password")
+            .addEventListener("click", (event) => {
+
+                event.preventDefault();
+
+                toast.textContent =
+                    "Password recovery will be available soon.";
+
+                toast.classList.add("show");
+
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 2500);
+
+            });
+
+    </script>
+
+</body>
+</html>
