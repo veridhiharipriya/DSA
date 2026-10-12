@@ -1,0 +1,7 @@
+{
+    "liveServer.settings.ignoreFiles": [
+        "**/backend/**",
+        "**/*.db",
+        "**/__pycache__/**"
+    ]
+}
