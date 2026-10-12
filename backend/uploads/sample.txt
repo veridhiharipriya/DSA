@@ -1,0 +1,6 @@
+Machine Learning is a branch of Artificial Intelligence.
+Python is easy to learn.
+Artificial Intelligence is transforming healthcare.
+Machine Learning improves education.
+Deep Learning is a subset of Machine Learning.
+

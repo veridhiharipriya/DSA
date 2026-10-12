@@ -1,0 +1,5 @@
+Database systems are used to store and manage large amounts of information.
+A database allows users to organize records and retrieve information efficiently.
+SQL is commonly used to create tables, insert records, and query stored data.
+Database management systems provide mechanisms for security, consistency, and recovery.
+They are widely used in banking, education, healthcare, and business applications.

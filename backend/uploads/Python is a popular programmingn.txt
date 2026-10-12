@@ -1,0 +1,9 @@
+Python is a popular programming language used for web development, data science, artificial intelligence, and automation.
+
+Students use Python to build applications and solve programming problems. The language is easy to learn because of its simple syntax and large collection of libraries.
+
+Python supports different programming paradigms including procedural, object oriented, and functional programming.
+
+Data structures such as lists, tuples, dictionaries, and sets are commonly used in Python programs.
+
+Python is also widely used in academic projects because students can develop applications quickly and test their algorithms efficiently.
